@@ -6,6 +6,5 @@ making-datapacks:
         link: bug-fix
       - text: Use my datapack in-game
         link: installing-datapacks
-        action: set usermade
       - text: Make a power
         link: making-powers
