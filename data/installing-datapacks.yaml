@@ -1,0 +1,25 @@
+installing-datapacks:
+    title: Installing Datapacks
+    text: Do you have the datapack file downloaded?
+    opts:
+      - text: Yes
+        link: installing-downloaded-datapacks
+      - text: No
+        link: no-zip
+
+no-zip:
+    title: No Zip
+    text: |
+        If you're using the Origin Creator, click the export button in the bottom left, make sure "Datapack" is selected at the top, and then click "Download":
+        ORIGIN_CREATOR
+        
+        If you're on discord, you can download a datapack in the #datapacks chat by clicking on the filename or button on the right:
+        DISCORD
+        
+        In order to install a datapack, you must download it to your computer first. Click "Continue..." when you've done this if you need more help.
+    images:
+        ORIGIN_CREATOR: origin-creator-export
+        DISCORD: discord-download-datapack
+    opts:
+      - text: Continue...
+        link: installing-downloaded-datapacks

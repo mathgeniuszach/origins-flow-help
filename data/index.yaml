@@ -1,0 +1,10 @@
+index:
+    title: Home
+    text: What do you need help with?
+    opts:
+      - text: Making a datapack
+        link: making-datapacks
+      - text: Fixing a bug
+        link: bug-fix
+      - text: Installing a datapack
+        link: installing-datapacks

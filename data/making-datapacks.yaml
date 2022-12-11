@@ -1,0 +1,11 @@
+making-datapacks:
+    title: Making Datapacks
+    text: What are you trying to do?
+    opts:
+      - text: Fix a bug (datapack isn't working)
+        link: bug-fix
+      - text: Use my datapack in-game
+        link: installing-datapacks
+        action: set usermade
+      - text: Make a power
+        link: making-powers
