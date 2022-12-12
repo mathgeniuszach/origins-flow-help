@@ -45,11 +45,11 @@ installing-downloaded-datapacks:
         Where do you want to install the datapack?
     opts:
       - text: I want to install it in an existing world
-        link: install-datapack-world-made
+        link: installing-datapack-world-made
       - text: I want to install it in a brand new world
-        link: install-datapack-world-new
+        link: installing-datapack-world-new
       - text: I want to install it in all worlds (e.g., in a modpack)
-        link: install-datapack-modpack
+        link: installing-datapack-modpack
 
 installing-datapack-world-made:
     title: Existing World Datapacks
