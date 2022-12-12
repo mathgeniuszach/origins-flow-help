@@ -6,5 +6,9 @@ making-datapacks:
         link: bug-fix
       - text: Use my datapack in-game
         link: installing-datapacks
-      - text: Make a power
-        link: making-powers
+      - text: Make an origin
+        link: making-origins
+
+making-origins:
+    title: Making Origins
+    text: 

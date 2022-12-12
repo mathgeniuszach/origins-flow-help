@@ -1,0 +1,83 @@
+getting-the-mod:
+    title: Getting the Mod
+    text: |
+        Unfortunately, you *MUST* have the origins mod installed in order to use origins datapacks. There are no workarounds; you cannot use these datapacks if you cannot put the origins mod in your game.
+
+        You can get the [origins mod for fabric/quilt here](https://www.curseforge.com/minecraft/mc-mods/origins) and the [forge version here](https://www.curseforge.com/minecraft/mc-mods/origins-forge). Note that the forge version isn't fully "official" so make sure to share if you're using it and asking anyone for help.
+
+        To download the latest version of the origins mod for your game, navigate to the right version for your modloader and version of minecraft (1), and press the download button (2):
+
+        ![Modloader downloads image](download-mod)
+
+        If you don't see your version of minecraft listed, you may need to click the "Files" tab (3) and find the latest file that supports your version of the game.
+    opts:
+      - text: What about Bedrock Edition?
+        link: bedrock-edition
+      - text: What's a mod? What's fabric/quilt/forge?
+        link: whats-a-mod
+      - text: I don't have a modloader
+        link: getting-a-modloader
+      - text: I have a modloader, how do I install the mod?
+        link: installing-the-mod
+      - text: Ok... I installed the mod. Now what?
+        link: installing-downloaded-datapacks
+      - text: Is there any way I can not use the mod?
+        link: no
+
+whats-a-mod:
+    title: What's a mod?
+    text: |
+        People have long since gotten bored of the default, regular Java Edition Minecraft as you get exclusively through the Minecraft Launcher (often called "vanilla Minecraft"), and as a result, wanted to rewrite parts of the game's code to add more items, mobs, and other behavior in general. This process is called "modding" (from "modifying") Minecraft, and any bit of code the does this is called a "modification" - or "mod" for short.
+        
+        To make modding the game easier, several groups of people have designed special mods for Minecraft which can automatically load other mods (usually `.jar` files) into the game automatically. These are called "modloaders". There are 3 popular modloaders in existence today: forge (the oldest of the three), fabric, and quilt (built from fabric).
+
+        Most mods today require you use one of these modloaders to use them; the origins mod is one of them.
+    opts:
+      - text: Ok... so how do I get a modloader?
+        link: getting-a-modloader
+
+getting-a-modloader:
+    title: Getting a Modloader
+    text: |
+        The origins mod requires you have a modloader installed to use it. If you don't know what modloader to pick, go for fabric. If you want to install something else, the instructions will look different. This guide will only cover fabric, but the process is similar for the other two modloaders. This process also only covers installing a modloader on a client. For servers, you'll have to look elsewhere.
+
+        If you use a launcher like MultiMC or Prism Launcher, you can install fabric very quickly through it. While you have an instance selected (if you have no instances yet, click "Add Instance" (1) and select a vanilla version, then click okay), click "Edit" (2). Select the "Version" tab (3), and click "Install Fabric" on the right (4). Select the version with the star (5) and click "Ok" (6) to install.
+
+        ![Picture of installing fabric on Prism Launcher](prism-launcher-install-fabric)
+
+        If you use the default Minecraft launcher, to install fabric, first [download the installer here](https://fabricmc.net/use/installer/). The installer should be a JAVA JAR file, and you should be able to double click it to run it. If that does not work, you may have an outdated version (or no version at all) of Java on your system; you'll have to look up how to install the latest version of Java on the internet.
+
+        Inside the installer, select a version of Minecraft you want to use (1), and click "Install" (2). You shouldn't need to touch anything else, but make sure that "Create profile" (3) is checked. After the installer finishes, reboot your Minecraft launcher and change profiles; you should see a fabric profile that you can now launch!
+
+        ![Picture of using the fabric installer](installing-fabric-generic)
+    opts:
+      - text: Ok... so how do I install the mod now?
+        link: installing-the-mod
+
+installing-the-mod:
+    title: Installing the Mod
+    text: |
+        If you just installed a modloader, make sure you've launched the game at least once (if not, just launch the game fully and then close it when it's done).
+
+        To install the origins mod, first download it. You can get the [origins mod for fabric/quilt here](https://www.curseforge.com/minecraft/mc-mods/origins) and the [forge version here](https://www.curseforge.com/minecraft/mc-mods/origins-forge). Note that the forge version isn't fully "official" so make sure to share if you're using it and asking anyone for help.
+
+        To download the latest version of the origins mod for your game, navigate to the right version for your modloader and version of minecraft (1), and press the download button (2):
+
+        ![Modloader downloads image](download-mod)
+
+        If you're using Prism Launcher or MultiMC, you can install the origins mod
+    opts:
+      - text: It says the mod version is wrong!
+        link: mod-wrong-version
+      - text: The game crashed when I tried to launch it!
+        link: mod-crash-report
+      - text: Ok, I installed the mod. What about the datapack?
+        link: installing-downloaded-datapacks
+
+mod-wrong-version:
+    title: Wrong Mod Version
+    text: 
+
+mod-crash-report:
+    title: Mod Crash
+    text: 
