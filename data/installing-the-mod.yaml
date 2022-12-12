@@ -5,11 +5,11 @@ getting-the-mod:
 
         You can get the [origins mod for fabric/quilt here](https://www.curseforge.com/minecraft/mc-mods/origins) and the [forge version here](https://www.curseforge.com/minecraft/mc-mods/origins-forge). Note that the forge version isn't fully "official" so make sure to share if you're using it and asking anyone for help.
 
-        To download the latest version of the origins mod for your game, navigate to the right version for your modloader and version of minecraft (1), and press the download button (2):
+        To download the latest version of the origins mod for your game, navigate to the right version for your modloader and version of minecraft (1), and press the download button (2).
+        
+        If you don't see your version of minecraft listed, you may need to click the "Files" tab (3) and find the latest file that supports your version of the game.
 
         ![Modloader downloads image](download-mod)
-
-        If you don't see your version of minecraft listed, you may need to click the "Files" tab (3) and find the latest file that supports your version of the game.
     opts:
       - text: What about Bedrock Edition?
         link: bedrock-edition
@@ -27,7 +27,7 @@ getting-the-mod:
 whats-a-mod:
     title: What's a mod?
     text: |
-        People have long since gotten bored of the default, regular Java Edition Minecraft as you get exclusively through the Minecraft Launcher (often called "vanilla Minecraft"), and as a result, wanted to rewrite parts of the game's code to add more items, mobs, and other behavior in general. This process is called "modding" (from "modifying") Minecraft, and any bit of code the does this is called a "modification" - or "mod" for short.
+        People have long since gotten bored of the default, regular Java Edition Minecraft as you get exclusively through the Minecraft Launcher (often called "vanilla Minecraft"), and as a result, wanted to rewrite parts of the game's code to add more items, mobs, and other behavior in general. This process is called "modding" (from "modifying") Minecraft, and any bit of code the does this is called a "modification" - or "mod" for short. A collection of mods is often called a "modpack".
         
         To make modding the game easier, several groups of people have designed special mods for Minecraft which can automatically load other mods (usually `.jar` files) into the game automatically. These are called "modloaders". There are 3 popular modloaders in existence today: forge (the oldest of the three), fabric, and quilt (built from fabric).
 
@@ -65,19 +65,30 @@ installing-the-mod:
 
         ![Modloader downloads image](download-mod)
 
-        If you're using Prism Launcher or MultiMC, you can install the origins mod
+        To install the mod, simply put it in your "mods" folder which is found in your [`.minecraft` folder (click here to learn how to get there)](#dot-minecraft).
+        
+        Sidenote, you'll also need to download [the Fabric API mod you can find here](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and potentially [the Pehkui mod you can find here](https://www.curseforge.com/minecraft/mc-mods/pehkui) for size-based origins to work. You can install these mods the same way you installed the Origins mod.
+
+        When you're done installing everything, launch the game to make sure everything works.
     opts:
-      - text: It says the mod version is wrong!
-        link: mod-wrong-version
+      - text: It says "Incompatible mod set!"
+        link: incompatible-mod-set
       - text: The game crashed when I tried to launch it!
-        link: mod-crash-report
+        link: crash-report
       - text: Ok, I installed the mod. What about the datapack?
         link: installing-downloaded-datapacks
 
-mod-wrong-version:
-    title: Wrong Mod Version
-    text: 
+incompatible-mod-set:
+    title: Incompatible Mod set
+    text: |
+        Presumably, you probably have a screen that looks like this:
 
-mod-crash-report:
-    title: Mod Crash
-    text: 
+        ![Fabric incompatible mod set image](fabric-incompatible-mod-set)
+
+        The most common reason these messages occur is for one of two reasons:
+        1. You're missing a mod that another mod needs in order to run, or
+        2. One of the mods you're using was made for a different version of Minecraft.
+
+        Fortunately, this problem is easy to fix, and more often than not the message will tell you exactly how. Take a look at the image again, particularly at (1). In my case, it's telling me the best solution to replace the origins mod with the 1.19.2 version. If we dig deeper into part (2), we can see more clearly what the issue is. The origins mod I have installed requires Minecraft 1.18.2 and not 1.19.2! All I have to do is delete the old 1.18.2 `.jar` file from my mods folder, and replace it with the 1.19.2 version instead.
+
+        Your "Incompatible mod set" may say something slightly different, but so long as you read part (1) carefully, you should be able to figure out what you need to do next to solve your problem.

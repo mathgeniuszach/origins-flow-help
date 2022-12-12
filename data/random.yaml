@@ -5,3 +5,57 @@ bedrock-edition:
 no:
     title: No
     text: Sorry, but the answer is unfortunately no. There are no solutions, workarounds, or anything else you can do to make the answer be "yes". You should stop trying, because you'll only tire yourself trying to find an answer that doesn't exist.
+
+dot-minecraft:
+    title: .minecraft Folder
+    text: |
+        For one reason or another, you may need to find where your `.minecraft` folder is located. The simplest way to locate it, is to launch your game, go to where you would load resource packs (Options... > Resource Packs), and click the "Open Pack Folder" button in the bottom left (1). Press the "Up one folder" button (2), and you're inside your `.minecraft` folder! If you use the vanilla launcher, I recommend bookmarking this folder so you can get back to it easily.
+
+        ![Open pack folder button image](resource-packs-folder)
+        ![Up a folder button image](resource-packs-up-one)
+
+        Launchers like Prism Launcher and MultiMC have an easier way of doing this that doesn't require launching the game. Select an instance and click the "Folder" button on the right (1). Then you can double click to open your `.minecraft` folder (2). In these launchers, every instance has it's own `.minecraft` folder.
+
+        ![Prism launcher folder button image](prism-launcher-folder)
+
+        There are usually a lot of folders and files present in the `.minecraft` folder, but the only ones important for this wiki are the folders shown below:
+
+        ![Dot Minecraft file contents image](dot-minecraft-contents)
+
+        1. The "crash-reports" folder is where you would find crash reports if your game crashes.
+        2. The "logs" folder shows many archived game logs (special information and messages that are stored while the game runs) and also the latest log as "latest.log".
+        3. The "mods" folder is where mods are installed or uninstalled from.
+        4. The "saves" folder is where your singleplayer worlds are stored.
+
+world-folder:
+    title: World Folder
+    text: |
+        Every world in minecraft is just a folder in someone's computer. Each world corresponds to exactly one folder.
+
+        You can find a singleplayer world folder easily by selecting it in your singleplayer menu (1), clicking "Edit" in the bottom left (2), and then clicking "Open World Folder" in the menu that shows up (3).
+
+        ![Picture of menu navigation to "Open World Folder"](world-folder)
+
+        Your singleplayer world folders are all located inside the "saves" folder which is inside your [`.minecraft` folder](#dot-minecraft) (click to learn where that is).
+
+        If you use a server hosting service, you may not be able to access the world folder directly. The methods differ between hosts and that's more than this guide covers, so you'll have to do more research yourself.
+
+        If you open ports and self-host a server, the folder will typically be called "world" and will be in the same folder as the server jar.
+
+crash-report:
+    title: Mod Crash
+    text: |
+        So the game crashed, eh?
+        
+        Find [the crash report and your game log](#logs) (you can click the links to figure out how). If by reading them you have absolutely no idea what went wrong, first upload the crash report and your game log separately to a site like [https://mclo.gs/](https://mclo.gs/). You can copy-paste the text there and press "Save". copy paste the links in your url bar and save it for later.
+        
+        Once you've saved the logs, go to the `#bug-reports` channel of [the Origins Discord](https://discord.gg/4mTMHu3) and submit a [direct](/response/be-direct) and [specific](/response/be-specific) message explaining what you were doing before your game crashed that includes the links to your crash report and game log. Someone should be able to help you from there.
+
+logs:
+    title: Logs
+    text: |
+        For a variety of reasons you may need to access your Minecraft logs or crash reports. There are a few ways to get these.
+
+        The easiest way is to navigate to your [.minecraft folder](#dot-minecraft) (click to find out how), and go into the "logs" folder for your game logs, or the "crash-reports" folder for crash reports. Note that crash reports are always dated, while the "logs" folder clearly shows which log is the latest. If you are going to share these with anyone else, pick the latest files.
+
+        If you need to view these logs for any reason, you can do so in any text editor. If you need to find some text (e.g., "origins") in them, you can do so by pressing "Ctrl+F" and typing that text into the box that shows up. Sometimes you must press "Enter" a few times to find all matches individually.

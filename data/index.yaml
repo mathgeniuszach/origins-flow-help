@@ -1,6 +1,9 @@
 index:
     title: Home
-    text: What do you need help with?
+    text: |
+        If you have trouble understanding this guide, please let me know in [my Discord](https://discord.gg/pBFqEcXvW5).
+
+        What do you need help with?
     opts:
       - text: Making a datapack
         link: making-datapacks
@@ -8,3 +11,5 @@ index:
         link: bug-fix
       - text: Installing a datapack
         link: installing-datapacks
+      - text: Removing a datapack
+        link: removing-datapacks

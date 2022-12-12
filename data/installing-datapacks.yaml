@@ -37,4 +37,41 @@ installing-mod-prompt:
 
 installing-downloaded-datapacks:
     title: Installing Downloaded Datapacks
-    text:
+    text: |
+        If you have the origins mod installed in your game, then you can proceed with installing a datapack you've downloaded.
+
+        Before installing it, make sure that the zip file you downloaded contains a "pack.mcmeta" file inside. If you only see a single folder inside, you'll have to extract the single folder inside, into the location you're installing datapacks to. If the zip does have a "pack.mcmeta" file inside, put the zip file itself into the location you're installing datapacks to.
+
+        Where do you want to install the datapack?
+    opts:
+      - text: I want to install it in an existing world
+        link: install-datapack-world-made
+      - text: I want to install it in a brand new world
+        link: install-datapack-world-new
+      - text: I want to install it in all worlds (e.g., in a modpack)
+        link: install-datapack-modpack
+
+installing-datapack-world-made:
+    title: Existing World Datapacks
+    text: |
+        The only thing you have to do to install a datapack in a single world is to put the datapack inside the "datapacks" folder which is present within the [world's folder](#world-folder) (click to learn where that is).
+
+        If you did this while the world is active (you're playing it or running a server with it), you can either run the `/reload` command ingame (requires operator), close and reopen the world, or reboot the server (if you're running one) to load the datapack. Note that if the screen to select an origin doesn't show up, you may have to give yourself the "Orb of Origin" in creative and right click it to pick an origin manually (The screen will always pop up for players that haven't joined the world yet).
+
+installing-datapack-world-new:
+    title: New World Datapacks
+    text: |
+        You can add a datapack to a world you're in the process of creating. While you're in the world creation menu, click "Data Packs" (1) and then "Open Pack Folder" in the screen that shows up (2).
+
+        ![Picture navigating to the temporary datapacks folder](datapacks-new-world)
+
+        Put the datapack inside the explorer window that popped up, and go back to Minecraft. You should see the datapack show up under "Available" on the left side. Hover your mouse over it and click the play button that shows up (1); it should move over to the right side. Now click "Done" at the bottom (2), and finish creating the world however you like.
+
+        ![Selecting a datapack image](new-world-select-datapack)
+
+installing-datapack-modpack:
+    title: Instance Datapacks
+    text: |
+        Datapacks in minecraft normally cannot be installed across a single instance; however, if you install another mod called [Global Packs (which you can find here)](https://www.curseforge.com/minecraft/mc-mods/drp-global-datapack) and launch the game once, you'll find a folder called "global_packs" inside your [`.minecraft` folder](#dot-minecraft), and another folder called "required_data" inside that.
+
+        To install a datapack for the entire instance, put the datapack inside the "required_data" folder. Reboot any worlds and you should be good to go.
