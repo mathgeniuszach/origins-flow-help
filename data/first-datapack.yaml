@@ -1,0 +1,117 @@
+first-datapack:
+    title: First Datapack
+    text: |
+        So you want to make a datapack, eh?
+
+        Making datapacks can be a time-consuming endevour, so make sure you have the patience to sit down and work through things and do proper research. Things will likely go wrong, and that's okay; in fact, there's a saying in computer science: "If it works on the first try, something's definitely wrong."
+
+        Before starting, make sure you have file extensions shown on your computer. [Click here to learn how to do that](#file-extensions).
+
+        When in doubt, consult the [Official Origins Wiki](https://origins.readthedocs.io/en/latest/) first. The wiki is your friend. You don't just ignore a friend when they're trying to help you, right? If you can't find what you're looking for on the wiki and are certain you checked it well enough, create a forum post in the #datapack-dev chat on the [Official Origins Discord](https://discord.gg/4mTMHu3).
+
+        If you're using the Origin Creator and you found a bug, let me know on [my Discord (aka, the Origin Creator Discord)](https://discord.gg/pBFqEcXvW5).
+
+        To start, have you ever installed and used an origins datapack (not a mod) successfully before?
+    opts:
+      - text: No
+        link: install-datapack-first
+      - text: Yes
+        link: coding-experience
+
+install-datapack-first:
+    title: Install a Datapack First!
+    text: |
+        You should learn how to successfully install a datapack before attempting to make your own. There are plenty of origins datapacks publicly available online. Take a look at the #datapacks channel in the [Official Origins Discord](https://discord.gg/4mTMHu3) for some awesome ones.
+
+        If you've found one and need help installing it, click the button below.
+    opts:
+      - text: Help me install it!
+        link: installing-datapacks
+
+coding-experience:
+    title: Experience
+    text: |
+        How much coding experience do you have?
+    opts:
+      - text: I have very little to no experience.
+        link: experience-level0
+      - text: I have some experience.
+        link: experience-level1
+      - text: I'm an adept programmer.
+        link: experience-level2
+
+experience-level0:
+    title: New Programmer
+    text: |
+        Unfortunately, making a Minecraft datapack does require you to learn *some* programming concepts, including problem solving skills. No tool (not even the Origin Creator), can let you cop out of that.
+
+        Fortunately, there are several resources at your disposal that can be of use, depending on how you choose to make your datapack. There are two main ways you could make a datapack:
+
+        1. Through the Origin Creator, and
+          - If code confuses or may confuse you, or you just prefer a more visual interface, then you will probably prefer using the Origin Creator over using an IDE or text editor. You'll still probably want to [learn about JSON (click for more info)](#json-format) to share your work with others.
+        2. Through a text editor or IDE.
+          - If you want to really get into the details of datapacks even though it may be challenging, you should [learn JSON (click for more info)](#json-format), and make a datapack through a text editor or IDE. This method is much more favorable if you want to eventually create much larger and complex origins, as the Origin Creator is best suited for simpler origins.
+        
+        Here's an image comparing making a datapack in both:
+
+        ![Image comparing the Origin Creator to VSCode](oc-vs-ide)
+        
+        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in the official Discord as most creators do not use it. Thus, if you ask for help with datapacking in the official discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
+
+        To learn more about each method, click the respective option below.
+    opts:
+      - text: I want to use the Origin Creator.
+        link: using-origin-creator
+      - text: I want to make a datapack through JSON.
+        link: using-json
+
+experience-level1:
+    title: Novice Programmer
+    text: |
+        Nice! While making a Minecraft datapack doesn't require you to learn a lot of programming concepts, the little experience you have will come in handy; especially problem solving skills.
+
+        There are two main ways you could make a datapack:
+
+        1. Through the Origin Creator, and
+          - If you plan on making something simple or just prefer a more visual interface, then you will probably prefer using the Origin Creator over using an IDE or text editor. If you don't know how it works yet, you'll still probably want to [learn about JSON (click for more info)](#json-format) to share your work with others.
+        2. Through a text editor or IDE.
+          - If you want to really get into the details of datapacks even though it may be challenging, you should [learn JSON (click for more info)](#json-format) if you haven't already, and make a datapack through a text editor or IDE. This method is much more favorable if you want to eventually create much larger and complex origins, as the Origin Creator is best suited for simpler origins.
+
+        Here's an image comparing making a datapack in both:
+
+        ![Image comparing the Origin Creator to VSCode](oc-vs-ide)
+
+        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in the official Discord as most creators do not use it. Thus, if you ask for help with datapacking in the official Discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
+
+        To learn more about each method, click the respective option below.
+    opts:
+      - text: I want to use the Origin Creator.
+        link: using-origin-creator
+      - text: I want to make a datapack through JSON.
+        link: using-json
+
+experience-level2:
+    title: Adept Programmer
+    text: |
+        If you're very familiar with programming, then making a Minecraft datapack shouldn't be too difficult for you; most of the difficulty just comes from getting the formatting right.
+
+        Here's an image comparing making a datapack in both:
+
+        ![Image comparing the Origin Creator to VSCode](oc-vs-ide)
+        
+        Note that if you choose to use the Origin Creator, you should avoid asking questions directly about it in the official Discord and instead focus on more generic concepts and constructs. Most creators don't use the Origin Creator, so they often won't understand what you want if you ask them about it. If you want to ask about the Origin Creator itself, ask in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
+
+        To learn more about each method, click the respective option below.
+    opts:
+      - text: I want to make a datapack through JSON.
+        link: using-json
+      - text: I want to use the Origin Creator.
+        link: using-origin-creator
+
+using-origin-creator:
+    title: The Origin Creator
+    text:
+
+using-json:
+    title: JSON Datapack
+    text: 

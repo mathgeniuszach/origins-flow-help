@@ -2,15 +2,11 @@ making-datapacks:
     title: Making Datapacks
     text: What are you trying to do?
     opts:
-      - text: Trying to learn how to make a datapack.
+      - text: Learn how to make a datapack
         link: first-datapack
       - text: Fix a bug (datapack isn't working)
         link: bug-fix
       - text: Use my datapack in-game
         link: installing-datapacks
-      - text: Make an origin
+      - text: Make an origin/power
         link: making-origins
-
-making-origins:
-    title: Making Origins
-    text: 
