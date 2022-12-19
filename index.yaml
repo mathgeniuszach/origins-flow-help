@@ -1,0 +1,18 @@
+data:
+    data/index.yaml
+    data/bug-fix.yaml
+    data/installing-datapacks.yaml
+    data/installing-the-mod.yaml
+    data/making-datapacks.yaml
+    data/first-datapack.yaml
+    data/random.yaml
+
+default:
+    title: Page Not Found
+    text: |
+        The page you clicked on does not exist.
+
+        If you believe this to be an error, please contact me on [my Discord (click here)](https://discord.gg/pBFqEcXvW5).
+
+redirects:
+    home: index

@@ -2,13 +2,84 @@ making-datapacks:
     title: Making Datapacks
     text: What are you trying to do?
     opts:
-      - text: Learn how to make a datapack
+      - text: Learn how to make an origins datapack
         link: first-datapack
-      - text: Make an origin/power
-        link: making-origins
+      # - text: Make an origin
+      #   link: first-time-prompt
+      - text: Make a specific power
+        link: making-powers
       - text: Fix a bug (datapack isn't working)
         link: bug-fix
       - text: Install my datapack
         link: installing-datapacks
       - text: Something else...
         link: other
+
+# first-time-prompt:
+#     title: First Time?
+#     text: Have you made an origins datapack before?
+#     opts:
+#       - text: No
+#         link: first-datapack
+#       - text: Yes
+#         link: making-origins
+
+# making-origins:
+#     title: Making Origins
+#     text: |
+#         Every origin is a collection of various powers. You can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
+
+#         TODO?
+
+making-powers:
+    title: Making Powers
+    text: |
+        Before making your own powers, you can check to see if one already exists in the base game in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/powers/). You can add these directly to the list of powers in your origin file.
+
+        Some powers actually require you to use multiple powers in order to work properly. If you want to use a power of an existing origin, you can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
+
+        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like lego blocks, you can make almost any power you want.
+
+        Let's start with the power type. You can (and **should**) overview all the power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
+
+        Another note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power.
+        
+        If you can't find what you want on there or just want something for convenience, you can select what you want your power to do for some presets:
+    opts:
+      - text: Change the player size
+        link: pehkui-power
+      - text: Add more health/speed/armor/etc (any attribute)
+        link: attribute-power
+      - text: Give a status effect
+        link: status-effect-power
+      - text: Toggle night vision
+        link: night-vision-power
+      - text: Enable creative flight
+        link: creative-flight-power
+      - text: Enable elytra flight (without an elytra equipped)
+      - text: Immunity to status effects
+        link: effect-immunity-power
+      - text: Immunity to fire
+        link: fire-immunity-power
+      - text: Fire a projectile
+        link: projectile-power
+      - text: Bonus Inventory
+        link: inventory-power
+      - text: Invisibility
+        link: invisibility-power
+      - text: Invulnerability
+        link: invulnerability-power
+      - text: Keep Inventory
+        link: keep-inventory-power
+      - text: Launch (Upwards)
+        link: launch-power
+      - text: Replace a Loot Table
+        link: loot-table-power
+      - text: Perform an action one-time or repeatedly
+        link: action-power
+      - text: Something else...
+        link: other-power
+
+power-conditions:
+    title: Power Conditions
+    text:
