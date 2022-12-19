@@ -13,3 +13,5 @@ index:
         link: installing-datapacks
       - text: Removing a datapack
         link: removing-datapacks
+      - text: Something else...
+        link: other

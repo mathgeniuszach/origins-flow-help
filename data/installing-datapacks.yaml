@@ -10,16 +10,18 @@ installing-datapacks:
 no-zip:
     title: No Zip
     text: |
-        If you're using the Origin Creator, click the export button in the bottom left (1), make sure "Datapack" is selected at the top (2), and then click "Download" (3):
-
-        ![Origin creator export menu image](origin-creator-export)
+        In order to install a datapack, you must download it to your computer first.
         
         If you're on discord, you can download a datapack in the #datapacks chat by clicking on the filename (1) or button on the right (2):
 
         ![Origins discord #datapacks file](discord-download-datapack)
         (Also check out Nobody#0836's origins datapacks on Discord)
+
+        If you're using the Origin Creator, click the export button in the bottom left (1), make sure "Datapack" is selected at the top (2), and then click "Download" (3):
+
+        ![Origin creator export menu image](origin-creator-export)
         
-        In order to install a datapack, you must download it to your computer first. Click "Continue..." when you've done this if you need more help.
+        Click "Continue..." when you've done this if you need more help installing it.
     opts:
       - text: Continue...
         link: installing-mod-prompt

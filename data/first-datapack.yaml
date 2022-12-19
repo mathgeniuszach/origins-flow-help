@@ -23,10 +23,10 @@ install-datapack-first:
     text: |
         You should learn how to successfully install a datapack before attempting to make your own. There are plenty of origins datapacks publicly available online. Take a look at the #datapacks channel in the [Official Origins Discord](https://discord.gg/4mTMHu3) for some awesome ones.
 
-        If you've found one and need help installing it, click the button below.
+        If you've found one and need help installing it, [click here](#installing-datapacks).
     opts:
-      - text: Help me install it!
-        link: installing-datapacks
+      - text: Ok, I installed one successfully.
+        link: coding-experience
 
 coding-experience:
     title: Experience
@@ -55,8 +55,10 @@ experience-level0:
         Here's an image comparing making a datapack in both:
 
         ![Image comparing the Origin Creator to VSCode](oc-vs-ide)
+
+        The IDE is much more powerful and provides detailed help directly in the editor, while the Origin Creator provides small blurbs of help if you hover over fields and click cyan links. The IDE also has much more effective mcfunction support. Note that an IDE is usually a lot less crowded than the picture shows.
         
-        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in the official Discord as most creators do not use it. Thus, if you ask for help with datapacking in the official discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
+        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in [the Official Discord](https://discord.gg/4mTMHu3) as most creators do not use it. Thus, if you ask for help with datapacking in the official discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
 
         To learn more about each method, click the respective option below.
     opts:
@@ -73,15 +75,17 @@ experience-level1:
         There are two main ways you could make a datapack:
 
         1. Through the Origin Creator, and
-          - If you plan on making something simple or just prefer a more visual interface, then you will probably prefer using the Origin Creator over using an IDE or text editor. If you don't know how it works yet, you'll still probably want to [learn about JSON (click for more info)](#json-format) to share your work with others.
+          - If you plan on making something simple or just prefer a more visual interface, then you will probably prefer using the Origin Creator over using an IDE or text editor. If you don't know how it works yet, you'll want to [learn about JSON (click for more info)](#json-format) to share your work with others.
         2. Through a text editor or IDE.
-          - If you want to really get into the details of datapacks even though it may be challenging, you should [learn JSON (click for more info)](#json-format) if you haven't already, and make a datapack through a text editor or IDE. This method is much more favorable if you want to eventually create much larger and complex origins, as the Origin Creator is best suited for simpler origins.
+          - If you want to really get into the details of datapacks, you should [learn JSON (click for more info)](#json-format) if you haven't already, and make a datapack through a text editor or IDE. You may already have an IDE like VSCode installed! This method is also much more favorable if you want to eventually create much larger and complex origins, as the Origin Creator is best suited for simpler origins.
 
         Here's an image comparing making a datapack in both:
 
         ![Image comparing the Origin Creator to VSCode](oc-vs-ide)
 
-        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in the official Discord as most creators do not use it. Thus, if you ask for help with datapacking in the official Discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
+        The IDE is much more powerful and provides detailed help directly in the editor, while the Origin Creator provides small blurbs of help if you hover over fields and click cyan links. The IDE also has much more effective mcfunction support. Note that an IDE is usually a lot less crowded than the picture shows.
+
+        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in [the Official Discord](https://discord.gg/4mTMHu3) as most creators do not use it. Thus, if you ask for help with datapacking in the official Discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
 
         To learn more about each method, click the respective option below.
     opts:
@@ -93,13 +97,17 @@ experience-level1:
 experience-level2:
     title: Adept Programmer
     text: |
-        If you're very familiar with programming, then making a Minecraft datapack shouldn't be too difficult for you; most of the difficulty just comes from getting the formatting right.
+        If you're very familiar with programming, then making a Minecraft datapack shouldn't be too difficult for you; most of the difficulty just comes from getting the formatting right, which plugins for VSCode make very simple. You should already understand what [JSON format](#json-format) is.
+
+        However, if you just want to make simple something very quickly, the Origin Creator may be more suitable for your use case.
 
         Here's an image comparing making a datapack in both:
 
         ![Image comparing the Origin Creator to VSCode](oc-vs-ide)
+
+        The IDE is much more powerful and provides detailed help directly in the editor, while the Origin Creator provides small blurbs of help if you hover over fields and click cyan links. The IDE also has much more effective mcfunction support.
         
-        Note that if you choose to use the Origin Creator, you should avoid asking questions directly about it in the official Discord and instead focus on more generic concepts and constructs. Most creators don't use the Origin Creator, so they often won't understand what you want if you ask them about it. If you want to ask about the Origin Creator itself, ask in [this Discord](https://discord.gg/pBFqEcXvW5) instead.
+        Note that if you choose to use the Origin Creator, you should avoid asking questions directly about it in [the Official Discord](https://discord.gg/4mTMHu3) and instead focus on more generic concepts and constructs. Most creators don't use the Origin Creator, so they often won't understand what you want if you ask them about it. If you want to ask about the Origin Creator itself, ask in [this Discord](https://discord.gg/pBFqEcXvW5) instead. You could also just refrain from using it in the first place, lol
 
         To learn more about each method, click the respective option below.
     opts:
@@ -110,8 +118,32 @@ experience-level2:
 
 using-origin-creator:
     title: The Origin Creator
-    text:
+    text: |
+        You can find [the Origin Creator here](/apps/origin-creator). Make sure you give the help page (the starting page) a good read, as it will help you get started. There's also a video there you can watch to learn how to use it for the first time. Note that there is an "intentional" failure in the video, so make sure you watch through that part fully.
+
+        If you have trouble following the video, let me know on [the Origin Creator Discord](https://discord.gg/pBFqEcXvW5). If while working on a datapack you have any specific issues, you can also come back to this help page again at any time.
+
+        Remember, [the Official Wiki](https://origins.readthedocs.io/en/latest/) is your friend. You can hover over labels and click any blue text to view wiki descriptions.
+
+        [Click here to see some example datapacks](https://github.com/apace100/origins-example-packs). You can import these into the Origin Creator with the file + button in the bottom left.
 
 using-json:
     title: JSON Datapack
-    text: 
+    text: |
+        Using an IDE or a text editor is the traditional and conventional way of making a datapack. It normally involves creating a specific folder structure, creating [JSON files](#json-format) with specific names, and placing the JSON files in specific places in that folder structure.
+
+        For a quick overview on origins datapacks, check out [the main page of the Official Wiki](https://origins.readthedocs.io/en/latest/), especially the "Helpful Links" at the bottom. There is also a [Video Tutorial by CandyCaneCazoo](https://www.youtube.com/watch?v=jId0Fw4w2PQ) for making datapacks for the first time if you already have an IDE installed.
+
+        If you do not have an IDE installed, the easiest one to work with (and the most popular) is [VSCode (click here to download)](https://code.visualstudio.com/). Also, here's [a video explaining the basics of VSCode](https://www.youtube.com/watch?v=ORrELERGIHs) for those that have never used it before.
+
+        It is recommended that you install some extensions for VSCode as well, particularly:
+        - [**Error Lens** by Alexander](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+        - [**Datapack Helper Plus** by spgoding](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server)
+        - [**language-mcfunction** by Arcensoth](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction)
+        - [**origins-mod-helper** by SnaveSutit](https://marketplace.visualstudio.com/items?itemName=SnaveSutit.origins-mod-helper)
+
+        Remember, [the Official Wiki](https://origins.readthedocs.io/en/latest/) is your friend. If while working on a datapack you have any specific issues, you can also come back to this help page again at any time.
+
+        [Click here to see some example datapacks](https://github.com/apace100/origins-example-packs).
+
+        

@@ -4,9 +4,11 @@ making-datapacks:
     opts:
       - text: Learn how to make a datapack
         link: first-datapack
-      - text: Fix a bug (datapack isn't working)
-        link: bug-fix
-      - text: Use my datapack in-game
-        link: installing-datapacks
       - text: Make an origin/power
         link: making-origins
+      - text: Fix a bug (datapack isn't working)
+        link: bug-fix
+      - text: Install my datapack
+        link: installing-datapacks
+      - text: Something else...
+        link: other
