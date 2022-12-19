@@ -161,3 +161,8 @@ raw-other:
         - #addon-support - If you're having an issue with an addon mod.
         - #wiki-suggestions - If you'd like to suggest a change or typo-fix in the wiki.
         - #origins-talk - If you don't know where else to go.
+
+banana:
+    title: Banana
+    text: |
+        ![banana](banana)
