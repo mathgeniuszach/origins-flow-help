@@ -46,8 +46,10 @@ crash-report:
     title: Mod Crash
     text: |
         So the game crashed, eh?
+
+        First try to reproduce the issue with a minimal number of mods (if possible, just origins and maybe pehkui if you're using it).
         
-        Find [the crash report and your game log](#logs) (you can click the links to figure out how). If by reading them you have absolutely no idea what went wrong, first upload the crash report and your game log separately to a site like [https://mclo.gs/](https://mclo.gs/). You can copy-paste the text there and press "Save". copy paste the links in your url bar and save it for later.
+        Once you've done that, find [the crash report and your game log](#logs) (you can click the links to figure out how). If by reading them you have absolutely no idea what went wrong, first upload the crash report and your game log separately to a site like [https://mclo.gs/](https://mclo.gs/). You can copy-paste the text there and press "Save". copy paste the links in your url bar and save it for later.
         
         Once you've saved the logs, go to the `#bug-reports` channel of [the Origins Discord](https://discord.gg/4mTMHu3) and submit a [direct](/response/be-direct) and [specific](/response/be-specific) message explaining what you were doing before your game crashed that includes the links to your crash report and game log. Someone should be able to help you from there.
 
@@ -56,9 +58,9 @@ logs:
     text: |
         For a variety of reasons you may need to access your Minecraft logs or crash reports. There are a few ways to get these.
 
-        The easiest way is to navigate to your [.minecraft folder](#dot-minecraft) (click to find out how), and go into the "logs" folder for your game logs, or the "crash-reports" folder for crash reports. Note that crash reports are always dated, while the "logs" folder clearly shows which log is the latest. If you are going to share these with anyone else, pick the latest files.
+        The easiest way is to navigate to your [.minecraft folder](#dot-minecraft) (click to find out how), and go into the "logs" folder for your game logs, or the "crash-reports" folder for crash reports. Note that crash reports are always dated, while the "logs" folder clearly shows which log is the latest. Pick the latest files relevant to your use case unless otherwise specified.
 
-        If you need to view these logs for any reason, you can do so in any text editor. If you need to find some text (e.g., "origins") in them, you can do so by pressing "Ctrl+F" and typing that text into the box that shows up. Sometimes you must press "Enter" a few times to find all matches individually.
+        If you need to view these logs for any reason, you can do so in any text editor. If you need to find some text (e.g., "origins") in them, you can do so by pressing "Ctrl+F" and typing that text into the box that shows up. Sometimes you must press "Enter" a few times to find all matches individually. You'll normally want this search to be case-insensitive, so make sure that any checkbox named "Match case" or similar is left unchecked.
 
 file-extensions:
     title: File Extensions

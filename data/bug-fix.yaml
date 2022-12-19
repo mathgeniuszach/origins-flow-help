@@ -1,3 +1,145 @@
 bug-fix:
     title: Bug Fix
-    text: 
+    text: |
+        If the game didn't crash, you may be able to find a quick solution by searching for origins error messages in [your log (click to learn how to get there)](#logs).
+
+        What happened, or what's not working?
+    opts:
+      - text: The game crashed!
+        link: crash-report
+      - text: Someone else's datapack isn't working!
+        link: external-datapack-help
+      - text: My origin isn't showing up ingame!
+        link: origin-no-show
+      - text: My origin's power isn't working!
+        link: power-no-work
+      - text: Something else...
+        link: other
+
+external-datapack-help:
+    title: Someone Else's Datapack
+    text: |
+        Unfortunately, this flow help isn't well equipped to help you with someone else's datapack.
+
+        You can try to follow [this installation guide (click here)](#installing-datapacks) to see if you did anything wrong when installing the datapack. You can make sure a datapack is installed by running `/datapack list` ingame and checking that your chosen datapack is listed in green. If you installed the datapack correctly, and it still isn't working properly, you should try to contact the original maker of the datapack. Make sure you be respectful and courteous of their time, and be patient for a response.
+
+origin-no-show:
+    title: Origin
+    text: |
+        If your origin isn't showing up ingame as one of the selectable origins, you need to [check your log](#logs) for any messages containing the word "ERROR", and any messages containing the word "origin". These messages may look something like this:
+
+        ![Error message picture](error-message)
+
+        Do you see any messages like this in your log? If so, what does it say?
+    opts:
+      - text: I don't see any messages in my log.
+        link: origin-no-msg
+      - text: It says "Couldn't parse data..." or "Error parsing..."
+        link: failed-to-parse
+      - text: It says "Unregistered origin"
+        link: unregistered-origin
+      - text: It says something else...
+        link: log-other
+
+failed-to-parse:
+    title: Parsing Failed
+    text:
+
+unregistered-origin:
+    title: Unregistered
+    text: |
+        If an origin is said to be "unregistered", it's likely that you typed it's name wrong. Make sure that anywhere you refer to the origin, you're using the same namespace and filename as the origin file itself. If you have the origin in a subfolder of the origins folder, you'll have to include the folders in the name as well:
+
+        For example, `namespace:name` or `namespace:folder1/folder2/name`.
+
+log-other:
+    title: Other Message
+    text: |
+        If the log says something else not listed, ask about it in the #datapack-dev forum channel in [the Official Origins Discord](https://discord.gg/4mTMHu3).
+
+origin-no-msg:
+    title: No Message
+    text: |
+        Really make sure you've thoroughly checked for any messages in your log, as you might not find the right answer if you missed something.
+
+        Also do a quick check of the origin file. Perhaps you made a typo that's really simple to fix.
+
+        If you found a message, press the back button. If you're really sure there are no messages, then run the `/datapack list` command ingame and check if your datapack is on the list in green.
+    opts:
+      - text: I see my pack on the list, and it's green.
+        link: origin-check-layer
+      - text: I see my pack on the list, but it's not green.
+        link: pack-disabled
+      - text: I don't see my pack on the list.
+        link: pack-bad-install
+
+origin-check-layer:
+    title: Check the Origin Layer
+    text: |
+        Make sure that you typed the origin file's name into the `origins:origin` origin layer file correctly, and that there are no typos. If you don't do this properly, it won't show up ingame.
+
+        If you're sure that's not the issue, you can try asking on Discord.
+
+        If your issue does not pertain to the Origin Creator, ask in the #datapack-dev forums channel in [the Official Origins Discord (click here)](https://discord.gg/4mTMHu3).
+        Otherwise, ask in [the Origin Creator Discord (click here)](https://discord.gg/pBFqEcXvW5).
+
+power-no-work:
+    title: Power
+    text: |
+        Make sure the power and origin are visible (hidden is set to false/unchecked) for testing purposes.
+        
+        Does the power appear in the origin's description? (i.e., when you choose the origin)
+    opts:
+      - text: Yes
+        link: power-broken
+      - text: No
+        link: power-no-show
+
+power-broken:
+    title: Broken
+    text: |
+        Review your power file thoroughly and make sure there's no errors with the code. If you don't understand what it is you even did, then that's your first problem. Make sure you do proper research on [the Official Origins Wiki](https://origins.readthedocs.io/en/latest/) to learn what your code really does. You're not going to be able to rely on others to tell you how to do everything.
+
+        If you still can't figure out what you did wrong and would like to ask for help **after doing careful research**, you can try asking on Discord.
+
+        If you're using the Origin Creator, ask in [the Origin Creator Discord (click here)](https://discord.gg/pBFqEcXvW5).
+        Otherwise, ask in the #datapack-dev forums channel in [the Official Origins Discord (click here)](https://discord.gg/4mTMHu3).
+
+power-no-show:
+    title: No Show
+    text: |
+        First of all, make sure you added the power name to the origins file, specifically in the "Powers" list. If you've done that, reloaded the datapack (through reloading the world, your game, or by using the `/reload` command), and it still doesn't show up in game, continue reading. If it does show up in game now but still isn't working, [refer to this (click here)](#power-broken)
+
+        If your power isn't showing up ingame under an origin, you need to [check your log](#logs) for any messages containing the word "ERROR", and any messages containing the word "power". These messages may look something like this:
+
+        ![Error message picture](error-message)
+
+        Do you see any messages like this in your log? If so, what does it say?
+    opts:
+      - text: I don't see any messages in my log.
+        link: power-no-msg
+      - text: It says "Couldn't parse data..." or "Error parsing..."
+        link: failed-to-parse
+      - text: It says "Unregistered power"
+        link: unregistered-power
+      - text: It says something else...
+        link: log-other
+
+unregistered-power:
+    title: Unregistered
+    text: |
+        If an power is said to be "unregistered", it's likely that you typed it's name wrong. Make sure that anywhere you refer to the power (like the origins file), you're using the same namespace and filename as the power file itself. If you have the power in a subfolder of the powers folder, you'll have to include the folders in the name as well:
+
+        For example, `namespace:name` or `namespace:folder1/folder2/name`.
+
+power-no-msg:
+    title: No Message
+    text: |
+        Really make sure you've thoroughly checked for any messages in your log, as you might not find the right answer if you missed something.
+
+        Also do a quick check of the power file. Perhaps you made a typo that's really simple to fix.
+
+        If you found something, press the back button. If you're REALLY sure there are no messages (There is almost certainly an error message in your log that you are missing), you can ask on Discord.
+
+        If your issue does not pertain to the Origin Creator, ask in the #datapack-dev forums channel in [the Official Origins Discord (click here)](https://discord.gg/4mTMHu3).
+        Otherwise, ask in [the Origin Creator Discord (click here)](https://discord.gg/pBFqEcXvW5).

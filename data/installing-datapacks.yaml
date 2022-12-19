@@ -60,6 +60,8 @@ installing-datapack-world-made:
 
         If you did this while the world is active (you're playing it or running a server with it), you can either run the `/reload` command ingame (requires operator), close and reopen the world, or reboot the server (if you're running one) to load the datapack. Note that if the screen to select an origin doesn't show up, you may have to give yourself the "Orb of Origin" in creative and right click it to pick an origin manually (The screen will always pop up for players that haven't joined the world yet).
 
+        You can make sure a datapack is installed by running `/datapack list` ingame and checking that your chosen datapack is listed in green. If it's gray, [refer to this (click here)](#pack-disabled)
+
 installing-datapack-world-new:
     title: New World Datapacks
     text: |
@@ -71,9 +73,13 @@ installing-datapack-world-new:
 
         ![Selecting a datapack image](new-world-select-datapack)
 
+        You can make sure a datapack is installed by running `/datapack list` ingame and checking that your chosen datapack is listed in green. If it's gray, [refer to this (click here)](#pack-disabled)
+
 installing-datapack-modpack:
     title: Instance Datapacks
     text: |
+        Make sure you test that a datapack works on a single world before installing it to an entire modpack. You may not get proper log output if you install it to an entire modpack.
+
         Datapacks in minecraft normally cannot be installed across a single instance; however, if you install another mod called [Global Packs (which you can find here)](https://www.curseforge.com/minecraft/mc-mods/drp-global-datapack) and launch the game once, you'll find a folder called "global_packs" inside your [`.minecraft` folder](#dot-minecraft), and another folder called "required_data" inside that.
 
         To install a datapack for the entire instance, put the datapack inside the "required_data" folder. You'll have to reboot your game for the datapacks to load.
@@ -86,3 +92,22 @@ removing-datapacks:
         If you installed the datapack across an entire modpack using [Global Packs](https://www.curseforge.com/minecraft/mc-mods/drp-global-datapack), you can delete it from the "global_packs/required_data/" folder inside your [`.minecraft` folder](#dot-minecraft).
         
         If you uninstalled a datapack while running a world, you will probably need to either run the `/reload` command, close and re-enter the world, or restart the server to update it fully. If you uninstalled it from the "global_packs/required_data/" folder, you'll have to restart your game.
+
+pack-disabled:
+    title: Pack Disabled
+    text: |
+        If after running the `/datapack list` command ingame, you see your datapack grayed out on the list, that means the datapack is disabled.
+
+        This can happen for a few reasons; for starters, the datapack could be made for a different version of Minecraft compared to the one you are on. It could also contain certain errors that prevented the datapack from loading properly.
+
+        The only thing you can really try to do is to forcibly enable the datapack with `/datapack enable {datapack name}`. You can run `/datapack list` afterwards and check if it's green to see if that worked. If the command did not work, there's not much you can do.
+
+pack-bad-install:
+    title: Bad Install
+    text: |
+        You probably didn't install the datapack correctly. Make sure you follow [this installation guide (click here)](#installing-datapacks) carefully to make sure you put the datapack in the right place. Run the `/reload` command afterwards and try again.
+
+        If you put the datapack in the right place and things still aren't quite working right, you can try asking on Discord.
+
+        If your issue pertains to the Origin Creator, ask [in the Origin Creator Discord (click here)](https://discord.gg/pBFqEcXvW5).
+        Otherwise, ask [in the Official Origins Discord (click here)](https://discord.gg/4mTMHu3).
