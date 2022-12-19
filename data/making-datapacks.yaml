@@ -57,6 +57,7 @@ making-powers:
       - text: Enable creative flight
         link: creative-flight-power
       - text: Enable elytra flight (without an elytra equipped)
+        link: elytra-flight-power
       - text: Immunity to status effects
         link: effect-immunity-power
       - text: Immunity to fire
