@@ -38,19 +38,19 @@ making-powers:
 
         Some powers actually require you to use multiple powers in order to work properly. If you want to use a power of an existing origin, you can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
 
-        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like lego blocks, you can make almost any power you want.
+        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like lego blocks, you can make almost any power you want. [For more about conditions, click here](#power-conditions).
 
         Note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power.
 
         Let's start with the power type. You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
         
-        If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do for some presets:
+        If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more:
     opts:
       - text: Change the player size
         link: pehkui-power
       - text: Add more health/speed/armor/etc (any attribute)
         link: attribute-power
-      - text: Give a status effect
+      - text: Give a constant/stacking status effect
         link: status-effect-power
       - text: Toggle night vision
         link: night-vision-power
@@ -60,7 +60,7 @@ making-powers:
         link: elytra-flight-power
       - text: Immunity to status effects
         link: effect-immunity-power
-      - text: Immunity to fire
+      - text: Immunity to fire/lava
         link: fire-immunity-power
       - text: Fire a projectile
         link: projectile-power
@@ -76,12 +76,101 @@ making-powers:
         link: launch-power
       - text: Replace a loot table
         link: loot-table-power
+      - text: Modify a player value (e.g., food, damage, break speed)
+        link: modify-power
       - text: Prevent the player from doing something
         link: prevent-power
       - text: Perform an action one-time or repeatedly
         link: action-power
       - text: Something else...
         link: other-power
+
+modify-power:
+    title: Modify Power
+    text: |
+        [Modifying power types (click here for full list)](https://origins.readthedocs.io/en/latest/types/power_types/#modifying_types) modify the player's ability to do something, particularly things with numerical values.
+
+        Most notable "modify" powers are:
+        - [Modify Player Spawn](https://origins.readthedocs.io/en/latest/types/power_types/modify_player_spawn/) - modifies the player spawn point
+        - [Modify Break Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_break_speed/) - modifies the speed of breaking blocks
+        - [Modify Damage Dealt](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_dealt/) - modifies the amount of damage dealt
+        - [Modify Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_taken/) - modifies the amount of damage taken
+        - [Modify Food](https://origins.readthedocs.io/en/latest/types/power_types/modify_food/) - modifies the amount of food gained from eating
+        - [Modify Exhaustion](https://origins.readthedocs.io/en/latest/types/power_types/modify_exhaustion/) - modifies how fast hunger is lost
+        - [Modify Jump](https://origins.readthedocs.io/en/latest/types/power_types/modify_jump/) - modifies jump height
+        - [Modify Lava Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_lava_speed/) - modifies lava swim speed
+        - [Modify Swim Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_swim_speed/) - modifies normal swim speed
+        - [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
+        - [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
+
+        All of these powers can be combined with a condition to only modify values things when a certain condition is true. [For more about conditions, click here](#power-conditions).
+
+prevent-power:
+    title: Prevent Power
+    text: |
+        [Preventing power types (click here for full list, at bottom of page)](https://origins.readthedocs.io/en/latest/types/power_types/#preventing_types) prevent the individual with the power from doing specific things in particular.
+
+        Most notable "prevent" powers are:
+        - [Prevent Block Use](https://origins.readthedocs.io/en/latest/types/power_types/prevent_block_use/) - prevents right clicking a block
+        - [Prevent Death](https://origins.readthedocs.io/en/latest/types/power_types/prevent_death/) - prevents damage from killing.
+        - [Prevent Elytra Flight](https://origins.readthedocs.io/en/latest/types/power_types/prevent_elytra_flight/) - prevents flying with an elytra
+        - [Prevent Entity Render](https://origins.readthedocs.io/en/latest/types/power_types/prevent_entity_render/) - prevents seeing certain entities
+        - [Prevent Item Use](https://origins.readthedocs.io/en/latest/types/power_types/prevent_item_use/) - prevents using items (but not placing blocks)
+        - [Prevent Sleep](https://origins.readthedocs.io/en/latest/types/power_types/prevent_sleep/) - prevents sleeping, with an optional message
+        - [Prevent Sprinting](https://origins.readthedocs.io/en/latest/types/power_types/prevent_sprinting/) - prevents sprinting
+
+        All of these powers can be combined with a condition to only prevent various things when a certain condition is true. [For more about conditions, click here](#power-conditions).
+
+action-power:
+    title: Action Power
+    text: |
+        [Action power types (click here for full list)](https://origins.readthedocs.io/en/latest/types/power_types/#action-related) are more "event-driven" than typical power types. When a certain event occurs (e.g., using an item, pressing a key, over time, when dealing or taking damage), you can use one of these powers to "activate" an [Entity Action](https://origins.readthedocs.io/en/latest/types/entity_action_types/).
+
+        Here's a list of common action-related power types ([full list here](https://origins.readthedocs.io/en/latest/types/power_types/#action-related)):
+        - [Active Self](https://origins.readthedocs.io/en/latest/types/power_types/active_self/) - pressing a key on the keyboard
+        - [Action On Block Break](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_break/) - breaking a block
+        - [Action On Block Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_use/) - right clicking a block
+        - [Action On Item Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_item_use/) - finishing using an item (like food or a potion)
+        - [Action On Callback](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) - respawning or gaining/losing the power/origin
+        - [Action On Entity Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_entity_use/) - right clicking an entity
+        - [Action On Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_on_hit/) - hitting another entity
+        - [Action When Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_when_hit/) - getting hit by another entity
+        - [Action When Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/action_when_damage_taken/) - taking damage from any source
+
+        Each of these power types execute an "Entity Action" when a specific event occurs. You can find the complete list of entity actions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_action_types/).
+
+        All of these action powers can be combined with a condition to only be allowed to activate when a certain condition is true. [For more about conditions, click here](#power-conditions).
+
+        If you can't find what you want on there or just want some links for convenience, you can select what you want the action to be below to learn more:
+    opts:
+      - text: Add velocity
+        link: velocity-action
+      - text: Add XP
+        link: xp-action
+      - text: Block action at
+        link: block-action
+      - text: Apply/clear effect
+        link: effect-action
+      - text: Damage/heal
+        link: health-action
+      - text: Open crafting-table/ender-chest
+        link: open-inventory-action
+      - text: Change/drop/add inventory items
+        link: inventory-action
+      - text: Play a sound
+        link: sound-action
+      - text: Spawn an entity/particles
+        link: spawn-action
+      - text: Explode
+        link: explode-action
+      - text: Extinguish/set-on fire
+        link: fire-action
+      - text: Feed/Exhaust
+        link: hunger-action
+      - text: Run a command
+        link: command-action
+      - text: Something else...
+        link: other-action
 
 power-conditions:
     title: Power Conditions
@@ -92,7 +181,7 @@ power-conditions:
 
         Every power condition is an "Entity Condition" that runs on the player. You can find the complete list of entity conditions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_condition_types/).
 
-        If you can't find what you want on there or just want some links for convenience, you can select when you want your power to be active for some presets:
+        If you can't find what you want on there or just want some links for convenience, you can click when you want your power to be active below to learn more:
     opts:
       - text: If in a biome
         link: biome-cond

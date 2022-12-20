@@ -1,0 +1,142 @@
+pehkui-power:
+    title: Pehkui
+    text: |
+        If you're not super adept at making powers or origins, do NOT make a power using pehkui. You are going to confuse yourself and your brain will explode. Really familiar yourself with simpler concepts first. If you're more comfortable with making origins, then you can continue on this page.
+
+        Modifying your player size is one of the most common things that requires that you install Pehkui mod in addition to the origins mod, but pehkui can be used to modify your mining speed, block reach, and other things with the player as well.
+
+        If you just want to modify player size, the simplest way is probably just to install the Extra Origins mod and use the custom `extraorigins:modify_size` power type it provides. [Here's one example (click here)](https://github.com/MoriyaShiine/extra-origins/blob/master/src/main/resources/data/extraorigins/powers/bite_sized.json#L4) of that power type in use. If you're using the Origin Creator, you can use the "custom" option in any drop down where it normally says "single" or "multiple" and type in `extraorigins:modify_size` for the power type yourself.
+
+        If you don't want to just modify player size or want more control over pehkui attributes, you'll have to use an "action" power type and run the /pehkui command through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. This is all the help that most people can provide you.
+attribute-power:
+    title: Attribute
+    text: 
+status-effect-power:
+    title: Status Effect
+    text: 
+night-vision-power:
+    title: Night Vision
+    text: 
+creative-flight-power:
+    title: Creative Flight
+    text: 
+elytra-flight-power:
+    title: Elytra Flight
+    text: 
+effect-immunity-power:
+    title: Effect Immunity
+    text: 
+fire-immunity-power:
+    title: Fire Immunity
+    text: 
+projectile-power:
+    title: Projectile
+    text: 
+inventory-power:
+    title: Inventory
+    text: 
+invisibility-power:
+    title: Invisibility
+    text: 
+invulnerability-power:
+    title: Invulnerability
+    text: 
+keep-inventory-power:
+    title: Keep Inventory
+    text: 
+launch-power:
+    title: Launch
+    text: 
+loot-table-power:
+    title: Loot Table
+    text: 
+other-power:
+    title: Other
+    text: 
+
+
+
+velocity-action:
+    title: Velocity Action
+    text: 
+xp-action:
+    title: XP Action
+    text: 
+block-action:
+    title: Block Action
+    text: 
+effect-action:
+    title: Effect Action
+    text: 
+health-action:
+    title: Health Action
+    text: 
+open-inventory-action:
+    title: Open Inventory Action
+    text: 
+inventory-action:
+    title: Inventory Action
+    text: 
+sound-action:
+    title: Sound Action
+    text: 
+spawn-action:
+    title: Spawn Action
+    text: 
+explode-action:
+    title: Explode Action
+    text: 
+fire-action:
+    title: Fire Action
+    text: 
+hunger-action:
+    title: Hunger Action
+    text: 
+command-action:
+    title: Command Action
+    text: 
+other-action:
+    title: Other Action
+    text: 
+
+
+
+biome-cond:
+    title: Biome
+    text: 
+block-cond:
+    title: Block
+    text: 
+time-cond:
+    title: Time
+    text: 
+dimension-cond:
+    title: Dimension
+    text: 
+sky-cond:
+    title: Sky
+    text: 
+stat-cond:
+    title: Stat
+    text: 
+rain-cond:
+    title: Rain
+    text: 
+fire-cond:
+    title: Fire
+    text: 
+riding-cond:
+    title: Riding
+    text: 
+score-cmd-cond:
+    title: Score/Command
+    text: 
+moving-cond:
+    title: Moving
+    text: 
+experience-cond:
+    title: Experience
+    text: 
+other-cond:
+    title: Other
+    text: 
