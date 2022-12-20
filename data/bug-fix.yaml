@@ -43,7 +43,10 @@ origin-no-show:
 
 failed-to-parse:
     title: Parsing Failed
-    text:
+    text: |
+        It's likely that the syntax of your JSON is wrong of the file in question. To make sure that your JSON is valid, paste it into [the box on this website](https://jsonlint.com/) and press "Validate JSON" on the left below the box. The website will tell you what line(s) are wrong.
+
+        After fixing that issue, remember to reload (either by reloading the world, using `/reload`, or reloading your game).
 
 unregistered-origin:
     title: Unregistered
@@ -51,6 +54,8 @@ unregistered-origin:
         If an origin is said to be "unregistered", it's likely that you typed it's name wrong. Make sure that anywhere you refer to the origin, you're using the same namespace and filename as the origin file itself. If you have the origin in a subfolder of the origins folder, you'll have to include the folders in the name as well:
 
         For example, `namespace:name` or `namespace:folder1/folder2/name`.
+
+        After fixing that issue, remember to reload (either by reloading the world, using `/reload`, or reloading your game).
 
 log-other:
     title: Other Message
@@ -128,7 +133,7 @@ power-no-show:
 unregistered-power:
     title: Unregistered
     text: |
-        If an power is said to be "unregistered", it's likely that you typed it's name wrong. Make sure that anywhere you refer to the power (like the origins file), you're using the same namespace and filename as the power file itself. If you have the power in a subfolder of the powers folder, you'll have to include the folders in the name as well:
+        If an power is said to be "unregistered", it's likely that you typed its name wrong. Make sure that anywhere you refer to the power (like the origins file), you're using the same namespace and filename as the power file itself. If you have the power in a subfolder of the powers folder, you'll have to include the folders in the name as well:
 
         For example, `namespace:name` or `namespace:folder1/folder2/name`.
 

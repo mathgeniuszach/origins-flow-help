@@ -40,11 +40,11 @@ making-powers:
 
         If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like lego blocks, you can make almost any power you want.
 
-        Let's start with the power type. You can (and **should**) overview all the power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
+        Note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power.
 
-        Another note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power.
+        Let's start with the power type. You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
         
-        If you can't find what you want on there or just want something for convenience, you can select what you want your power to do for some presets:
+        If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do for some presets:
     opts:
       - text: Change the player size
         link: pehkui-power
@@ -64,18 +64,20 @@ making-powers:
         link: fire-immunity-power
       - text: Fire a projectile
         link: projectile-power
-      - text: Bonus Inventory
+      - text: Extra inventory
         link: inventory-power
       - text: Invisibility
         link: invisibility-power
       - text: Invulnerability
         link: invulnerability-power
-      - text: Keep Inventory
+      - text: Keep inventory
         link: keep-inventory-power
       - text: Launch (Upwards)
         link: launch-power
-      - text: Replace a Loot Table
+      - text: Replace a loot table
         link: loot-table-power
+      - text: Prevent the player from doing something
+        link: prevent-power
       - text: Perform an action one-time or repeatedly
         link: action-power
       - text: Something else...
@@ -83,4 +85,38 @@ making-powers:
 
 power-conditions:
     title: Power Conditions
-    text:
+    text: |
+        Conditions specify *when* a power is active. A power will only "work" and exist when the condition is true.
+
+        Note that certain power types (the oldest ones, really) have two variants; a "normal" type, and a "conditioned" type. Conditions only work on the "conditioned" type.
+
+        Every power condition is an "Entity Condition" that runs on the player. You can find the complete list of entity conditions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_condition_types/).
+
+        If you can't find what you want on there or just want some links for convenience, you can select when you want your power to be active for some presets:
+    opts:
+      - text: If in a biome
+        link: biome-cond
+      - text: If in/near/on a block/fluid
+        link: block-cond
+      - text: If time of day
+        link: time-cond
+      - text: If in dimension
+        link: dimension-cond
+      - text: If exposed to sky
+        link: sky-cond
+      - text: If stat (e.g., health) above/below/equal-to value
+        link: stat-cond
+      - text: If in rain
+        link: rain-cond
+      - text: If on fire
+        link: fire-cond
+      - text: If riding something
+        link: riding-cond
+      - text: If scoreboard/command
+        link: score-cmd-cond
+      - text: If moving/sneaking/sprinting/swimming
+        link: moving-cond
+      - text: If has experience
+        link: experience-cond
+      - text: If something else...
+        link: other-cond
