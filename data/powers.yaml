@@ -16,7 +16,7 @@ attribute-power:
         This power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "attribute" name (specifying what to modify), an "operation" (specifying how to modify), and a value (specifying how much to modify by).
 
         Common attribute names ([for full list click here](https://minecraft.fandom.com/wiki/Attribute)) are:
-        
+
         - `generic.max_health` - maximum health in half hearts. Normally 20.0.
         - `generic.knockback_resistance` - the percentage number of knockback that's ignored (1.0 is 100% or no knockback, 0.5 is 50% or half knockback)
         - `generic.movement_speed` - speed of movement; for players, multiply by about 43 for blocks/second (1 block/s is about 0.023). It's recommended you modify this with a multiply operation.
@@ -30,6 +30,7 @@ attribute-power:
         As for the operation, you only need to know that `addition` adds/subtracts a raw number to the value, and `multiply_base` adds/subtracts a percentage, and all `addition` modifiers occur before `multiply_base` modifiers. Use `addition` when you have a clear number of something (e.g., number of half hearts, armor points, knockback resistance, etc), and `multiply_base` when you don't have a clear number (movement speed).
 
         A value of 2.5 for `addition` in `generic.max_health` adds a heart and a quarter, while with `generic.knockback_resistance` it adds 2.5%. With `generic.movement_speed`, it adds about 108 blocks/second (2.5*43 is about 108).
+        
         A value of 0.5 for `multiply_base` in `generic.max_health` multiplies your health by 1.5x (5 hearts normally), while with `generic.knockback_resistance` it adds nothing (1.5 times no knockback resistance by default is 0). With `generic.movement_speed`, it multiplies your movement speed by 1.5x.
 
         If you really want to know, `multiply_total` is the same as `multiply_base`, but percentages stack with each other. So while `multiply_base` values of 0.2 (+20% each) would only yield a net result of 0.4 (+40%), two `multiply_total` values of 0.2 (20%) would stack and yield a net result of 0.44 (+44%). There's a bonus 4% (which is 20% of 20%).
