@@ -38,7 +38,7 @@ making-powers:
 
         Some powers actually require you to use multiple powers in order to work properly. If you want to use a power of an existing origin, you can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
 
-        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like lego blocks, you can make almost any power you want. [For more about conditions, click here](#power-conditions).
+        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like basic building blocks, you can make almost any power you want. [For more about conditions, click here](#power-conditions).
 
         Note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power.
 
@@ -48,12 +48,12 @@ making-powers:
     opts:
       - text: Change the player size
         link: pehkui-power
-      - text: Add more health/speed/armor/etc (any attribute)
+      - text: Add more health/speed/attack/armor/etc (any attribute)
         link: attribute-power
       - text: Give a constant/stacking status effect
         link: status-effect-power
       - text: Toggle night vision
-        link: night-vision-power
+        link: toggle-vision-power
       - text: Enable creative flight
         link: creative-flight-power
       - text: Enable elytra flight (without an elytra equipped)
@@ -76,7 +76,7 @@ making-powers:
         link: launch-power
       - text: Replace a loot table
         link: loot-table-power
-      - text: Modify a player value (e.g., food, damage, break speed)
+      - text: Modify a player "value" or "rate" (e.g., hunger, damage, break speed)
         link: modify-power
       - text: Prevent the player from doing something
         link: prevent-power
@@ -91,17 +91,48 @@ modify-power:
         [Modifying power types (click here for full list)](https://origins.readthedocs.io/en/latest/types/power_types/#modifying_types) modify the player's ability to do something, particularly things with numerical values.
 
         Most notable "modify" powers are:
+        - [Modify Attribute](https://origins.readthedocs.io/en/latest/types/power_types/modify_attribute/) - modifies an attribute (max health, armor, attack). Possible attributes use the same names/values as the regular [Attribute power type (click here to learn more)](#attribute-power).
         - [Modify Player Spawn](https://origins.readthedocs.io/en/latest/types/power_types/modify_player_spawn/) - modifies the player spawn point
         - [Modify Break Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_break_speed/) - modifies the speed of breaking blocks
         - [Modify Damage Dealt](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_dealt/) - modifies the amount of damage dealt
         - [Modify Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_taken/) - modifies the amount of damage taken
         - [Modify Food](https://origins.readthedocs.io/en/latest/types/power_types/modify_food/) - modifies the amount of food gained from eating
-        - [Modify Exhaustion](https://origins.readthedocs.io/en/latest/types/power_types/modify_exhaustion/) - modifies how fast hunger is lost
+        - [Modify Exhaustion](https://origins.readthedocs.io/en/latest/types/power_types/modify_exhaustion/) - modifies how much exhaust is received (causing hunger to deplete) when exhaust is received (from sprinting/jumping/etc)
         - [Modify Jump](https://origins.readthedocs.io/en/latest/types/power_types/modify_jump/) - modifies jump height
         - [Modify Lava Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_lava_speed/) - modifies lava swim speed
         - [Modify Swim Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_swim_speed/) - modifies normal swim speed
         - [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
         - [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
+
+        Each modify power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied. You can see each of these values in the chart below as ModValueA, ModValueB, ...
+
+        Also, in the chart below, Result is the number result of the value being modified after the operation is applied, OldValue is the value beforehand, and BaseValue is the default value. Vanilla operators correspond to some of these as well; `addition` = `add_base_early`; `multiply_base` = `multiply_total_additive`; `multiply_total` = `multiply_total_multiplicative`.
+
+        Operations are ([for wiki list click here](https://origins.readthedocs.io/en/latest/types/data_types/attribute_modifier_operation/)):
+        - `add_base_early` - (vanilla `addition`) performs addition with a number.
+            (Result = BaseValue + ModValueA + ModValueB + ...)
+        - `multiply_base_additive` - adds a non-stacking percentage of the base/default value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
+            (Result = OldValue + BaseValue * (ModValueA + ModValueB + ...))
+        - `multiply_base_multiplicative` - adds a stacking percentage of the current value (NOT THE BASE!) (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
+            (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
+        - `add_base_late` - performs addition with a number, after the multiply_base operations occur.
+            (Result = OldValue + ModValueA + ModValueB + ...)
+        - `min_base` - ensures that the result is greater than or equal all the given values.
+            (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
+        - `max_base` - ensures that the result is less than or equal to all the given values.
+            (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
+        - `set_base` - sets the result to the value specified directly, before total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
+            (Result = ModValue)
+        - `multiply_total_additive` - (vanilla `multiply_base`) adds a non-stacking percentage of the current value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
+            (Result = OldValue + OldValue * (ModValueA + ModValueB + ...))
+        - `multiply_total_multiplicative` - (vanilla `multiply_total`) adds a stacking percentage of the current value (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
+            (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
+        - `min_total` - ensures that the result is greater than or equal all the given values.
+            (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
+        - `max_total` - ensures that the result is less than or equal to all the given values.
+            (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
+        - `set_total` - sets the result to the value specified directly, after other total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
+            (Result = ModValue)
 
         All of these powers can be combined with a condition to only modify values things when a certain condition is true. [For more about conditions, click here](#power-conditions).
 
