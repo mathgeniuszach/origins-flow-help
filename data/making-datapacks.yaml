@@ -92,18 +92,18 @@ modify-power:
 
         Most notable "modify" powers are:
 
-        - [Modify Attribute](https://origins.readthedocs.io/en/latest/types/power_types/modify_attribute/) - modifies an attribute (max health, armor, attack). Possible attributes use the same names/values as the regular [Attribute power type (click here to learn more)](#attribute-power).
-        - [Modify Player Spawn](https://origins.readthedocs.io/en/latest/types/power_types/modify_player_spawn/) - modifies the player spawn point
-        - [Modify Break Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_break_speed/) - modifies the speed of breaking blocks
-        - [Modify Damage Dealt](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_dealt/) - modifies the amount of damage dealt
-        - [Modify Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_taken/) - modifies the amount of damage taken
-        - [Modify Food](https://origins.readthedocs.io/en/latest/types/power_types/modify_food/) - modifies the amount of food gained from eating
-        - [Modify Exhaustion](https://origins.readthedocs.io/en/latest/types/power_types/modify_exhaustion/) - modifies how much exhaust is received (causing hunger to deplete) when exhaust is received (from sprinting/jumping/etc)
-        - [Modify Jump](https://origins.readthedocs.io/en/latest/types/power_types/modify_jump/) - modifies jump height
-        - [Modify Lava Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_lava_speed/) - modifies lava swim speed
-        - [Modify Swim Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_swim_speed/) - modifies normal swim speed
-        - [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
-        - [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
+        * [Modify Attribute](https://origins.readthedocs.io/en/latest/types/power_types/modify_attribute/) - modifies an attribute (max health, armor, attack). Possible attributes use the same names/values as the regular [Attribute power type (click here to learn more)](#attribute-power).
+        * [Modify Player Spawn](https://origins.readthedocs.io/en/latest/types/power_types/modify_player_spawn/) - modifies the player spawn point
+        * [Modify Break Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_break_speed/) - modifies the speed of breaking blocks
+        * [Modify Damage Dealt](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_dealt/) - modifies the amount of damage dealt
+        * [Modify Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_taken/) - modifies the amount of damage taken
+        * [Modify Food](https://origins.readthedocs.io/en/latest/types/power_types/modify_food/) - modifies the amount of food gained from eating
+        * [Modify Exhaustion](https://origins.readthedocs.io/en/latest/types/power_types/modify_exhaustion/) - modifies how much exhaust is received (causing hunger to deplete) when exhaust is received (from sprinting/jumping/etc)
+        * [Modify Jump](https://origins.readthedocs.io/en/latest/types/power_types/modify_jump/) - modifies jump height
+        * [Modify Lava Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_lava_speed/) - modifies lava swim speed
+        * [Modify Swim Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_swim_speed/) - modifies normal swim speed
+        * [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
+        * [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
 
         Each modify power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied. You can see each of these values in the chart below as ModValueA, ModValueB, ...
 
@@ -111,29 +111,29 @@ modify-power:
 
         Operations are ([for wiki list click here](https://origins.readthedocs.io/en/latest/types/data_types/attribute_modifier_operation/)):
 
-        - `add_base_early` - (vanilla `addition`) performs addition with a number.
+        * `add_base_early` - (vanilla `addition`) performs addition with a number.
             (Result = BaseValue + ModValueA + ModValueB + ...)
-        - `multiply_base_additive` - adds a non-stacking percentage of the base/default value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
+        * `multiply_base_additive` - adds a non-stacking percentage of the base/default value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
             (Result = OldValue + BaseValue * (ModValueA + ModValueB + ...))
-        - `multiply_base_multiplicative` - adds a stacking percentage of the current value (NOT THE BASE!) (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
+        * `multiply_base_multiplicative` - adds a stacking percentage of the current value (NOT THE BASE!) (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
             (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
-        - `add_base_late` - performs addition with a number, after the multiply_base operations occur.
+        * `add_base_late` - performs addition with a number, after the multiply_base operations occur.
             (Result = OldValue + ModValueA + ModValueB + ...)
-        - `min_base` - ensures that the result is greater than or equal all the given values.
+        * `min_base` - ensures that the result is greater than or equal all the given values.
             (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
-        - `max_base` - ensures that the result is less than or equal to all the given values.
+        * `max_base` - ensures that the result is less than or equal to all the given values.
             (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
-        - `set_base` - sets the result to the value specified directly, before total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
+        * `set_base` - sets the result to the value specified directly, before total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
             (Result = ModValue)
-        - `multiply_total_additive` - (vanilla `multiply_base`) adds a non-stacking percentage of the current value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
+        * `multiply_total_additive` - (vanilla `multiply_base`) adds a non-stacking percentage of the current value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
             (Result = OldValue + OldValue * (ModValueA + ModValueB + ...))
-        - `multiply_total_multiplicative` - (vanilla `multiply_total`) adds a stacking percentage of the current value (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
+        * `multiply_total_multiplicative` - (vanilla `multiply_total`) adds a stacking percentage of the current value (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
             (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
-        - `min_total` - ensures that the result is greater than or equal all the given values.
+        * `min_total` - ensures that the result is greater than or equal all the given values.
             (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
-        - `max_total` - ensures that the result is less than or equal to all the given values.
+        * `max_total` - ensures that the result is less than or equal to all the given values.
             (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
-        - `set_total` - sets the result to the value specified directly, after other total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
+        * `set_total` - sets the result to the value specified directly, after other total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
             (Result = ModValue)
 
         All of these powers can be combined with a condition to only modify values things when a certain condition is true. [For more about conditions, click here](#power-conditions).
@@ -161,16 +161,16 @@ action-power:
         [Action power types (click here for full list)](https://origins.readthedocs.io/en/latest/types/power_types/#action-related) are more "event-driven" than typical power types. When a certain event occurs (e.g., using an item, pressing a key, over time, when dealing or taking damage), you can use one of these powers to "activate" an [Entity Action](https://origins.readthedocs.io/en/latest/types/entity_action_types/).
 
         Here's a list of common action-related power types ([full list here](https://origins.readthedocs.io/en/latest/types/power_types/#action-related)):
-        
-        - [Active Self](https://origins.readthedocs.io/en/latest/types/power_types/active_self/) - pressing a key on the keyboard
-        - [Action On Block Break](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_break/) - breaking a block
-        - [Action On Block Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_use/) - right clicking a block
-        - [Action On Item Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_item_use/) - finishing using an item (like food or a potion)
-        - [Action On Callback](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) - respawning or gaining/losing the power/origin
-        - [Action On Entity Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_entity_use/) - right clicking an entity
-        - [Action On Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_on_hit/) - hitting another entity
-        - [Action When Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_when_hit/) - getting hit by another entity
-        - [Action When Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/action_when_damage_taken/) - taking damage from any source
+
+        * [Active Self](https://origins.readthedocs.io/en/latest/types/power_types/active_self/) - pressing a key on the keyboard
+        * [Action On Block Break](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_break/) - breaking a block
+        * [Action On Block Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_use/) - right clicking a block
+        * [Action On Item Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_item_use/) - finishing using an item (like food or a potion)
+        * [Action On Callback](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) - respawning or gaining/losing the power/origin
+        * [Action On Entity Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_entity_use/) - right clicking an entity
+        * [Action On Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_on_hit/) - hitting another entity
+        * [Action When Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_when_hit/) - getting hit by another entity
+        * [Action When Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/action_when_damage_taken/) - taking damage from any source
 
         Each of these power types execute an "Entity Action" when a specific event occurs. You can find the complete list of entity actions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_action_types/).
 
