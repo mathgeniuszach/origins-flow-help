@@ -155,13 +155,13 @@ raw-other:
 
         If you're having an issue unrelated to the Origin Creator, ask your question in the right channel in [the Official Origins Discord](https://discord.gg/4mTMHu3)!
         Use the chart below to find out which one is right for you:
-
-        * #datapack-dev - If you're making a datapack. Create a forum post in this channel. Do not use #datapack-talk.
-        * #datapack-installation - If you're installing a datapack.
-        * #origins-support - If you're having an issue with the BASE GAME CONTENT or installing the mod.
-        * #addon-support - If you're having an issue with an addon mod.
-        * #wiki-suggestions - If you'd like to suggest a change or typo-fix in the wiki.
-        * #origins-talk - If you don't know where else to go.
+        
+        - #datapack-dev - If you're making a datapack. Create a forum post in this channel. Do not use #datapack-talk.
+        - #datapack-installation - If you're installing a datapack.
+        - #origins-support - If you're having an issue with the BASE GAME CONTENT or installing the mod.
+        - #addon-support - If you're having an issue with an addon mod.
+        - #wiki-suggestions - If you'd like to suggest a change or typo-fix in the wiki.
+        - #origins-talk - If you don't know where else to go.
 
 banana:
     title: Banana
