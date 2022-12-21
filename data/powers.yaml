@@ -16,6 +16,7 @@ attribute-power:
         This power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "attribute" name (specifying what to modify), an "operation" (specifying how to modify), and a value (specifying how much to modify by).
 
         Common attribute names ([for full list click here](https://minecraft.fandom.com/wiki/Attribute)) are:
+        
         - `generic.max_health` - maximum health in half hearts. Normally 20.0.
         - `generic.knockback_resistance` - the percentage number of knockback that's ignored (1.0 is 100% or no knockback, 0.5 is 50% or half knockback)
         - `generic.movement_speed` - speed of movement; for players, multiply by about 43 for blocks/second (1 block/s is about 0.023). It's recommended you modify this with a multiply operation.
