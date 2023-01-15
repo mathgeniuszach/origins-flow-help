@@ -36,21 +36,25 @@ making-powers:
     text: |
         Before making your own powers, you can check to see if one already exists in the base game in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/powers/). You can add these directly to the list of powers in your origin file.
 
+        A lot of these still need to be worked on; if you see a TODO page, you'll probably want to ask in the Discord instead.
+
         Some powers actually require you to use multiple powers in order to work properly. If you want to use a power of an existing origin, you can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
 
         If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like basic building blocks, you can make almost any power you want. [For more about conditions, click here](#power-conditions).
 
-        Note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power.
+        Note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
 
         Let's start with the power type. You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
         
         If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more:
     opts:
+      - text: Multiple powers... inside a single power!
+        link: multiple-power
       - text: Change the player size
         link: pehkui-power
-      - text: Add more health/speed/attack/armor/etc (any attribute)
+      - text: Add/Remove health/speed/attack/etc (any attribute)
         link: attribute-power
-      - text: Give a constant/stacking status effect
+      - text: Give a status effect
         link: status-effect-power
       - text: Toggle night vision
         link: toggle-vision-power
@@ -76,6 +80,10 @@ making-powers:
         link: launch-power
       - text: Replace a loot table
         link: loot-table-power
+      - text: Restrict what armor can be worn
+        link: restrict-armor-power
+      - text: Some kind of "Energy" or "Waste"
+        link: resource-power
       - text: Modify a player "value" or "rate" (e.g., hunger, damage, break speed)
         link: modify-power
       - text: Prevent the player from doing something
@@ -105,9 +113,9 @@ modify-power:
         - [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
         - [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
 
-        Each modify power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied. You can see each of these values in the chart below as ModValueA, ModValueB, ...
+        Each modify power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied (You can see how each of these values are used in the chart below as ModValueA, ModValueB, ...). Resources can also be used instead of constant values.
 
-        Also, in the chart below, Result is the number result of the value being modified after the operation is applied, OldValue is the value beforehand, and BaseValue is the default value. Vanilla operators correspond to some of these as well; `addition` = `add_base_early`; `multiply_base` = `multiply_total_additive`; `multiply_total` = `multiply_total_multiplicative`.
+        Also, in the chart below, Result is the number result of the value being modified after the operation is applied, OldValue is the value beforehand (or current value of the attribute), and BaseValue is the default value. Vanilla operators correspond to some of these as well; `addition` = `add_base_early`; `multiply_base` = `multiply_total_additive`; `multiply_total` = `multiply_total_multiplicative`.
 
         Operations are ([for wiki list click here](https://origins.readthedocs.io/en/latest/types/data_types/attribute_modifier_operation/)):
 
@@ -119,7 +127,7 @@ modify-power:
             (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
         - `add_base_late` - performs addition with a number, after the multiply_base operations occur.
             (Result = OldValue + ModValueA + ModValueB + ...)
-        - `min_base` - ensures that the result is greater than or equal all the given values.
+        - `min_base` - ensures that the result is greater than or equal to all the given values.
             (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
         - `max_base` - ensures that the result is less than or equal to all the given values.
             (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
@@ -162,6 +170,7 @@ action-power:
 
         Here's a list of common action-related power types ([full list here](https://origins.readthedocs.io/en/latest/types/power_types/#action-related)):
         - [Active Self](https://origins.readthedocs.io/en/latest/types/power_types/active_self/) - pressing a key on the keyboard
+        - [Action Over Time](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) - 
         - [Action On Block Break](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_break/) - breaking a block
         - [Action On Block Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_use/) - right clicking a block
         - [Action On Item Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_item_use/) - finishing using an item (like food or a potion)
@@ -171,11 +180,11 @@ action-power:
         - [Action When Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_when_hit/) - getting hit by another entity
         - [Action When Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/action_when_damage_taken/) - taking damage from any source
 
-        Each of these power types execute an "Entity Action" when a specific event occurs. You can find the complete list of entity actions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_action_types/).
-
         All of these action powers can be combined with a condition to only be allowed to activate when a certain condition is true. [For more about conditions, click here](#power-conditions).
 
-        If you can't find what you want on there or just want some links for convenience, you can select what you want the action to be below to learn more:
+        Each of these power types execute an "Entity Action" when a specific event occurs. You can find the complete list of entity actions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_action_types/). If you want to execute multiple actions at once, or perhaps activate some actions based on specific rules or randomness, take a look at the [Meta Action Types](https://origins.readthedocs.io/en/latest/types/meta_action_types/).
+
+        If you can't find what you want on the wiki or just want some links for convenience, you can select what you want a single action to be below to learn more:
     opts:
       - text: Add velocity
         link: velocity-action
