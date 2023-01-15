@@ -120,29 +120,29 @@ modify-power:
         Operations are ([for wiki list click here](https://origins.readthedocs.io/en/latest/types/data_types/attribute_modifier_operation/)):
 
         - `add_base_early` - (vanilla `addition`) performs addition with a number.
-            (Result = BaseValue + ModValueA + ModValueB + ...)
+            <br>&nbsp;(Result = BaseValue + ModValueA + ModValueB + ...)
         - `multiply_base_additive` - adds a non-stacking percentage of the base/default value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
-            (Result = OldValue + BaseValue * (ModValueA + ModValueB + ...))
+            <br>&nbsp;(Result = OldValue + BaseValue * (ModValueA + ModValueB + ...))
         - `multiply_base_multiplicative` - adds a stacking percentage of the current value (NOT THE BASE!) (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
-            (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
+            <br>&nbsp;(Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
         - `add_base_late` - performs addition with a number, after the multiply_base operations occur.
-            (Result = OldValue + ModValueA + ModValueB + ...)
+            <br>&nbsp;(Result = OldValue + ModValueA + ModValueB + ...)
         - `min_base` - ensures that the result is greater than or equal to all the given values.
-            (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
+            <br>&nbsp;(Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
         - `max_base` - ensures that the result is less than or equal to all the given values.
-            (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
+            <br>&nbsp;(Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
         - `set_base` - sets the result to the value specified directly, before total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
-            (Result = ModValue)
+            <br>&nbsp;(Result = ModValue)
         - `multiply_total_additive` - (vanilla `multiply_base`) adds a non-stacking percentage of the current value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
-            (Result = OldValue + OldValue * (ModValueA + ModValueB + ...))
+            <br>&nbsp;(Result = OldValue + OldValue * (ModValueA + ModValueB + ...))
         - `multiply_total_multiplicative` - (vanilla `multiply_total`) adds a stacking percentage of the current value (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
-            (Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
+            <br>&nbsp;(Result = OldValue * (1 + ModValueA) * (1 + ModValueB) * ...)
         - `min_total` - ensures that the result is greater than or equal all the given values.
-            (Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
+            <br>&nbsp;(Result = Math.max(CurrentValue, ModValueA, ModValueB, ...))
         - `max_total` - ensures that the result is less than or equal to all the given values.
-            (Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
+            <br>&nbsp;(Result = Math.min(CurrentValue, ModValueA, ModValueB, ...))
         - `set_total` - sets the result to the value specified directly, after other total operations are applied. Only use this ONCE, otherwise weird side effects can occur.
-            (Result = ModValue)
+            <br>&nbsp;(Result = ModValue)
 
         All of these powers can be combined with a condition to only modify values things when a certain condition is true. [For more about conditions, click here](#power-conditions).
 
