@@ -3,6 +3,8 @@ index:
     text: |
         If you have trouble understanding this guide, please let me know in [my Discord](https://discord.gg/pBFqEcXvW5).
 
+        This guide is incomplete. Please help me complete it through [this GitHub repo](https://github.com/xMGZx/origins-flow-help).
+
         What do you need help with?
     opts:
       - text: Making a datapack
