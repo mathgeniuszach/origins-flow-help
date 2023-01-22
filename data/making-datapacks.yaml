@@ -113,7 +113,9 @@ modify-power:
         - [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
         - [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
 
-        Each modify power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied (You can see how each of these values are used in the chart below as ModValueA, ModValueB, ...). Resources can also be used instead of constant values.
+        Each modify power can either provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied (You can see how each of these values are used in the chart below as ModValueA, ModValueB, ...).
+        
+        Resources can also be used instead of constant values. To use a resource instead, specify the resource power's id in the "Resource" field of the modifier. Make sure you also do not specify a value for this to work properly (in the Origin Creator make sure the field is blank).
 
         Also, in the chart below, Result is the number result of the value being modified after the operation is applied, OldValue is the value beforehand (or current value of the attribute), and BaseValue is the default value. Vanilla operators correspond to some of these as well; `addition` = `add_base_early`; `multiply_base` = `multiply_total_additive`; `multiply_total` = `multiply_total_multiplicative`.
 
