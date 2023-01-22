@@ -6,6 +6,10 @@ multiple-power:
 #        The [Multiple `origins:multiple` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/multiple/) power type lets you squish a bunch of custom powers together into a single file.
 
 #        You may want to do this to fit a bunch of different effects into a single power name and description, or just to simplify the work for yourself.
+toggleable-power:
+    title: Toggleable Power
+    text: |
+        If you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (or check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
 pehkui-power:
     title: Pehkui
     text: |
@@ -45,7 +49,7 @@ attribute-power:
 
         If you're updating `generic.max_health`, there is an additional field called `update_health` for this power that defaults to be true (on). If you set it to false (off), the player's health percentage will not be preserved to the new maximum health. For example, imagine the user has 5 hearts remaining and their max health changes from 10 hearts to 20. If true (default), their health will change to 10 hearts (to preserve 50%). If false, their health will remain at 5 hearts.
 
-        If you want more control over the modifier operation, the [Modify Attribute power type (click here to learn more about modify powers)](#modify-power) provides many more operators that apply to the same attributes here.
+        If you want more control over the modifier operation or what to modify something else, the [Modify Attribute power type (click here to learn more about modify powers)](#modify-power) provides many more operators and things to modify.
 status-effect-power:
     title: Status Effect
     text: |
@@ -56,10 +60,14 @@ status-effect-power:
         The Stacking Status Effect works with the concept of "stacks". While the power is active/inactive ([condition](#power-conditions) is true/false), the user gains/loses a stack respectively every so many ticks (determined by the "Tick Rate"). The amount of stacks starts at 0, but increases/decreases until hitting the Max-Stacks/Min-Stacks values respectively. Note that "Min Stacks" can be negative to provide a "buffer" before the status effect is applied. Every time a stack is added (not when a stack is removed) the status effect is reapplied with a duration (in ticks, 20 ticks is a second) equal to `number of stacks * Duration Per Stack`. If the user already has the status effect with a greater duration than what would be applied, the status effect remains the same.
 
         If you need more control over how and when the status effect is applied, as well as increases or decreases (e.g., you would like the amplifier to increase over time), you'll probably have to use a [Resource (click to learn more)](#resource-power) in combination with several [Action Over Time `origins:action_over_time`](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) powers instead. Note that actions can have individual conditions too with [`origins:if_else` and `origins:if_else_list` (click to learn about meta actions)](https://origins.readthedocs.io/en/latest/types/meta_action_types/).
-toggle-vision-power:
-    title: Toggle Night Vision
+night-vision-power:
+    title: Night Vision
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Night Vision](https://origins.readthedocs.io/en/latest/types/power_types/night_vision/) power type grants night vision to it's owner without giving them the status effect.
+
+        It also has a `strength` field that can range from 0.0-1.0 that specifies how strong the night vision effect is, which defaults to 1.0. As you can imagine, a value of 0.0 does nothing, while a value of 1.0 gives full night vision.
+
+        This specific power (though not any other power types) also has a [Toggle Night Vision](https://origins.readthedocs.io/en/latest/types/power_types/toggle_night_vision/) variant that allows its owner to enable or disable the effects of night vision with a keybind.
 creative-flight-power:
     title: Creative Flight
     text: |

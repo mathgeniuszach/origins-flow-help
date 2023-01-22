@@ -36,8 +36,6 @@ making-powers:
     text: |
         Before making your own powers, you can check to see if one already exists in the base game in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/powers/). You can add these directly to the list of powers in your origin file.
 
-        A lot of these still need to be worked on; if you see a TODO page, you'll probably want to ask in the Discord instead.
-
         Some powers actually require you to use multiple powers in order to work properly. If you want to use a power of an existing origin, you can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
 
         If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like basic building blocks, you can make almost any power you want. [For more about conditions, click here](#power-conditions).
@@ -46,18 +44,20 @@ making-powers:
 
         Let's start with the power type. You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
         
-        If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more:
+        If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more (A lot of these still need to be worked on; if you see a TODO page, you'll probably want to ask in the Discord instead):
     opts:
       - text: Multiple powers... inside a single power!
         link: multiple-power
-      - text: Change the player size
+      - text: Toggleable power
+        link: toggleable-power
+      - text: Change the player size (pehkui)
         link: pehkui-power
       - text: Add/Remove health/speed/attack/etc (any attribute)
         link: attribute-power
       - text: Give a status effect
         link: status-effect-power
-      - text: Toggle night vision
-        link: toggle-vision-power
+      - text: Night vision
+        link: night-vision-power
       - text: Enable creative flight
         link: creative-flight-power
       - text: Enable elytra flight (without an elytra equipped)
