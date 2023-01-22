@@ -6,7 +6,7 @@ bug-fix:
         What happened, or what's not working?
     opts:
       - text: The game crashed!
-        link: crash-report
+        link: crash-report-editing
       - text: Someone else's datapack isn't working!
         link: external-datapack-help
       - text: My origin isn't showing up ingame!
@@ -21,7 +21,11 @@ external-datapack-help:
     text: |
         Unfortunately, this flow help isn't well equipped to help you with someone else's datapack.
 
-        You can try to follow [this installation guide (click here)](#installing-datapacks) to see if you did anything wrong when installing the datapack. You can make sure a datapack is installed by running `/datapack list` ingame and checking that your chosen datapack is listed in green. If you installed the datapack correctly, and it still isn't working properly, you should try to contact the original maker of the datapack. Make sure you be respectful and courteous of their time, and be patient for a response.
+        You can try to follow [this installation guide (click here)](#installing-datapacks) to see if you did anything wrong when installing the datapack. You can make sure a datapack is installed by running `/datapack list` ingame and checking that your chosen datapack is listed in green.
+
+        You might also find it helpful to discuss your problem in the `#datapack-installation` channel in [the Official Origins Discord (click here)](https://discord.gg/4mTMHu3).
+        
+        If you installed the datapack correctly, and it still isn't working properly, you could also try to contact the original maker of the datapack. Really this should be a last resort if necessary. Make sure you be respectful and courteous of their time, and be patient for a response.
 
 origin-no-show:
     title: Origin
@@ -54,6 +58,8 @@ unregistered-origin:
         If an origin is said to be "unregistered", it's likely that you typed it's name wrong. Make sure that anywhere you refer to the origin, you're using the same namespace and filename as the origin file itself. If you have the origin in a subfolder of the origins folder, you'll have to include the folders in the name as well:
 
         For example, `namespace:name` or `namespace:folder1/folder2/name`.
+
+        Another potential cause for an origin to be "unregistered" is that you put an invalid item as the origin's icon. Make sure there's no typo in the field of the origin file, and perhaps test the origin with a vanilla item like `minecraft:apple` or `minecraft:carrot` to see if the issue is there or elsewhere.
 
         After fixing that issue, remember to reload (either by reloading the world, using `/reload`, or reloading your game).
 
