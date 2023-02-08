@@ -98,8 +98,7 @@ json-format:
         
         "spacing": "doesn't matter, though commas do",
 
-            "the number two": 2,
-            "the-number-three": 3,
+            "the number two": 2, "the-number-three": 3,
             "the_number_four": 4.1,
 
             "booleanz": true,
