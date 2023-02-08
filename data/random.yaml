@@ -119,7 +119,7 @@ json-format:
                 ]
             },
 
-            "quotedbackslash": "This is how you make a quote symbol: \"  If you want to make a backslash symbol, use \\. \n is a line separator."
+            "quotedbackslash": "This is how you make a quote symbol: \"  If you want to make a backslash symbol, use \\. \n is a line separator.",
 
             "Notice": "the final line in json does not have a comma at the end."
         }
