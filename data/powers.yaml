@@ -1,15 +1,103 @@
+what-the-power:
+    title: Adding A Power to an Origin
+    text: |
+        If it is your first time creating an Origins datapack and you have no idea where to start, you should probably follow the "first datapack" guide by clicking the "I don't know where to start" button at the bottom of this page.
+
+        If you've simply forgotten, you just need to take the id of your power and add it to the "powers" list of your origin. If you're using the Origin Creator, read the "Important Information" dropdown fully as it explains how to find it with a picture.
+        
+        If you still don't understand, you should probably rewatch the tutorial, or [seek further help](#other).
+
+        Example origin [JSON](#json-format) with a power:
+        ```json
+        {
+            "name": "Herobrine",
+            "description": "The one who sees all",
+            "powers": [
+                "mypack:see_all",
+                "mypack:evil",
+                "mypack:schemer"
+            ]
+        }
+        ```
+    opts:
+      - text: I don't know where to start
+        link: first-datapack
+
+existing-power:
+    title: Existing Powers
+    text: |
+        You can find a list of all base origin powers and power ids [on this page of the wiki](https://origins.readthedocs.io/en/latest/misc/base_contents/powers/).
+
+        If you want to use an existing power (NOT power type), for example a power that one of the base origins uses, you can do so by adding the id of that power to the "powers" list of your origin.
+
+        Example origin [JSON](#json-format) with a base power:
+        ```json
+        {
+            "name": "Egg Layer",
+            "description": "Lays eggs when waking up",
+            "powers": [
+                "origins:lay_eggs"
+            ]
+        }
+        ```
+
 multiple-power:
     title: Multiple
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Multiple `origins:multiple` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/multiple/) power type lets you squish a bunch of custom powers together into a single file. You may want to do this to fit a bunch of different effects into a single power name and description. Note that you could also alternatively just have two or more power files and just mark all but one as hidden.
 
-#        The [Multiple `origins:multiple` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/multiple/) power type lets you squish a bunch of custom powers together into a single file.
+        Every key in a power file that is not the name of a field like "name" or "description" is treated as a "sub-power". Each sub-power has its own condition and power type, and is marked as hidden by default so that only the super power shows up on the list of origin powers.
+        
+        You can refer to sub-powers via the id: `{namespace}:{super-power}_{key}`, where you replace {namespace}, {super-power} and {key} with the appropriate values. So a sub-power named "banana" in the super power "mypack:fruity" can be referred to as "mypack:fruity_banana".
 
-#        You may want to do this to fit a bunch of different effects into a single power name and description, or just to simplify the work for yourself.
+        Note! Multiple power types DO NOT support a condition on the ENTIRE power. If you want that, you'll have to copy-paste the condition to every sub-power individually.
+
+        To use this power type in the Origin Creator, change the dropdown in the top left from `single` to `multiple`. You can press the "+" button at the bottom to add more sub-powers.
+        ![Power type dropdown](power-type-dropdown)
+
+        Example multiple power [JSON](#json-format):
+        ```json
+        {
+            "name": "Egg Layer",
+            "description": "Lays eggs on wake up",
+            "powers": [
+                "origins:lay_eggs"
+            ]
+        }
+        ```
+
 toggleable-power:
     title: Toggleable Power
     text: |
         If you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (or check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
+
+        Example multiple power with togglability [JSON](#json-format) (this power has id "mypack:radar"):
+        ```json
+        {
+            "name": "Radar",
+            "description": "Causes moving entities to glow. Can be toggled.",
+            "type": "origins:multiple",
+
+            "toggle": {
+                "type": "origins:toggle",
+                "key": {
+                  "key": "key.origins.primary_active"
+                }
+            },
+            "glow": {
+                "condition": {
+                    "type": "origins:power_active",
+                    "power": "mypack:radar_toggle"
+                },
+
+                "type": "origins:entity_glow",
+                "entity_condition": {
+                    "type": "origins:moving"
+                }
+            }
+        }
+        ```
+
 pehkui-power:
     title: Pehkui
     text: |
@@ -17,13 +105,45 @@ pehkui-power:
 
         Modifying your player size is one of the most common things that requires that you install Pehkui mod in addition to the origins mod, but pehkui can be used to modify your mining speed, block reach, and other things with the player as well. You can get [the Pehkui mod here (click)](https://www.curseforge.com/minecraft/mc-mods/pehkui).
 
-        If you just want to modify player size, the simplest way is probably just to install the Extra Origins mod and use the custom `extraorigins:modify_size` power type it provides. [Here's one example (click here)](https://github.com/MoriyaShiine/extra-origins/blob/master/src/main/resources/data/extraorigins/powers/bite_sized.json#L4) of that power type in use. If you're using the Origin Creator, you can use the "custom" option in any drop down where it normally says "single" or "multiple" and type in `extraorigins:modify_size` for the power type yourself.
+        The main way to modify player size or other pehkui attributes is to use an "action" power type and run pehkui commands through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. There's an example power below.
 
-        If you don't want to just modify player size or want more control over pehkui attributes, you'll have to use an "action" power type and run the /pehkui command through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. This is all the help that most people can provide you.
+        If you just want to modify player size, you could also install the Extra Origins mod and use the custom `extraorigins:modify_size` power type it provides instead. [Here's one example (click here)](https://github.com/MoriyaShiine/extra-origins/blob/master/src/main/resources/data/extraorigins/powers/bite_sized.json#L4) of that power type in use. If you're using the Origin Creator, you can use the "custom" option in any drop down where it normally says "single" or "multiple" and type in `extraorigins:modify_size` for the power type yourself.
+
+        Example 65% size power [JSON](#json-format) (courtesy of LuaDotExe):
+        ```json
+        {
+            "type": "origins:action_on_callback",
+            "entity_action_chosen": {
+                "type": "origins:and",
+                "actions": [
+                    {
+                      "type": "origins:execute_command",
+                      "command": "scale set pehkui:height 0.65 @s"
+                    },
+                    {
+                      "type": "origins:execute_command",
+                      "command": "scale set pehkui:width 0.65 @s"
+                    },
+                    {
+                      "type": "origins:execute_command",
+                      "command": "scale persist set true @s"
+                    }
+                ]
+            },
+            "entity_action_lost": {
+                "type": "origins:execute_command",
+                "command": "scale reset @s"
+            },
+
+            "name": "Smol",
+            "description": "You're 65% normal size!"
+        }
+        ```
+
 attribute-power:
     title: Attribute
     text: |
-        The [Attribute `origins:attribute` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/attribute/) power type gives/takes away certain numeric values (e.g. max-health/armor/speed) from its user. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Attribute `origins:conditioned_attribute` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_attribute/) instead.
+        The [Attribute `origins:attribute` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/attribute/) power type gives/takes away certain numeric values (e.g. max-health/armor/speed) from its user. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Attribute `origins:conditioned_attribute` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_attribute/) power type instead.
 
         This power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "attribute" name (specifying what to modify), an "operation" (specifying how to modify), and a value (specifying how much to modify by).
 
@@ -50,80 +170,207 @@ attribute-power:
         If you're updating `generic.max_health`, there is an additional field called `update_health` for this power that defaults to be true (on). If you set it to false (off), the player's health percentage will not be preserved to the new maximum health. For example, imagine the user has 5 hearts remaining and their max health changes from 10 hearts to 20. If true (default), their health will change to 10 hearts (to preserve 50%). If false, their health will remain at 5 hearts.
 
         If you want more control over the modifier operation or what to modify something else, the [Modify Attribute power type (click here to learn more about modify powers)](#modify-power) provides many more operators and things to modify.
+
+        Example attribute power [JSON](#json-format):
+        ```json
+        {
+            "name": "Dragon Scales",
+            "description": "Your skin is tough and you have diamond armor naturally.",
+            "type": "origins:attribute",
+            "modifiers": [
+                {
+                    "attribute": "minecraft:generic.armor",
+                    "value": 20,
+                    "operation": "addition"
+                },
+                {
+                    "attribute": "minecraft:generic.armor_toughness",
+                    "value": 8,
+                    "operation": "addition"
+                }
+            ]
+        }
+        ```
+
 status-effect-power:
     title: Status Effect
     text: |
-        If you simply want a constant status effect that remains permanent even after the user drinks milk, you can use the [Action Over Time `origins:action_over_time`](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) power type (that runs an action every so many ticks) instead with the "Entity Action" being an [Apply Effect](#effect-action) action containing the status effect you want. If you want the power to instantly remove the status effect when it deactivates (it's [condition](#power-conditions) becomes false), set the "Falling Action" to a [Clear Effect](#effect-action) action containing the status effect to remove.
+        If you simply want a constant status effect that remains permanent even after the user drinks milk, you can use the [Action Over Time `origins:action_over_time`](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) power type (that runs an action every so many ticks) instead with the "Entity Action" being an [Apply Effect](#effect-action) action containing the status effect you want. If you want the power to instantly remove the status effect when it deactivates (its [condition](#power-conditions) becomes false), set the "Falling Action" to a [Clear Effect](#effect-action) action containing the status effect to remove.
 
-        Otherwise, the [Stacking Status Effect `origins:stacking_status_effect` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/stacking_status_effect/) power type is a typical way to apply a status effect that increases it's duration (not it's amplifier) over time as the power remains active.
+        Otherwise, the [Stacking Status Effect `origins:stacking_status_effect` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/stacking_status_effect/) power type is a typical way to apply a status effect that increases its duration (not its amplifier) over time as the power remains active.
 
         The Stacking Status Effect works with the concept of "stacks". While the power is active/inactive ([condition](#power-conditions) is true/false), the user gains/loses a stack respectively every so many ticks (determined by the "Tick Rate"). The amount of stacks starts at 0, but increases/decreases until hitting the Max-Stacks/Min-Stacks values respectively. Note that "Min Stacks" can be negative to provide a "buffer" before the status effect is applied. Every time a stack is added (not when a stack is removed) the status effect is reapplied with a duration (in ticks, 20 ticks is a second) equal to `number of stacks * Duration Per Stack`. If the user already has the status effect with a greater duration than what would be applied, the status effect remains the same.
 
         If you need more control over how and when the status effect is applied, as well as increases or decreases (e.g., you would like the amplifier to increase over time), you'll probably have to use a [Resource (click to learn more)](#resource-power) in combination with several [Action Over Time `origins:action_over_time`](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) powers instead. Note that actions can have individual conditions too with [`origins:if_else` and `origins:if_else_list` (click to learn about meta actions)](https://origins.readthedocs.io/en/latest/types/meta_action_types/).
+
+        Example constant status effect power [JSON](#json-format):
+        ```json
+        {
+            "name": "Regenerative Soul",
+            "description": "Permanent regeneration",
+            "type": "origins:action_over_time",
+            "interval": 20,
+            "entity_action": {
+                "type": "origins:apply_effect",
+                "effect": {
+                    "effect": "minecraft:regeneration",
+                    "duration": 100,
+                    "amplifier": 0,
+                    "show_particles": true,
+                    "show_icon": true
+                }
+            }
+        }
+        ```
+
 night-vision-power:
     title: Night Vision
     text: |
-        The [Night Vision](https://origins.readthedocs.io/en/latest/types/power_types/night_vision/) power type grants night vision to it's owner without giving them the status effect.
+        The [Night Vision `origins:night_vision` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/night_vision/) power type grants night vision to its owner without giving them the status effect.
 
         It also has a `strength` field that can range from 0.0-1.0 that specifies how strong the night vision effect is, which defaults to 1.0. As you can imagine, a value of 0.0 does nothing, while a value of 1.0 gives full night vision.
 
         This specific power (though not any other power types) also has a [Toggle Night Vision](https://origins.readthedocs.io/en/latest/types/power_types/toggle_night_vision/) variant that allows its owner to enable or disable the effects of night vision with a keybind.
+
+        Example night vision power [JSON](#json-format):
+        ```json
+        {
+            "name": "Above Average Eyes",
+            "description": "It's slightly easier for you to see in the dark.",
+            "type": "origins:night_vision",
+            "strength": 0.5
+        }
+        ```
+
+mob-hostility-power:
+    title: Mob Hostility
+    text: |
+        Unfortunately, there is currently NO power type to change whether or not mobs are hostile towards the player.
+        
+        The closest thing you have is the `origins:scare_creepers` power, which is a _power_ and not a _power type_, meaning it can only be added to origins directly and not configured. You can also try vaguely related power types or powers that involve command/function usage, like giving mobs blindness to lower their follow radius, shoving them away, giving them the `{NoAI:1b}` NBT tag, or teleporting an invisible cat around to scare creepers.
+
+        There are two other main workarounds, you could either:
+        1. Interface with mob hostility directly via mixins with an origins addon mod (make a mod instead of a datapack).
+        2. Make a power which adds the mob to your own "team" via the [`/team`](https://minecraft.fandom.com/wiki/Commands/team) command. Mobs will not attack the player if they are on the same team as the player. However, all entities can only ever be on ONE team at a time, so using this method could conflict with other packs that use teams.
+
 creative-flight-power:
     title: Creative Flight
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Creative Flight `origins:creative_flight` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/creative_flight/) power type grants the ability to fly as if its owner was in creative mode.
+
+        Example creative flight power [JSON](#json-format):
+        ```json
+        {
+            "name": "Fly",
+            "description": "Fly",
+            "type": "origins:creative_flight"
+        }
+        ```
+        There's not much to this power, honestly.
+
 elytra-flight-power:
     title: Elytra Flight
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Elytra Flight `origins:elytra_flight` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/elytra_flight/) power type grants the ability to fly as if an elytra was equipped.
+
+        There is also a `render_elytra` field that must be either set to `true` (an elytra should be shown), or `false` (no elytra will be shown).
+
+        Optionally, a `texture_location` field can be provided to retexture the elytra wings to any custom texture provided via minecraft or a resource pack.
+
+        Example elytra flight power [JSON](#json-format):
+        ```json
+        {
+            "name": "Bug wings",
+            "description": "You have wings like a bug that let you fly.",
+            "type": "origins:elytra_flight",
+            "render_elytra": true,
+            "texture_location": "minecraft:textures/entity/elytra.png"
+        }
+        ```
+
 effect-immunity-power:
     title: Effect Immunity
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Effect Immunity `origins:effect_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/effect_immunity/) power type prevents certain status effects from being applied to its owner.
+
+        TODO
+
 fire-immunity-power:
     title: Fire Immunity
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Fire Immunity `origins:fire_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_immunity/) power type prevents its owner from being set on fire and from taking fire damage.
+
+        TODO
+
 projectile-power:
     title: Projectile
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Fire Projectile `origins:fire_projectile` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_projectile/) power type enables its owner to fire a projectile upon a keypress.
+
+        TODO
+
 inventory-power:
     title: Inventory
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Inventory `origins:inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/inventory/) power type gives its owner a separate inventory, like a backpack, that can be used to store items.
+
+        TODO
+
 invisibility-power:
     title: Invisibility
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Invisibility `origins:invisibility` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invisibility/) power type grants its owner invisibility.
+
+        TODO
 invulnerability-power:
     title: Invulnerability
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Invulnerability `origins:invulnerability` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invulnerability/) power type grants its owner damage immunity to certain damage sources.
+
+        TODO
 keep-inventory-power:
     title: Keep Inventory
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Keep Inventory `origins:keep_inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/keep_inventory/) power type makes certain items persist in its owner's inventory after death.
+
+        TODO
 launch-power:
     title: Launch
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Launch `origins:launch`](https://origins.readthedocs.io/en/latest/types/power_types/launch/) power type launches its owner upwards when pressing a certain key.
+
+        TODO
 loot-table-power:
     title: Loot Table
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Replace Loot Table `origins:replace_loot_table` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) power type changes the loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
+
+        TODO
 restrict-armor-power:
     title: Restrict Armor
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Restrict Armor `origins:restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_restrict_armor/) power type instead.
+
+        TODO
 resource-power:
     title: Resources
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Resource `origins:resource` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/resource/) power type provides an integer variable with a minimum (`min` field) and maximum (`max` field) value that can be used for a variety of purposes. The starting value of a resource can be set with the `start_value` field, otherwise it will default to the `min` value.
+        
+        Resources can be changed via the [Change Resource (Entity Action)](https://origins.readthedocs.io/en/latest/types/entity_action_types/change_resource/) and checked via the [Resource (Entity Condition)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/resource/).
+
+        Resources can also optionally appear as a colored bar on their owner's HUD via the `hud_render` field, which takes a [HUD Render object](https://origins.readthedocs.io/en/latest/types/data_types/hud_render/) as its value.
+
+        You can also set the `min_action` and `max_action` fields to entity actions that will be executed when the resource reaches its minimum and maximum values respectively, from any means.
+
+        Resources are fairly complex and it is recommended you look at example packs and experiment on them yourself to figure out how they work more fully.
+
 other-power:
     title: Other
     text: |
-        TODO - [Click here for now](#raw-other).
+        A full list of power types can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/power_types/). You should also try looking at the [Action Power Types](#action-power), [Prevent Power Types](#prevent-power), and [Modify Power Types](#modify-power) to see if any of those have what you want.
+
+        If none of the power types listed on there provide the functionality you need, there is a very real possibility there is NO power that does what you want. You can suggest a power in the `#suggestions` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or if you REALLY want to make sure that power gets added, write the code for the power yourself and pull request it to the [apoli mod github repository](https://github.com/apace100/apoli).
 
 
 

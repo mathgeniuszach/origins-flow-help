@@ -4,9 +4,7 @@ making-datapacks:
     opts:
       - text: Learn how to make an origins datapack
         link: first-datapack
-      # - text: Make an origin
-      #   link: first-time-prompt
-      - text: Make a specific power
+      - text: Make/Use a specific power
         link: making-powers
       - text: Fix a bug (datapack isn't working)
         link: bug-fix
@@ -14,22 +12,6 @@ making-datapacks:
         link: installing-datapacks
       - text: Something else...
         link: other
-
-# first-time-prompt:
-#     title: First Time?
-#     text: Have you made an origins datapack before?
-#     opts:
-#       - text: No
-#         link: first-datapack
-#       - text: Yes
-#         link: making-origins
-
-# making-origins:
-#     title: Making Origins
-#     text: |
-#         Every origin is a collection of various powers. You can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
-
-#         TODO?
 
 making-powers:
     title: Making Powers
@@ -46,11 +28,15 @@ making-powers:
         
         If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more (A lot of these still need to be worked on; if you see a TODO page, you'll probably want to ask in the Discord instead):
     opts:
+      - text: How do I add a power to an origin?
+        link: what-the-power
+      - text: An existing power
+        link: existing-power
       - text: Multiple powers... inside a single power!
         link: multiple-power
       - text: Toggleable power
         link: toggleable-power
-      - text: Change the player size (pehkui)
+      - text: Change the player size/reach (pehkui)
         link: pehkui-power
       - text: Add/Remove health/speed/attack/etc (any attribute)
         link: attribute-power
@@ -58,10 +44,18 @@ making-powers:
         link: status-effect-power
       - text: Night vision
         link: night-vision-power
+      - text: Change mob hostility
+        link: mob-hostility-power
       - text: Enable creative flight
         link: creative-flight-power
       - text: Enable elytra flight (without an elytra equipped)
         link: elytra-flight-power
+      - text: Modify a player "value" or "rate" (e.g., hunger, damage, break speed)
+        link: modify-power
+      - text: Prevent the player from doing something
+        link: prevent-power
+      - text: Perform an action one-time or repeatedly
+        link: action-power
       - text: Immunity to status effects
         link: effect-immunity-power
       - text: Immunity to fire/lava
@@ -84,12 +78,6 @@ making-powers:
         link: restrict-armor-power
       - text: Some kind of "Energy" or "Waste"
         link: resource-power
-      - text: Modify a player "value" or "rate" (e.g., hunger, damage, break speed)
-        link: modify-power
-      - text: Prevent the player from doing something
-        link: prevent-power
-      - text: Perform an action one-time or repeatedly
-        link: action-power
       - text: Something else...
         link: other-power
 
