@@ -519,7 +519,7 @@ inventory-action:
 
         The [Replace Inventory `origins:replace_inventory` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/replace_inventory/) entity action replaces the items specified by the `item_condition` field with a given [Item Stack](https://origins.readthedocs.io/en/latest/types/data_types/item_stack/) (`stack` field). An `item_action` can be provided to modify the stack after replacement. More fields are available to configure the slots and inventories the replacement occurs in.
 
-        Entity action which gives 3 eggs [JSON](#json-format)
+        Entity action which gives 3 eggs [JSON](#json-format):
         ```json
         "entity_action": {
             "type": "origins:give",
@@ -609,7 +609,32 @@ sound-action:
 particle-action:
     title: Particle Action
     text: |
-        The [Particle]()
+        There are two main ways to spawn particles:
+
+        The [Spawn Particles `origins:spawn_particles` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/spawn_particles/) entity action spawns particles on the entity's position, and only allows offsetting in the y direction.
+
+        The [`/particle`](https://minecraft.fandom.com/wiki/Commands/particle) command spawns particles at any specified position and can be run through the [Execute Command](#command-action) entity action.
+
+        Both methods take a `particle` effect of some kind ([IDs can be found here](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Particles)), a number of particles to spawn (`count` field), the `speed` the particles move/fall at, a boolean `force` specifying the range at which particles can be seen (normal or false means within 32 blocks, force or true means within 512 blocks), and a `delta`/`spread` cuboid volume to spawn the particle in.
+
+        Entity action which spawns a redstone block particle cuboid [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:spawn_particles",
+            "particle": {
+                "type": "minecraft:block",
+                "params": "minecraft:redstone_block"
+            },
+            "count": 16,
+            "speed": 0.0,
+            "force": true,
+            "spread": {
+                "x": 3.0,
+                "y": 0.0,
+                "z": 3.0
+            }
+        }
+        ```
 
 spawn-action:
     title: Spawn Action
