@@ -245,11 +245,15 @@ night-vision-power:
 mob-hostility-power:
     title: Mob Hostility
     text: |
-        Unfortunately, there is currently NO power type to change whether or not mobs are hostile towards the player.
-        
-        The closest thing you have is the `origins:scare_creepers` power, which is a _power_ and not a _power type_, meaning it can only be added to origins directly and not configured. You can also try vaguely related power types or powers that involve command/function usage, like giving mobs blindness to lower their follow radius, shoving them away, giving them the `{NoAI:1b}` NBT tag, or teleporting an invisible cat around to scare creepers.
+        Unfortunately, there is currently no power type in the base game to change whether or not mobs are hostile towards the player. However, there are options if you allow the use of addons.
 
-        There are two other main workarounds, you could either:
+        If you allow yourself to use addon mods, here are some options:
+        1. [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) has the [Mobs Ignore `apugli:mobs_ignore`](https://apugli.readthedocs.io/en/latest/types/power_types/mobs_ignore/) power type which causes certain mobs to ignore the player.
+        2. [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) has the [Remove Goal `ra_additions:remove_goal`] power type, which when on a _mob_, allows you to prevent the mob from performing actions on a more granular level. This should be on the _mob_, not the player, so you'd have to grant the power to said mob.
+        
+        The closest thing you have in regular old origins is the `origins:scare_creepers` power, which is a _power_ and not a _power type_, meaning it can only be added to origins directly and not configured. You can also try vaguely related power types or powers that involve command/function usage, like giving mobs blindness to lower their follow radius, shoving them away, giving them the `{NoAI:1b}` NBT tag, or teleporting an invisible cat around to scare creepers.
+
+        There are two other main workarounds in base origins, you could either:
         1. Interface with mob hostility directly via mixins with an origins addon mod (make a mod instead of a datapack).
         2. Make a power which adds the mob to your own "team" via the [`/team`](https://minecraft.fandom.com/wiki/Commands/team) command. Mobs will not attack the player if they are on the same team as the player. However, all entities can only ever be on ONE team at a time, so using this method could conflict with other packs that use teams.
 
@@ -322,36 +326,42 @@ invisibility-power:
         The [Invisibility `origins:invisibility` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invisibility/) power type grants its owner invisibility.
 
         TODO
+
 invulnerability-power:
     title: Invulnerability
     text: |
         The [Invulnerability `origins:invulnerability` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invulnerability/) power type grants its owner damage immunity to certain damage sources.
 
         TODO
+
 keep-inventory-power:
     title: Keep Inventory
     text: |
         The [Keep Inventory `origins:keep_inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/keep_inventory/) power type makes certain items persist in its owner's inventory after death.
 
         TODO
+
 launch-power:
     title: Launch
     text: |
         The [Launch `origins:launch`](https://origins.readthedocs.io/en/latest/types/power_types/launch/) power type launches its owner upwards when pressing a certain key.
 
         TODO
+
 loot-table-power:
     title: Loot Table
     text: |
         The [Replace Loot Table `origins:replace_loot_table` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) power type changes the loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
 
         TODO
+
 restrict-armor-power:
     title: Restrict Armor
     text: |
         The [Restrict Armor `origins:restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_restrict_armor/) power type instead.
 
         TODO
+
 resource-power:
     title: Resources
     text: |
@@ -368,68 +378,307 @@ resource-power:
 other-power:
     title: Other
     text: |
-        A full list of power types can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/power_types/). You should also try looking at the [Action Power Types](#action-power), [Prevent Power Types](#prevent-power), and [Modify Power Types](#modify-power) to see if any of those have what you want.
+        A full list of power types can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/power_types/). You should also try looking at the [Action Power Types](#action-power), [Prevent Power Types](#prevent-power), and [Modify Power Types](#modify-power) to see if any of those have what you want, and consider that a Minecraft command/function may be able to work in conjuction with your power to provide the functionality you desire.
 
-        If none of the power types listed on there provide the functionality you need, there is a very real possibility there is NO power that does what you want. You can suggest a power in the `#suggestions` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or if you REALLY want to make sure that power gets added, write the code for the power yourself and pull request it to the [apoli mod github repository](https://github.com/apace100/apoli).
+        If none of the power types listed on there provide the functionality you need, there is a very real possibility there is NO power that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are two great addon mods:
+        - [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) - [Wiki](https://apugli.readthedocs.io/en/latest/)
+        - [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) - [Wiki](https://raa-docs.readthedocs.io/en/latest/)
+
+        You can find more addons in the `#addons` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or by [viewing dependants on CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/origins/relations/dependents?filter-related-dependents=3).
+        
+        You can also suggest a power in the `#suggestions` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or perhaps just write the code for the power yourself in an addon.
 
 
+
+area-action:
+    title: Area Action
+    text: |
+        Sometimes you don't want to execute an entity action on the main player or entity, but a certain entity nearby. There are a few actions that can help with this, and they all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/) and [Bientity Actions](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/). These are special conditions and actions that work on a pair of entities called the "actor" and a "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/) or the [Invert `origins:invert` (Action)](https://origins.readthedocs.io/en/latest/types/bientity_action_types/invert/).
+        
+        If you want to execute regular conditions or actions on either, use the [Actor Action `origins:actor_action`](https://origins.readthedocs.io/en/latest/types/bientity_action_types/actor_action/), [Target Action `origins:target_action`](https://origins.readthedocs.io/en/latest/types/bientity_action_types/target_action/), [Actor Condition `origins:actor_condition`](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/actor_condition/), or [Target Condition `origins:target_condition`](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/target_condition/) types.
+
+        The [Area of Effect `origins:area_of_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/area_of_effect/) entity action executes a bi-entity action with the executor being the "actor" and nearby entities being the "target"s. Use `radius` to set a radius of blocks to work in (defaults to 10), `bientity_condition` to restrict which entities are affected, and `bientity_action` to specify an action to perform.
+
+        The [Riding Action `origins:riding_action` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/riding_action/) entity action executes a bi-entity action with the executor being the "actor" and any entities being ridden being the "target". Use `recursive` to set whether or not any entities being ridden indirectly will be targeted (defaults to false), `bientity_condition` to restrict which entities are affected, and `bientity_action` to specify an action to perform.
+
+        The [Passenger Action `origins:passenger_action` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/passenger_action/) entity action executes a bi-entity action with the executor being the "actor" and any entities being riding the actor being the "target". Use `recursive` to set whether or not any entities riding the actor indirectly will be targeted (defaults to false), `bientity_condition` to restrict which entities are affected, and `bientity_action` to specify an action to perform.
+
+        There is also the [Raycast `origins:raycast` (click here for more info)](#raycast-action) entity action which casts a ray in the direction the "actor" entity is looking until it hits a block or entity, known as the "target". The Raycast action is very complex and thus it has its own page in this flow help.
+
+        Example area of effect action [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:area_of_effect",
+            "radius": 32,
+            "bientity_action": {
+                "type": "origins:target_action",
+                "action": {
+                    "type": "origins:set_on_fire",
+                    "duration": 5
+                }
+            },
+            "bientity_condition": {
+                "type": "origins:can_see"
+            }
+        }
+        ```
+        This example will set entities within a 32 block radius on fire for 5 seconds if the entities that are within the radius can be "seen" by the entity that invoked the action.
+
+raycast-action:
+    title: Raycast Action
+    text: |
+        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/raycast/) entity action casts a ray in the direction the "actor" entity is looking until it hits a block or entity, known as the "target".
+
+        TODO
 
 velocity-action:
     title: Velocity Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Add Velocity `origins:add_velocity` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/add_velocity/) entity action adds to or sets the entity's velocity.
+
+        TODO
+
 xp-action:
     title: XP Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Add XP `origins:add_xp` (click here for more info)](hhttps://origins.readthedocs.io/en/latest/types/entity_action_types/add_xp/) entity action adds experience points or levels to the entity.
+
+        TODO
+
 block-action:
     title: Block Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Block Action At `origins:block_action_at` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/block_action_at/) entity action executes a block action at the position of the entity.
+
+        TODO
+
 effect-action:
     title: Effect Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Apply Effect `origins:apply_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/apply_effect/) entity action applies one or more status effects to the entity.
+
+        The [Clear Effect `origins:clear_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/clear_effect/) entity action clears all or just one status effect from the entity.
+
+        TODO
+
 health-action:
     title: Health Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Heal `origins:heal` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/heal/) entity action heals the entity by a certain amount of half hearts (`amount` field). Healing by 20 would set the user to full health (10 hearts) normally.
+
+        The [Damage `origins:damage` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/damage/) entity action damages the entity by a certain amount of half hearts (`amount` field). Damaging by 10 hearts will take away half of the health bar (5 hearts) normally.
+
+        The Damage entity action also allows for a `source` field, which when given a [Damage Source object](https://origins.readthedocs.io/en/latest/types/data_types/damage_source/), controls how the damage is applied - i.e., by changing the death message, damage type, whether armor is bypassed, etc.
+
+        Example fire damage action [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:damage",
+            "amount": 4,
+            "source": {
+                "name": "onFire",
+                "fire": true,
+                "bypasses_armor": true
+            }
+        }
+        ```
+        This does 2 hearts of `onFire` damage - considered fire damage - that bypasses armor.
+
 open-inventory-action:
     title: Open Inventory Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Crafting Table `origins:crafting_table` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/crafting_table/) entity action opens the crafting table GUI for the entity as if they right clicked a crafting table.
+
+        The [Ender Chest `origins:ender_chest` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/ender_chest/) entity action opens the ender chest GUI for the entity as if they right clicked an ender chest.
+
+        Example power which opens the ender chest on key press [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:active_self",
+            "entity_action": {
+                "type": "origins:ender_chest"
+            },
+            "key": {
+                "key": "key.origins.primary_active"
+            }
+        }
+        ```
+
 inventory-action:
     title: Inventory Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        There are several entity actions that interact with the items in a player/entity's inventory. Most of these actions work based upon [Item Actions](https://origins.readthedocs.io/en/latest/types/item_action_types/), and items effected can be restricted via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/).
+
+        The [Give `origins:give` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/give/) entity action gives an entity an item stack by inserting it into their inventory or dropping it on the ground if there is no available inventory space. The [Item Stack](https://origins.readthedocs.io/en/latest/types/data_types/item_stack/) given is configurable through the `stack` field. You can optionally provide an `item_action` to change the item stack before it is given, or specify a preferred equipment slot for the item to go with the `preferred_slot` field (Accepts one of: "chest", "feet", "head", "legs", "mainhand", or "offhand").
+
+        The [Equipped Item Action `origins:equipped_item_action` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/equipped_item_action/) entity action executes an `item_action` on the item in one equipped item slot (`equipment_slot` field). The slot is one of: "mainhand", "offhand", "head", "chest", "legs", or "feet".
+
+        The [Drop Inventory `origins:drop_inventory` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/drop_inventory/) entity action drops certain items from the player's main inventory or power-based inventory. The amount of items dropped, slots dropped from, inventories are dropped from, item types dropped, and how items are dropped can all be configured via various fields present on the power. Notably the `item_condition` field can be used to restrict which items are dropped.
+
+        The [Modify Inventory `origins:modify_inventory` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/modify_inventory/) entity action uses an `item_action` to modify certain items specified by the `item_condition` field. More fields are available to configure the slots and inventories the modification occurs in.
+
+        The [Replace Inventory `origins:replace_inventory` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/replace_inventory/) entity action replaces the items specified by the `item_condition` field with a given [Item Stack](https://origins.readthedocs.io/en/latest/types/data_types/item_stack/) (`stack` field). An `item_action` can be provided to modify the stack after replacement. More fields are available to configure the slots and inventories the replacement occurs in.
+
+        Entity action which gives 3 eggs [JSON](#json-format)
+        ```json
+        "entity_action": {
+            "type": "origins:give",
+            "stack": {
+                "item": "minecraft:egg",
+                "amount": 3
+            }
+        }
+        ```
+
+        Entity action that damages all armor value items [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:modify_inventory",
+            "item_condition": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 0
+            },
+            "item_action": {
+                "type": "origins:damage",
+                "amount": 1,
+                "ignore_unbreaking": true
+            }
+        }
+        ```
+
 sound-action:
     title: Sound Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Play Sound `origins:play_sound` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/play_sound/) entity action plays a sound event at the entity's position.
+
+        The sound played is specified by the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.fandom.com/wiki/Sounds.json/Java_Edition_values).
+
+        The `volume` field controls the number of blocks the sound can be heard from. A value of 1.0 means 16 blocks, 0.5 means 8 blocks, 3.0 means 48 blocks, etc. It defaults to 1.0 or 16 blocks.
+
+        The `pitch` field controls the pitch of the sound event by multiplying it's frequency. It ranges from 0.0 to 2.0 and defaults to 1.0. 1.0 means no pitch change, 0.5 means one octave lower, 2.0 means one octave higher, and 0.25 means two octaves lower.
+        
+        For note block sounds, the default sound is F#4. Here's a table showing the frequencies of note block sounds (based on 2^(n/12)):
+
+        | Note | Freqency |
+        | ---- | -------- |
+        | F#3  | 0.500000 |
+        | G3   | 0.529732 |
+        | G#3  | 0.561231 |
+        | A3   | 0.594604 |
+        | A#3  | 0.629961 |
+        | B3   | 0.667420 |
+        | C4   | 0.707107 |
+        | C#4  | 0.749154 |
+        | D4   | 0.793701 |
+        | D#4  | 0.840896 |
+        | E4   | 0.890899 |
+        | F4   | 0.943874 |
+        | F#4  | 1.000000 |
+        | G4   | 1.059463 |
+        | G#4  | 1.122462 |
+        | A4   | 1.189207 |
+        | A#4  | 1.259921 |
+        | B4   | 1.334840 |
+        | C5   | 1.414214 |
+        | C#5  | 1.498307 |
+        | D5   | 1.587401 |
+        | D#5  | 1.681793 |
+        | E5   | 1.781797 |
+        | F5   | 1.887749 |
+        | F#5  | 2.000000 |
+
+        Entity action that plays the enderman death sound within 24 blocks [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:play_sound",
+            "sound": "minecraft:entity.enderman.death",
+            "volume": 1.5
+        }
+        ```
+
+        Entity action that plays C5 on a note block harp [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:play_sound",
+            "sound": "minecraft:block.note_block.harp",
+            "pitch": 1.414214
+        }
+        ```
+
+particle-action:
+    title: Particle Action
+    text: |
+        The [Particle]()
+
 spawn-action:
     title: Spawn Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Spawn Entity `origins:add_velocity` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/spawn_entity/) entity action spawns another entity at the position of the actor entity. The ID of the entity spawned is specified by the `entity_type` field ([This is a list of all entity IDs](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Entities)). Extra NBT for that entity can be provided through the `nbt` field, and an `entity_action` can be executed on the spawned entity as well.
+
+        For acquiring NBT data, I recommend using [`mcstacker.net`](https://mcstacker.net/).
+
+        Entity action that spawns a no AI baby zombie holding a gold block [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:spawn_entity",
+            "entity_type": "minecraft:zombie",
+            "tag": "{NoAI:1b,IsBaby:1,HandItems:[{id:\"minecraft:gold_block\",Count:1},{}]}"
+        }
+        ```
+
 explode-action:
     title: Explode Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Explode `origins:explode` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/explode/) entity action summons an explosion at the entity with a specific explosion power.
+
+        TODO
+
 fire-action:
     title: Fire Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Set On Fire `origins:set_on_fire` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/set_on_fire/) entity action sets the entity on fire.
+
+        The [Extinguish `origins:extinguish` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/extinguish/) entity action extinguishes the entity if they are on fire, removing the burning effect.
+
+        TODO
+
 hunger-action:
     title: Hunger Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        These food related entity actions will only work on players.
+
+        The [Feed `origins:feed` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/feed/) entity action fills up the _player_ entity's hunger bar as if they had eaten food.
+
+        The [Exhaust `origins:exhaust` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/exhaust/) entity action applies exhaustion to the entity, reducing saturation and hunger.
+
+        TODO
+
 command-action:
     title: Command Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Execute Command `origins:execute_command` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action executes a command with the entity as the source (@s).
+
+        Entity action which says hello in the chat [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:execute_command",
+            "command": "say Hello World!"
+        }
+        ```
+
 other-action:
     title: Other Action
     text: |
-        TODO - [Click here for now](#raw-other).
+        A full list of entity actions can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/entity_action_types/). Remember that the [Execute Command `origins:execute_command` (click here for more info)](#command-action) is able to execute any command in the game, including functions, making it able to do things the other actions could never do.
+
+        If none of the actions listed on there provide the functionality you need, there is a very real possibility there is NO action that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are two great addon mods:
+        - [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) - [Wiki](https://apugli.readthedocs.io/en/latest/)
+        - [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) - [Wiki](https://raa-docs.readthedocs.io/en/latest/)
+
+        You can find more addons in the `#addons` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or by [viewing dependants on CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/origins/relations/dependents?filter-related-dependents=3).
+        
+        You can also suggest an action in the `#suggestions` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or perhaps just write the code for the action yourself in an addon.
 
 
 

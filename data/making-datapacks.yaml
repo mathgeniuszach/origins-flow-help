@@ -20,13 +20,11 @@ making-powers:
 
         Some powers actually require you to use multiple powers in order to work properly. If you want to use a power of an existing origin, you can see the list of all powers the base game origins have in [this list (click here)](https://origins.readthedocs.io/en/latest/misc/base_contents/origins/).
 
-        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a condition that specifies when the power should be active. By understanding these two parts and using them like basic building blocks, you can make almost any power you want. [For more about conditions, click here](#power-conditions).
+        If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a [condition](#power-conditions) that specifies when the power should be active. By understanding these two parts and using them like basic building blocks, you can make almost any power you want.
 
-        Note, if you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
+        You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/). If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more (A lot of these still need to be worked on; if you see a TODO page, you might want to ask in the Discord instead).
 
-        Let's start with the power type. You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/).
-        
-        If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more (A lot of these still need to be worked on; if you see a TODO page, you'll probably want to ask in the Discord instead):
+        [If you want to learn more about conditions, click here](#power-conditions).
     opts:
       - text: How do I add a power to an origin?
         link: what-the-power
@@ -176,6 +174,10 @@ action-power:
 
         If you can't find what you want on the wiki or just want some links for convenience, you can select what you want a single action to be below to learn more:
     opts:
+      - text: Apply an action to certain entities nearby
+        link: area-action
+      - text: Raycast and apply action to hit block/entity
+        link: raycast-action
       - text: Add velocity
         link: velocity-action
       - text: Add XP
@@ -192,7 +194,9 @@ action-power:
         link: inventory-action
       - text: Play a sound
         link: sound-action
-      - text: Spawn an entity/particles
+      - text: Spawn Particles
+        link: particle-action
+      - text: Spawn an entity
         link: spawn-action
       - text: Explode
         link: explode-action
@@ -212,7 +216,7 @@ power-conditions:
 
         Note that certain power types (the oldest ones, really) have two variants; a "normal" type, and a "conditioned" type. Conditions only work on the "conditioned" type.
 
-        Every power condition is an "Entity Condition" that runs on the player. You can find the complete list of entity conditions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_condition_types/).
+        Every power condition is an "Entity Condition" that runs on the owner of the power as the entity. [Click here to see the complete list of regular Entity Conditions](https://origins.readthedocs.io/en/latest/types/entity_condition_types/). If you want to combine conditions together, look at the [Meta Conditions list](https://origins.readthedocs.io/en/latest/types/meta_condition_types/), which provides logical operators and some other useful logic.
 
         If you can't find what you want on there or just want some links for convenience, you can click when you want your power to be active below to learn more:
     opts:
