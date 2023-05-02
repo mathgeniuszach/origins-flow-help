@@ -212,7 +212,7 @@ action-power:
 power-conditions:
     title: Power Conditions
     text: |
-        Conditions specify *when* a power is active. A power will only "work" and exist when the condition is true.
+        Conditions specify *when* a power is active. A power will only "work" and exist when the condition is true. To make the power work when the condition is false, set the `inverted` field on the condition to true.
 
         Note that certain power types (the oldest ones, really) have two variants; a "normal" type, and a "conditioned" type. Conditions only work on the "conditioned" type.
 
@@ -222,27 +222,31 @@ power-conditions:
     opts:
       - text: If in a biome
         link: biome-cond
-      - text: If in/near/on a block/fluid
+      - text: If block/fluid...
         link: block-cond
+      - text: If equipped item...
+        link: item-cond
+      - text: Raycast and check condition of entity/block
+        link: raycast-cond
       - text: If time of day
         link: time-cond
       - text: If in dimension
         link: dimension-cond
       - text: If exposed to sky
         link: sky-cond
-      - text: If stat (e.g., health) above/below/equal-to value
+      - text: If stat (e.g., health, experience) above/below/equal-to value
         link: stat-cond
       - text: If in rain
         link: rain-cond
       - text: If on fire
         link: fire-cond
-      - text: If riding something
+      - text: Check for passenger or mount
         link: riding-cond
-      - text: If scoreboard/command
-        link: score-cmd-cond
+      - text: If scoreboard/command/predicate/nbt
+        link: server-side-cond
+      - text: If living
+        link: living-cond
       - text: If moving/sneaking/sprinting/swimming
         link: moving-cond
-      - text: If has experience
-        link: experience-cond
       - text: If something else...
         link: other-cond

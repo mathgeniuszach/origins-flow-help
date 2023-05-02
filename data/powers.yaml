@@ -380,9 +380,10 @@ other-power:
     text: |
         A full list of power types can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/power_types/). You should also try looking at the [Action Power Types](#action-power), [Prevent Power Types](#prevent-power), and [Modify Power Types](#modify-power) to see if any of those have what you want, and consider that a Minecraft command/function may be able to work in conjuction with your power to provide the functionality you desire.
 
-        If none of the power types listed on there provide the functionality you need, there is a very real possibility there is NO power that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are two great addon mods:
+        If none of the power types listed on there provide the functionality you need, there is a very real possibility there is NO power that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are three great addon mods:
         - [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) - [Wiki](https://apugli.readthedocs.io/en/latest/)
         - [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) - [Wiki](https://raa-docs.readthedocs.io/en/latest/)
+        - [Extra Origins](https://legacy.curseforge.com/minecraft/mc-mods/extra-origins) - [Wiki](https://github.com/MoriyaShiine/extra-origins/wiki)
 
         You can find more addons in the `#addons` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or by [viewing dependants on CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/origins/relations/dependents?filter-related-dependents=3).
         
@@ -394,6 +395,8 @@ area-action:
     title: Area Action
     text: |
         Sometimes you don't want to execute an entity action on the main player or entity, but a certain entity nearby. There are a few actions that can help with this, and they all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/) and [Bientity Actions](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/). These are special conditions and actions that work on a pair of entities called the "actor" and a "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/) or the [Invert `origins:invert` (Action)](https://origins.readthedocs.io/en/latest/types/bientity_action_types/invert/).
+
+        As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of bientity conditions too.
         
         If you want to execute regular conditions or actions on either, use the [Actor Action `origins:actor_action`](https://origins.readthedocs.io/en/latest/types/bientity_action_types/actor_action/), [Target Action `origins:target_action`](https://origins.readthedocs.io/en/latest/types/bientity_action_types/target_action/), [Actor Condition `origins:actor_condition`](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/actor_condition/), or [Target Condition `origins:target_condition`](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/target_condition/) types.
 
@@ -507,7 +510,7 @@ open-inventory-action:
 inventory-action:
     title: Inventory Action
     text: |
-        There are several entity actions that interact with the items in a player/entity's inventory. Most of these actions work based upon [Item Actions](https://origins.readthedocs.io/en/latest/types/item_action_types/), and items effected can be restricted via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/).
+        There are several entity actions that interact with the items in a player/entity's inventory. Most of these actions work based upon [Item Actions](https://origins.readthedocs.io/en/latest/types/item_action_types/), and items effected can be restricted via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
 
         The [Give `origins:give` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/give/) entity action gives an entity an item stack by inserting it into their inventory or dropping it on the ground if there is no available inventory space. The [Item Stack](https://origins.readthedocs.io/en/latest/types/data_types/item_stack/) given is configurable through the `stack` field. You can optionally provide an `item_action` to change the item stack before it is given, or specify a preferred equipment slot for the item to go with the `preferred_slot` field (Accepts one of: "chest", "feet", "head", "legs", "mainhand", or "offhand").
 
@@ -560,33 +563,34 @@ sound-action:
         
         For note block sounds, the default sound is F#4. Here's a table showing the frequencies of note block sounds (based on 2^(n/12)):
 
-        | Note | Freqency |
-        | ---- | -------- |
-        | F#3  | 0.500000 |
-        | G3   | 0.529732 |
-        | G#3  | 0.561231 |
-        | A3   | 0.594604 |
-        | A#3  | 0.629961 |
-        | B3   | 0.667420 |
-        | C4   | 0.707107 |
-        | C#4  | 0.749154 |
-        | D4   | 0.793701 |
-        | D#4  | 0.840896 |
-        | E4   | 0.890899 |
-        | F4   | 0.943874 |
-        | F#4  | 1.000000 |
-        | G4   | 1.059463 |
-        | G#4  | 1.122462 |
-        | A4   | 1.189207 |
-        | A#4  | 1.259921 |
-        | B4   | 1.334840 |
-        | C5   | 1.414214 |
-        | C#5  | 1.498307 |
-        | D5   | 1.587401 |
-        | D#5  | 1.681793 |
-        | E5   | 1.781797 |
-        | F5   | 1.887749 |
-        | F#5  | 2.000000 |
+        <table>
+            <th><td>Note</td><td>Frequency</td></th>
+            <tr><td>F#3 </td><td>0.500000 </td></tr>
+            <tr><td>G3  </td><td>0.529732 </td></tr>
+            <tr><td>G#3 </td><td>0.561231 </td></tr>
+            <tr><td>A3  </td><td>0.594604 </td></tr>
+            <tr><td>A#3 </td><td>0.629961 </td></tr>
+            <tr><td>B3  </td><td>0.667420 </td></tr>
+            <tr><td>C4  </td><td>0.707107 </td></tr>
+            <tr><td>C#4 </td><td>0.749154 </td></tr>
+            <tr><td>D4  </td><td>0.793701 </td></tr>
+            <tr><td>D#4 </td><td>0.840896 </td></tr>
+            <tr><td>E4  </td><td>0.890899 </td></tr>
+            <tr><td>F4  </td><td>0.943874 </td></tr>
+            <tr><td>F#4 </td><td>1.000000 </td></tr>
+            <tr><td>G4  </td><td>1.059463 </td></tr>
+            <tr><td>G#4 </td><td>1.122462 </td></tr>
+            <tr><td>A4  </td><td>1.189207 </td></tr>
+            <tr><td>A#4 </td><td>1.259921 </td></tr>
+            <tr><td>B4  </td><td>1.334840 </td></tr>
+            <tr><td>C5  </td><td>1.414214 </td></tr>
+            <tr><td>C#5 </td><td>1.498307 </td></tr>
+            <tr><td>D5  </td><td>1.587401 </td></tr>
+            <tr><td>D#5 </td><td>1.681793 </td></tr>
+            <tr><td>E5  </td><td>1.781797 </td></tr>
+            <tr><td>F5  </td><td>1.887749 </td></tr>
+            <tr><td>F#5 </td><td>2.000000 </td></tr>
+        </table>
 
         Entity action that plays the enderman death sound within 24 blocks [JSON](#json-format):
         ```json
@@ -708,54 +712,306 @@ other-action:
 
 
 biome-cond:
-    title: Biome
+    title: Biome Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Biome `origins:biome` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/biome/) entity condition checks whether the entity is in a specified biome/biomes. The biome(s) to check for can be controlled via either the `biome` or `biomes` field.
+
+        Optionally, a "condition" field is available that allows the checking the biome against a more complex [Biome Condition](https://origins.readthedocs.io/en/latest/types/biome_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
+
+        Condition that checks if the entity is a plains biome [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:biome",
+            "biome": "minecraft:plains"
+        }
+        ```
+
 block-cond:
-    title: Block
+    title: Block Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        Several block-related conditions exist that allow for checking nearby blocks against a [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
+
+        The [Block Collision `origins:block_collision` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/block_collision/) entity condition checks a `block_condition` against a block the entity is colliding with.
+
+        The [Block In Radius `origins:block_in_radius` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/block_in_radius/) entity condition checks if a certain number of blocks match a given `block_condition` within a given `radius` in a specific `shape` (defaults to cube).
+
+        The [In Block Anywhere `origins:in_block_anywhere` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/in_block_anywhere/) entity condition checks if a certain number of blocks that match a given `block_condition` are overlapping with the entity's eyes or feet.
+
+        The [In Block `origins:in_block` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/in_block/) entity condition checks if the block the entity's feet is inside matches a given `block_condition`.
+
+        The [On Block `origins:on_block` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/on_block/) entity condition checks if the block the entity is standing on matches a given `block_condition`.
+
+        The [Submerged In `origins:submerged_in` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/submerged_in/) entity condition checks if the entity's eyes are in the `fluid` specified. 
+
+        The [Fluid Height `origins:fluid_height` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/distance_from_coordinates/) entity condition checks how deep the entity is within a given fluid, where the values get larger the deeper you are. If the entity is not in the liquid, the fluid height will be 0. If the entity is fully under the liquid (they cannot breathe air), this value will be at least 1.5. Higher values than 2.8 wrap back to 1.78.
+
+        The [Distance From Coordinates `origins:distance_from_coordinates` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/distance_from_coordinates/) entity condition checks the entity's position relative to a point in space, either relative to 0,0 or the world spawn.
+
+        The [Collided Horizontally `origins:collided_horizontally` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/collided_horizontally/) entity condition checks if the entity is walking against a block horizontally.
+
+        Condition that checks if the entity is standing on a grass block [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:on_block",
+            "block_condition": {
+                "type": "origins:block",
+                "block": "minecraft:grass_block"
+            }
+        }
+        ```
+
+item-cond:
+    title: Item Condition
+    text: |
+        The following entity conditions allow checking if an item is equipped. Items can be checked via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
+
+        The [Equipped Item `origins:equipped_item` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/equipped_item/) entity condition checks if the entity has an item equipped in the specified `equipment_slot` (which can be one of "mainhand", "offhand", "head", "chest", "legs", or "feet").
+
+        The [Using Item `origins:using_item` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/using_item/) entity condition checks if the entity is using an item (eating, drinking, shielding, drawing a bow, etc.).
+
+        The [Using Effective Tool `origins:using_effective_tool` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/using_effective_tool/) entity condition checks if the player entity is using the effective tool of the block they're mining. This condition only works on players.
+
+        Condition which checks if the entity is holding a harvest level 2 or more item [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:equipped_item",
+            "equipment_slot": "mainhand",
+            "item_condition": {
+                "type": "origins:harvest_level",
+                "comparison": ">=",
+                "compare_to": 2
+            }
+        }
+        ```
+
+raycast-cond:
+    title: Raycast Condition
+    text: |
+        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/raycast/) entity condition casts a ray in the direction the "actor" entity is looking until it hits a block or entity, known as the "target".
+
+        TODO
+
 time-cond:
-    title: Time
+    title: Time Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        There are two base conditions that allow checking the time.
+
+        The [Daytime `origins:daytime` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/daytime/) entity condition checks if it is daytime in the world. To check for night time, set the `inverted` field on this condition to true.
+
+        The [Time of Day `origins:time_of_day` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/time_of_day/) entity condition compares the current day time of the world (in ticks) to another value. The day time goes from 0 to 24000 and loops around; 23000-24000 (23230) is sunrise, 6000 is noon, 12000-13000 (12780) is sunset, and 18000 is midnight.
+
+        Condition that checks if the sun is setting [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:time_of_day",
+                    "comparison": ">=",
+                    "compare_to": 12000
+                },
+                {
+                    "type": "origins:time_of_day",
+                    "comparison": "<=",
+                    "compare_to": 13000
+                }
+            ]
+        }
+        ```
+
 dimension-cond:
-    title: Dimension
+    title: Dimension Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Dimension `origins:dimension` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/dimension/) entity condition checks whether the entity is in a specified dimension.
+
+        Vanilla dimensions are minecraft:overworld, minecraft:the_nether and minecraft:the_end, but namespace and IDs of custom/modded dimensions should also work.
+
+        Entity condition that checks if the entity is not in the overworld [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:dimension",
+            "dimension": "minecraft:overworld",
+            "inverted": true
+        }
+        ```
+
 sky-cond:
-    title: Sky
+    title: Sky Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [Exposed to Sky `origins:exposed_to_sky` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/exposed_to_sky/) entity condition checks if the entity is exposed to the sky, meaning there are no blocks above them.
+
+        Example [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:exposed_to_sky"
+        }
+        ```
+
 stat-cond:
-    title: Stat
+    title: Stat Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        All of the powers in this section function in basically the same way; they all involve a "stat" (e.g. health, oxygen, armor) of some kind.
+
+        The [Attribute `origins:attribute` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/attribute/) entity condition checks how much of a given `attribute` the entity has. for a full list of attributes check [the Minecraft Fandom Wiki](https://minecraft.fandom.com/wiki/Attribute#Attributes).
+
+        The [Air `origins:air` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/air/) entity condition checks how much breath/air/bubbles/oxygen the entity has left in ticks. Players (and most mobs) have a max value of 300 ticks (15 secs), while dolphins have a max value of 4800 ticks (240 secs). Axolotls, on the other hand, have a max value of 6000 ticks (300 secs).
+
+        The [Fall Distance `origins:fall_distance` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/fall_distance/) entity condition checks how many blocks the entity has been falling for.
+
+        The [Food Level `origins:food_level` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/food_level/) entity condition checks how many half-hunger legs the player entity has. Food level is in the range of 0 to 20. This condition only works on players.
+
+        The [Saturation Level `origins:saturation_level` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/saturation_level/) entity condition checks how many half-hunger legs of saturation (normally invisible unless you use something like [AppleSkin](https://www.curseforge.com/minecraft/mc-mods/appleskin)) the player entity has. Saturation is in the range of 0 to 20 and can never be greater than the food level. This condition only works on players.
+
+        The [Health `origins:health` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/health/) entity condition checks the current _absolute_ health value of the entity in half-hearts.
+
+        The [Relative Health `origins:relative_health` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/relative_health/) entity condition checks the current health _percentage_ value of the entity, calculated by `currentHealth / maxHealth`.
+
+        The [XP Levels `origins:xp_levels` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/xp_levels/) entity condition checks how many experience levels the player entity has. This condition only works on players.
+        
+        The [XP Points `origins:xp_points` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/xp_points/) entity condition checks how many experience points the player entity has. This condition only works on players.
+
+        Condition which checks if the entity has 10 or more armor points [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:attribute",
+            "attribute": "minecraft:generic.armor",
+            "comparison": ">=",
+            "compare_to": 10.0
+        }
+        ```
+
 rain-cond:
-    title: Rain
+    title: Rain Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [In Rain `origins:in_rain` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/in_rain/) entity condition checks if it is raining at the entity's position.
+
+        Example [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:in_rain"
+        }
+        ```
+
 fire-cond:
-    title: Fire
+    title: Fire Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        The [On Fire `origins:on_fire` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/on_fire/) entity condition checks if the entity is on fire.
+
+        Example [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:on_fire"
+        }
+        ```
+
 riding-cond:
-    title: Riding
+    title: Riding Condition
     text: |
-        TODO - [Click here for now](#raw-other).
-score-cmd-cond:
-    title: Score/Command
+        These entity conditions involve passengers and mounts. They all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/). These are special conditions and actions that work on a pair of entities called the "actor" and a "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/).
+
+        The [Passenger `origins:passenger` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger/) entity condition checks if the entity with the power (the actor) is being directly ridden by some other entity (the target).
+
+        The [Passenger Recursive `origins:passenger_recursive` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the actor) is being directly or indirectly ridden by some other entity (the target).
+
+        The [Riding `origins:riding` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the actor) is directly riding an entity (the target).
+
+        The [Riding Recursive `origins:riding_recursive` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/riding_recursive/) entity condition checks if the entity with the power (the actor) is directly or indirectly riding an entity (the target).
+
+        The [Riding Root `origins:riding_root` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/riding_root/) entity condition checks if the entity with the power (the actor) is indirectly riding an entity at the start of the riding chain (the target).
+
+        Condition which checks if the entity is riding a minecart [JSON](#json-format)
+        ```json
+        "condition": {
+            "type": "origins:riding",
+            "bientity_condition": {
+                "type": "origins:target_condition",
+                "condition": {
+                    "type": "origins:entity_type",
+                    "entity_type": "minecraft:minecart"
+                }
+            }
+        }
+        ```
+
+server-side-cond:
+    title: Score/Command/Predicate/NBT Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        These entity conditions are by far the most powerful, but as a consequence they only work server-side. This means that they do not work with client side power types such as `origins:climbing`, `origins:entity_glow`, and`origins:shader` won't work with this.
+
+        The [Scoreboard `origins:scoreboard` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/scoreboard/) entity condition checks the entity's score in a scoreboard objective.
+
+        The [Command `origins:command` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/command/) entity condition executes a command and checks the number result, which is the number of things effected or just 1 on command success, or 0 on failure.
+
+        The [Predicate `origins:predicate` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/predicate/) entity condition checks if the entity fulfills a specified [Predicate](https://minecraft.gamepedia.com/Predicate).
+
+        The [NBT `origins:nbt` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/nbt/) entity condition checks if the entity has the given NBT data.
+
+        Condition that checks for 4 or more skeletons within a 64-block radius [JSON](#json-format)
+        ```json
+        "condition": {
+            "type": "origins:command",
+            "command": "execute if entity @e[type=#minecraft:skeletons, distance=..64]",
+            "comparison": ">=",
+            "compare_to": 4
+        }
+        ```
+
+living-cond:
+    title: Living Condition
+    text: |
+        The [Living `origins:living` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/living/) entity condition checks if the entity is a mob or a player (a LivingEntity).
+
+        Example [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:living"
+        }
+        ```
+
 moving-cond:
-    title: Moving
+    title: Moving Condition
     text: |
-        TODO - [Click here for now](#raw-other).
-experience-cond:
-    title: Experience
-    text: |
-        TODO - [Click here for now](#raw-other).
+        All of these conditions involve some kind of movement, except for sneaking.
+
+        The [Moving `origins:moving` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/moving/) entity condition checks if the entity is moving horizontally.
+
+        The [Sneaking `origins:sneaking` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/sneaking/) entity condition checks if the player entity is sneaking. This condition only works on players.
+
+        The [Swimming `origins:swimming` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/swimming/) entity condition checks if the entity is in the swimming pose. This condition only works on players.
+
+        The [Sneaking `origins:sneaking` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/sneaking/) entity condition checks if the player entity is sneaking. This condition only works on players.
+
+        The [Climbing `origins:climbing` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/climbing/) entity condition checks if the entity is climbing.
+
+        The [Creative Flying `origins:creative_flying` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/creative_flying/) entity condition checks if the entity is flying with creative-mode-like flight.
+
+        The [Fall Flying `origins:fall_flying` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/creative_flying/) entity condition checks if the entity is flying with an elytra or elytra like power.
+
+        Condition that checks for sneak-walking [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:moving"
+                },
+                {
+                    "type": "origins:sneaking"
+                }
+            ]
+        }
+        ```
+
 other-cond:
-    title: Other
+    title: Other Condition
     text: |
-        TODO - [Click here for now](#raw-other).
+        A full list of entity conditions can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/entity_condition_types/). Remember that the [Scoreboard/Command Conditions](#score-cmd-cond) are able to check any command in the game, making it able to do things the other conditions could never do.
+
+        If none of the conditions listed on there provide the functionality you need, there is a very real possibility there is NO condition that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are three great addon mods:
+        - [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) - [Wiki](https://apugli.readthedocs.io/en/latest/)
+        - [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) - [Wiki](https://raa-docs.readthedocs.io/en/latest/)
+        - [Extra Origins](https://legacy.curseforge.com/minecraft/mc-mods/extra-origins) - [Wiki](https://github.com/MoriyaShiine/extra-origins/wiki)
+
+        You can find more addons in the `#addons` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or by [viewing dependants on CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/origins/relations/dependents?filter-related-dependents=3).
+        
+        You can also suggest a condition in the `#suggestions` channel in the [official Origins Discord](https://discord.gg/4mTMHu3), or perhaps just write the code for the condition yourself in an addon.
