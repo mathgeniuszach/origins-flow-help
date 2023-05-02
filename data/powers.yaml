@@ -564,7 +564,7 @@ sound-action:
         For note block sounds, the default sound is F#4. Here's a table showing the frequencies of note block sounds (based on 2^(n/12)):
 
         <table>
-            <th><td>Note</td><td>Frequency</td></th>
+            <tr><th>Note</th><th>Frequency</th></tr>
             <tr><td>F#3 </td><td>0.500000 </td></tr>
             <tr><td>G3  </td><td>0.529732 </td></tr>
             <tr><td>G#3 </td><td>0.561231 </td></tr>
