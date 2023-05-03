@@ -1,9 +1,11 @@
 index:
     title: Home
     text: |
+        This is an interactive help repository for all things related to the Minecraft [Origins](https://www.curseforge.com/minecraft/mc-mods/origins) mod.
+        
         If you have trouble understanding this guide, please let me know in [my Discord](https://discord.gg/pBFqEcXvW5).
 
-        This guide is incomplete. Please help me complete it through [this GitHub repo](https://github.com/xMGZx/origins-flow-help).
+        This guide may contain errors or bugs. Please help me fix them through [this GitHub repo](https://github.com/xMGZx/origins-flow-help) or report bugs/suggestions in the Discord above.
 
         What do you need help with?
     opts:
