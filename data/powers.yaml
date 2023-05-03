@@ -474,7 +474,7 @@ launch-power:
         }
         ```
 
-        TODO - Research the speed field's impact on projectile motion
+        TODO - Research the speed field's impact on motion and height
 
 loot-table-power:
     title: Loot Table
@@ -483,7 +483,7 @@ loot-table-power:
 
         The `replace` field requires an object with `"key": "value"` pairs. Each "key" is a [regular expression](https://en.wikipedia.org/wiki/Regular_expression) matching all loot tables to replace, and each "value" is the loot table to replace all matches with.
 
-        In case multiple powers want to replace a loot table, the power with the highest `priority` (default to 0) will "win" and it will successfully replace the table while the other powers will be ignored (TODO - Verify this). If multiple powers with the same priority try to do the replacement, the power that successfully "wins" is undefined (unknowable normally, but not necessarily random).
+        In case multiple powers want to replace a loot table, the power with the highest `priority` (default to 0) will "win" and it will successfully replace the table while the other powers will be ignored. If multiple powers with the same priority try to do the replacement, the power that successfully "wins" is undefined (unknowable normally and not necessarily random).
 
         A [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_action_types/), [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/), and an [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) can all be used to determine when to apply the loot table replacement. As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of all conditions too.
 
