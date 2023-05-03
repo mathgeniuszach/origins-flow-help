@@ -658,30 +658,89 @@ velocity-action:
     text: |
         The [Add Velocity `origins:add_velocity` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/add_velocity/) entity action adds to or sets the entity's velocity.
 
-        TODO
+        The amount of velocity added in each axis can be set via the `x`, `y`, and `z` values. By default, these values are in "world" space meaning they add directly to the x, y, and z axis velocity of the entity; however, it may be more useful to add velocity relative to the entity's looking direction ("local" space) or some other space. This can be set via the `space` field to any of the values specified on the [Space](https://origins.readthedocs.io/en/latest/misc/extras/space/) page of the Origins wiki.
+
+        If the `set` field is set to true, this action directly sets the entity's motion instead of adding to it.
+
+        If the entity action type behaves unexpectedly, try setting either the `client` (should always work) or `server` (might not work) boolean fields to false. In most cases you'll want to set the `client` field to false.
+
+        Example action which cancels all velocity (and resets fall distance) [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:and",
+            "actions": [
+                {
+                    "type": "origins:add_velocity",
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "client": false,
+                    "set": true
+                },
+                {
+                    "type": "origins:set_fall_distance",
+                    "fall_distance": 0
+                }
+            ]
+        }
+        ```
+
+        TODO - Research the fields' impact on entity speed
 
 xp-action:
     title: XP Action
     text: |
-        The [Add XP `origins:add_xp` (click here for more info)](hhttps://origins.readthedocs.io/en/latest/types/entity_action_types/add_xp/) entity action adds experience points or levels to the entity.
+        The [Add XP `origins:add_xp` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/add_xp/) entity action adds experience points or levels to the entity. The amount of points added is set via the `points` field, and the amount of levels added is set via the `levels` field.
 
-        TODO
+        Entity action which adds 2 levels [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:add_xp",
+            "levels": 2
+        }
+        ```
 
 block-action:
     title: Block Action
     text: |
-        The [Block Action At `origins:block_action_at` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/block_action_at/) entity action executes a block action at the position of the entity.
+        The [Block Action At `origins:block_action_at` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/block_action_at/) entity action executes a [Block Action](https://origins.readthedocs.io/en/latest/types/block_action_types/) at the position of the entity. Like other kinds of actions, a [Meta Action](https://origins.readthedocs.io/en/latest/types/meta_action_types/) can be used as well.
 
-        TODO
+        Entity action that sets the block at the entity's feet to sand [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:block_action_at",
+            "block_action": {
+                "type": "origins:set_block",
+                "block": "minecraft:sand"
+            }
+        }
+        ```
 
 effect-action:
     title: Effect Action
     text: |
-        The [Apply Effect `origins:apply_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/apply_effect/) entity action applies one or more status effects to the entity.
+        The [Apply Effect `origins:apply_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/apply_effect/) entity action applies one or more status effects to the entity. The effects applied can be specified via either the `effect` (A single [Status Effect Instance](https://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance/)) or `effects` ([Array](https://origins.readthedocs.io/en/latest/types/data_types/array/) of [Status Effect Instances](https://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance/)). 
+        
+        Each [Status Effect Instance](https://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance/) has an `effect` field that should be set to the [Status Effect ID (click for a full list of vanilla ids)](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Effects) of a status effect to give; other fields are optional. Optionally, the `duration` (in ticks, defaults to 100 or 5 secs) and `amplifier` (0 level 1, 1 level 2, defaults to 0 or level 1) of the effect can be set as well. Set `is_ambient` to true (defaults to false) to make particle effects less noticable, or `show_particles` to false (defaults to true) to turn off particle effects entirely. If you don't want the icon of the effect to show on the hud, set `show_icon` to false (defaults to true).
 
-        The [Clear Effect `origins:clear_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/clear_effect/) entity action clears all or just one status effect from the entity.
+        The [Clear Effect `origins:clear_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/clear_effect/) entity action clears all or just one status effect from the entity. By default, this action clears all effects from the entity, but the `effect` field can be set to a [Status Effect ID (click for a full list of vanilla ids)](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Effects) to only clear that one effect.
 
-        TODO
+        Entity action which gives Slow Falling I and Slowness I for 20 seconds [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:apply_effect",
+            "effects": [
+                {
+                    "effect": "minecraft:slow_falling",
+                    "duration": 400
+                },
+                {
+                    "effect": "minecraft:slowness",
+                    "duration": 400
+                }
+            ]
+        }
+        ```
 
 health-action:
     title: Health Action
@@ -868,27 +927,57 @@ explode-action:
     text: |
         The [Explode `origins:explode` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/explode/) entity action summons an explosion at the entity with a specific explosion power.
 
-        TODO
+        You can set the power of the explosion via the `power` field. [Here's a list of all vanilla explosion power levels](https://minecraft.fandom.com/wiki/Explosion).
+
+        By default, this action will damage the entity who invoked the action (which is often the player who summoned the explosion). If you do not want this to damage said entity, set `damage_self` to false.
+
+        You can control which blocks get exploded via the `indestructable` and `destructable` fields, which each accept a [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too. You probably only want to use one of these fields. If `indestructable` is set, all blocks will be destroyed except the blocks which match the condition. If `destructable` is set, only blocks which match the condition will be destroyed.
+
+        You can change if blocks are dropped via the `destruction_type` field, which can be "break" (default, all blocks will drop loot), "destroy" (some blocks will drop loot), or "none" (no blocks will drop loot).
+
+        If you want the explosion to also create fire, set the `create_fire` field to true.
+
+        Entity action which summons a TNT-like explosion that doesn't damage the actor [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:explode",
+            "power": 4,
+            "damage_self": false
+        }
+        ```
 
 fire-action:
     title: Fire Action
     text: |
-        The [Set On Fire `origins:set_on_fire` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/set_on_fire/) entity action sets the entity on fire.
+        The [Set On Fire `origins:set_on_fire` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/set_on_fire/) entity action sets the entity on fire for the number of seconds specified via the `duration` field.
 
         The [Extinguish `origins:extinguish` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/extinguish/) entity action extinguishes the entity if they are on fire, removing the burning effect.
 
-        TODO
+        Example action which sets the entity on fire for 5 seconds [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:set_on_fire",
+            "duration": 5
+        }
+        ```
 
 hunger-action:
     title: Hunger Action
     text: |
         These food related entity actions will only work on players.
 
-        The [Feed `origins:feed` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/feed/) entity action fills up the _player_ entity's hunger bar as if they had eaten food.
+        The [Feed `origins:feed` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/feed/) entity action fills up the _player_ entity's hunger bar as if they had eaten food. The `food` field specifies the number of half hunger bars to restore, and `food * saturation * 2` is the number of half saturation bars to restore. See the [Food level and saturation level restoration](https://minecraft.fandom.com/wiki/Hunger#Food_level_and_saturation_level_restoration) section on the Minecraft wiki for common food and saturation values. To mimic the saturation of a given item, set the `saturation` field to the "Saturation Ratio" value divided by 2.
 
-        The [Exhaust `origins:exhaust` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/exhaust/) entity action applies exhaustion to the entity, reducing saturation and hunger.
+        The [Exhaust `origins:exhaust` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/exhaust/) entity action applies exhaustion to the entity, reducing saturation and hunger. This value starts at 0 and increases up to 4 via various actions; once reaching 4, the total hunger value is decreased by 1 (half a hunger bar). See the [Exhaustion level increase](https://minecraft.fandom.com/wiki/Hunger#Exhaustion_level_increase) section on the Minecraft wiki to see how much exhaustion occurs from various actions.
 
-        TODO
+        Example action which feeds the food/saturation of an apple [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:feed",
+            "food": 4,
+            "saturation": 0.3
+        }
+        ```
 
 command-action:
     title: Command Action
