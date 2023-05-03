@@ -487,11 +487,24 @@ loot-table-power:
 
         A [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_action_types/), [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/), and an [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) can all be used to determine when to apply the loot table replacement. As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of all conditions too.
 
-        Here's a table explaining what entities, blocks, and items are tested for each loot table type:
+        Here's a table explaining what entities, blocks, and items are tested for each loot table type. Note that the actor is always the entity that has the power.
+        
+        TODO - This table is not complete; look at the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki to .
 
-        TODO - Look at [Replace Loot Table](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) page on the origins wiki to determine actor and target, and the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki.
+        <table>
+            <tr><th>Type</th><th>Description</th><th>Target</th><th>Item</th><th>Block</th></tr>
+            <tr><th>block</th><td>Block drops</td><td>Same as actor</td><td>?</td><td>?</td></tr>
+            <tr><th>chest</th><td>Any generated container</td><td>Same as actor</td><td>?</td><td>?</td></tr>
+            <tr><th>entity</th><td>Entity drops</td><td>The entity which died</td><td>?</td><td>?</td></tr>
+            <tr><th>fishing</th><td>Fishing</td><td>The actor's fishing bobber</td><td>?</td><td>?</td></tr>
+            <tr><th>gift</th><td>Gift from cat or villager</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><th>advancement_reward</th><td>Reward from advancement</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><th>barter</th><td>Bartering with piglins</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><th>archaeology</th><td>Brushing suspicious sand</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><th>generic</th><td>Generic</td><td>?</td><td>?</td><td>?</td></tr>
+        </table>
 
-        For [JSON](#json-format) examples, see the [Replace Loot Table](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) wiki page.
+        For [JSON](#json-format) examples, see the [Replace Loot Table (Examples)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/#Examples) wiki page.
 
 restrict-armor-power:
     title: Restrict Armor
