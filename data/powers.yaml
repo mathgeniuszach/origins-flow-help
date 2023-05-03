@@ -649,9 +649,72 @@ area-action:
 raycast-action:
     title: Raycast Action
     text: |
-        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/raycast/) entity action casts a ray in the direction the "actor" entity is looking until it hits a block or entity, known as the "target".
+        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/raycast/) entity action casts a ray (think of it like an invisible laser) in the direction the "actor" entity is looking that moves forward until it hits a block or entity, known as the "target".
 
-        TODO
+        ### Basic Functionality
+
+        The only required field for this action is `distance`, which determines the maximum distance the ray/laser will travel. Higher values may allow for further entities/blocks to be reached, but may also decrease performance. I recommend using 32 for this value in most cases, but you may want to increase or decrease this value depending on your use case.
+
+        By default, the ray/laser fired will travel forward until it "hits" a block (which can be a fluid) or an entity, or it will "miss" if it travels beyond the specified `distance` without hitting anything.
+
+        ### Configure What Happens on Hit
+
+        If specified, the regular entity action specified by the `before_action` field will be executed on the entity caster of the ray/laser.
+
+        Upon hitting a block/fluid, if it is specified, the [Block Action](https://origins.readthedocs.io/en/latest/types/block_action_types/) specified by the `block_action` field will be executed on that block/fluid.
+
+        Upon hitting an entity, if it is specified, the [Bientity Action](https://origins.readthedocs.io/en/latest/types/bientity_action_types/) specified by the `bientity_action` field will be executed with the actor (the entity who casted the ray/laser) and target (the entity hit) in context. To prevent this action from executing on certain entities that were hit, specify a [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/) (`bientity_condition` field).
+
+        If the ray misses, if it is specified, the regular entity action specified by the `miss_action` field will be executed on the entity caster of the ray/laser.
+
+        Like other conditions and actions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) and [Meta Actions](https://origins.readthedocs.io/en/latest/types/meta_action_types/) can be used here as well.
+
+        ### Configure What the Ray/Laser Hits
+
+        To make the ray not hit any entity, set the `entity` field to false; to make the ray not hit any block, set the `block` field to false.
+
+        The `fluid_handling` field can be used to control how the ray will handle fluids; this can be set to "any" (default, the ray stops at both flowing and source fluids), "none" (the ray does not stop at any fluid), or "source_only" (the ray only stops at fluid source blocks).
+        
+        The `shape_type` field can also be used to control which blocks the ray will travel through; this can be one of "visual" (default, the ray hits blocks which are not see through), "outline" (the ray takes the block shape into account and only hits faces of blocks), or "collider" (the ray stops only at blocks that cannot be walked through).
+
+        ### Execute Commands Throughout the Cast
+
+        Optionally, commands may be executed throughout the cast.
+
+        The `command_at_hit` field takes a command (in a string) to execute on the caster (as @s) and the position of the block or entity the ray cast has hit. It is not run on a miss. To run this command at a position before or after the position hit by the laser, set the `command_hit_offset` field to a negative or positive number respectively. This offsets the position in the direction the laser was traveling.
+
+        The `command_along_ray` field takes a command (in a string) to execute every "step" blocks/meters specified by the `command_step` field. To make these commands only execute on a successful hit, set `command_along_ray_only_on_hit` to true.
+
+        Example raycast action, which runs some say and particle commands [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:raycast",
+            "distance": 16,
+            "bientity_action": {
+                "type": "origins:target_action",
+                "action": {
+                    "type": "origins:execute_command",
+                    "command": "say I've been hit!"
+                }
+            },
+            "before_action": {
+                "type": "origins:execute_command",
+                "command": "say Before"
+            },
+            "hit_action": {
+                "type": "origins:execute_command",
+                "command": "say After (hit)"
+            },
+            "miss_action": {
+                "type": "origins:execute_command",
+                "command": "say After (miss)"
+            },
+            "command_at_hit": "particle minecraft:block_marker minecraft:emerald_block ~ ~ ~ 0 0 0 0.0 1 normal @a",
+            "command_along_ray": "particle minecraft:soul_fire_flame",
+            "command_step": 1,
+            "command_along_ray_only_on_hit": true
+        }
+        ```
 
 velocity-action:
     title: Velocity Action
@@ -1083,9 +1146,49 @@ item-cond:
 raycast-cond:
     title: Raycast Condition
     text: |
-        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/raycast/) entity condition casts a ray in the direction the "actor" entity is looking until it hits a block or entity, known as the "target".
+        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/raycast/) entity condition casts a ray (think of it as an invisible laser) in the direction the "actor" entity is looking until it hits a block or entity, known as the "target". This condition will be true if a hit is found that matches any sub-conditions provided. If no sub-conditions match the hit, this condition will be false.
 
-        TODO
+        ### Basic Functionality
+
+        The only required field for this condition is `distance`, which determines the maximum distance the ray/laser will travel. Higher values may allow for further entities/blocks to be reached, but may also decrease performance. I recommend using 32 for this value in most cases, but you may want to increase or decrease this value depending on your use case.
+
+        By default, the ray/laser fired will travel forward until it "hits" a block (which can be a fluid) or an entity, or it will "miss" if it travels beyond the specified `distance` without hitting anything. A hit makes the condition true and a miss makes the condition false.
+
+        ### Configure What Happens on Hit
+
+        Upon hitting a block/fluid, if it is specified, the [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/) specified by the `block_condition` field will be evaluated on that block/fluid. If it is true, then the condition will be true; otherwise, the condition will be false.
+
+        Upon hitting an entity, if it is specified, the [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/) specified by the `hit_bientity_condition` field will be evaluated with the actor (the entity who casted the ray/laser) and target (the entity hit) in context. If it is true, then the raycast condition will be true; otherwise, the raycast condition will be false.
+
+        On a miss, this raycast condition will be false.
+
+        Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
+
+        ### Configure What the Ray/Laser Hits
+
+        To make the ray not hit any entity, set the `entity` field to false; to make the ray not hit any block, set the `block` field to false.
+
+        The `fluid_handling` field can be used to control how the ray will handle fluids; this can be set to "any" (default, the ray stops at both flowing and source fluids), "none" (the ray does not stop at any fluid), or "source_only" (the ray only stops at fluid source blocks).
+        
+        The `shape_type` field can also be used to control which blocks the ray will travel through; this can be one of "visual" (default, the ray hits blocks which are not see through), "outline" (the ray takes the block shape into account and only hits faces of blocks), or "collider" (the ray stops only at blocks that cannot be walked through).
+
+        For entities, a [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/) (`match_bientity_condition` field) can be provided, which will prevent any entities that don't match the condition from being hit. For this condition, the actor is the entity who casted the ray/laser and the target is the entity that could be hit. Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
+
+        Condition that checks if a creeper is being looked at, ignoring fluids [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:raycast",
+            "distance": 32,
+            "fluid_handling": "none",
+            "hit_bientity_condition": {
+                "type": "origins:target_condition",
+                "condition": {
+                    "type": "origins:entity_type",
+                    "entity_type": "minecraft:creeper"
+                }
+            }
+        }
+        ```
 
 time-cond:
     title: Time Condition
