@@ -493,15 +493,15 @@ loot-table-power:
 
         <table>
             <tr><th>Type</th><th>Description</th><th>Target</th><th>Item</th><th>Block</th></tr>
-            <tr><th>block</th><td>Block drops</td><td>Same as actor</td><td>?</td><td>?</td></tr>
-            <tr><th>chest</th><td>Any generated container</td><td>Same as actor</td><td>?</td><td>?</td></tr>
-            <tr><th>entity</th><td>Entity drops</td><td>The entity which died</td><td>?</td><td>?</td></tr>
-            <tr><th>fishing</th><td>Fishing</td><td>The actor's fishing bobber</td><td>?</td><td>?</td></tr>
-            <tr><th>gift</th><td>Gift from cat or villager</td><td>?</td><td>?</td><td>?</td></tr>
-            <tr><th>advancement_reward</th><td>Reward from advancement</td><td>?</td><td>?</td><td>?</td></tr>
-            <tr><th>barter</th><td>Bartering with piglins</td><td>?</td><td>?</td><td>?</td></tr>
-            <tr><th>archaeology</th><td>Brushing suspicious sand</td><td>?</td><td>?</td><td>?</td></tr>
-            <tr><th>generic</th><td>Generic</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">block</code></td><td>Block drops</td><td>Same as actor</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">chest</code></td><td>Any generated container</td><td>Same as actor</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">entity</code></td><td>Entity drops</td><td>The entity which died</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">fishing</code></td><td>Fishing</td><td>The actor's fishing bobber</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">gift</code></td><td>Gift from cat or villager</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">advancement_reward</code></td><td>Reward from advancement</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">barter</code></td><td>Bartering with piglins</td><td>The piglin bartered with</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">archaeology</code></td><td>Brushing suspicious sand</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><td><code class="noborder">generic</code></td><td>Generic</td><td>?</td><td>?</td><td>?</td></tr>
         </table>
 
         For [JSON](#json-format) examples, see the [Replace Loot Table (Examples)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/#Examples) wiki page.
