@@ -496,7 +496,7 @@ loot-table-power:
             <tr><td><code class="noborder">entity</code></td><td>Entity drops</td><td>The entity which died</td><td></td><td>The block where the entity died</td></tr>
             <tr><td><code class="noborder">fishing</code></td><td>Fishing</td><td>The actor's fishing bobber</td><td>The fishing rod cast</td><td>The block where the fishing bobber is</td></tr>
             <tr><td><code class="noborder">gift</code></td><td>Gift from cat or villager</td><td>The cat or villager who gave the gift</td><td></td><td></td></tr>
-            <tr><td><code class="noborder">advancement_reward</code></td><td>Reward from an advancement</td><td>Same as actor</td><td></td><td>Position of the actor</td></tr>
+            <tr><td><code class="noborder">advancement_reward</code></td><td>Reward from an advancement</td><td>Same as actor</td><td></td><td>The block at the actor's position</td></tr>
             <tr><td><code class="noborder">barter</code></td><td>Bartering with piglins</td><td>The piglin bartered with</td><td></td><td></td></tr>
             <tr><td><code class="noborder">archaeology</code></td><td>Brushing suspicious sand</td><td>Same as actor</td><td></td><td>The suspicious sand</td></tr>
             <tr><td><code class="noborder">generic</code></td><td>Generic</td><td>?</td><td>?</td><td>?</td></tr>
