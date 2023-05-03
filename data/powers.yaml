@@ -487,22 +487,22 @@ loot-table-power:
 
         A [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_action_types/), [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/), and an [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) can all be used to determine when to apply the loot table replacement. As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of all conditions too.
 
-        Here's a table explaining what entities, blocks, and items are tested for each loot table type. Note that the actor is always the entity that has the power.
-        
-        TODO - This table is not complete; look at the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki to gain further understanding on the items and blocks tested.
+        Here's a table explaining what entities, blocks, and items are tested for each loot table type. Empty slots mean that thing cannot be tested. Note that the "actor" (in reference to the bientity condition and the "target") is always the entity that has the power.
 
         <table>
-            <tr><th>Type</th><th>Description</th><th>Target</th><th>Item</th><th>Block</th></tr>
-            <tr><td><code class="noborder">block</code></td><td>Block drops</td><td>Same as actor</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">chest</code></td><td>Any generated container</td><td>Same as actor</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">entity</code></td><td>Entity drops</td><td>The entity which died</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">fishing</code></td><td>Fishing</td><td>The actor's fishing bobber</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">gift</code></td><td>Gift from cat or villager</td><td>?</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">advancement_reward</code></td><td>Reward from advancement</td><td>?</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">barter</code></td><td>Bartering with piglins</td><td>The piglin bartered with</td><td>?</td><td>?</td></tr>
-            <tr><td><code class="noborder">archaeology</code></td><td>Brushing suspicious sand</td><td>?</td><td>?</td><td>?</td></tr>
+            <tr><th>Type</th><th>Description</th><th>Target</th><th>Item/Tool</th><th>Block</th></tr>
+            <tr><td><code class="noborder">block</code></td><td>Block drops</td><td>Same as actor</td><td>The item used to mine the block</td><td>The block mined</td></tr>
+            <tr><td><code class="noborder">chest</code></td><td>Any generated container</td><td>Same as actor</td><td></td><td>The container opened</td></tr>
+            <tr><td><code class="noborder">entity</code></td><td>Entity drops</td><td>The entity which died</td><td></td><td>The block where the entity died</td></tr>
+            <tr><td><code class="noborder">fishing</code></td><td>Fishing</td><td>The actor's fishing bobber</td><td>The fishing rod cast</td><td>The block where the fishing bobber is</td></tr>
+            <tr><td><code class="noborder">gift</code></td><td>Gift from cat or villager</td><td>The cat or villager who gave the gift</td><td></td><td></td></tr>
+            <tr><td><code class="noborder">advancement_reward</code></td><td>Reward from an advancement</td><td>Same as actor</td><td></td><td>Position of the actor</td></tr>
+            <tr><td><code class="noborder">barter</code></td><td>Bartering with piglins</td><td>The piglin bartered with</td><td></td><td></td></tr>
+            <tr><td><code class="noborder">archaeology</code></td><td>Brushing suspicious sand</td><td>Same as actor</td><td></td><td>The suspicious sand</td></tr>
             <tr><td><code class="noborder">generic</code></td><td>Generic</td><td>?</td><td>?</td><td>?</td></tr>
         </table>
+        
+        This data was found using the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki. In general, the "Target" is the "this entity", the "Item/Tool" is the "Tool", and the "Block" is a cached version of the block at the "Origin" position.
 
         For [JSON](#json-format) examples, see the [Replace Loot Table (Examples)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/#Examples) wiki page.
 
