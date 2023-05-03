@@ -270,7 +270,6 @@ creative-flight-power:
             "type": "origins:creative_flight"
         }
         ```
-        There's not much to this power, honestly.
 
 elytra-flight-power:
     title: Elytra Flight
@@ -297,70 +296,251 @@ effect-immunity-power:
     text: |
         The [Effect Immunity `origins:effect_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/effect_immunity/) power type prevents certain status effects from being applied to its owner.
 
-        TODO
+        The effects to prevent can be provided in the `effect` (singular) or `effects` (plural) fields. To turn the list of effects into a whitelist instead of a blacklist (i.e., `effect` and `effects` would specify the only effects that should not be blocked), set the `inverted` field to true.
+
+        Example effect immunity power to weakness and strength [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:effect_immunity",
+            "effects": [
+                "minecraft:weakness",
+                "minecraft:strength"
+            ]
+        }
+        ```
 
 fire-immunity-power:
     title: Fire Immunity
     text: |
-        The [Fire Immunity `origins:fire_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_immunity/) power type prevents its owner from being set on fire and from taking fire damage.
+        The [Fire Immunity `origins:fire_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_immunity/) power type prevents its owner from being set on fire and from taking any fire damage.
 
-        TODO
+        Example fire immunity power [JSON](#json-format):
+        ```json
+        {
+            "name": "Fireborn",
+            "description": "You take no damage from fire sources",
+            "type": "origins:fire_immunity"
+        }
+        ```
 
 projectile-power:
     title: Projectile
     text: |
-        The [Fire Projectile `origins:fire_projectile` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_projectile/) power type enables its owner to fire a projectile upon a keypress.
+        The [Fire Projectile `origins:fire_projectile` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_projectile/) power type enables its owner to fire a projectile upon a key press.
 
-        TODO
+        The entity fired can be configured via the `entity_type` field. [A full list of entity ids can be found here](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Entities), but notable ones are in the "Projectiles" section of that page. NBT can be given to the entity via the `tag` field.
+
+        The number of entities fired is configurable via the `count` field which defaults to 1.
+
+        The `key` field specifies what key this power should respond to. By default, this is the primary key (G). A `cooldown` in ticks can be provided to cause the power to need to recharge on use; this is rendered into a resource bar on the hud, but can be turned off by setting the `hud_render`s `should_render` field to false.
+
+        A full list of fields available and their functions can be found on the [Fire Projectile](https://origins.readthedocs.io/en/latest/types/power_types/fire_projectile/) page of the wiki.
+
+        Example power that fires arrows rapidly while holding left click [JSON](#json-format)
+        ```json
+        {
+            "type": "origins:fire_projectile",
+            "entity_type": "minecraft:arrow",
+            "cooldown": 2,
+            "hud_render": {
+                "should_render": false
+            },
+            "tag": "{pickup:0b}",
+            "key": {
+                "key": "key.attack",
+                "continuous": true
+            }
+        }
+        ```
+
+        TODO - Research the fields' impact on projectile motion
 
 inventory-power:
     title: Inventory
     text: |
         The [Inventory `origins:inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/inventory/) power type gives its owner a separate inventory, like a backpack, that can be used to store items.
 
-        TODO
+        The type of inventory is configurable via the `container_type` field, and can be set to one of "chest", "hopper", "dropper", "dispenser", or "double_chest". The "chest" has 3 rows of 9 slots (27), hopper has 1 row of 5 slots (5), the "dropper" and "dispenser" have 3 rows of 3 slots (9), and the "double_chest" as 6 rows of 9 slots (54). There is no noticable difference between "dropper" and "dispenser".
+
+        The `key` field specifies what key this power should respond to. By default, this is the primary key (G).
+
+        The `title` field can be optionally given literal text or a translation key that shows up at the top of the inventory. It defaults to `container.inventory`, which translates to "Inventory" in English.
+
+        The `drop_on_death` field, if set to true (defaults to false), will cause all items in the inventory to drop on death. The `drop_on_death_filter` field allows using an [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/), which allows specifying which items will drop; items not matching the condition will not drop on death. Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
+
+        Hopper-like inventory that opens on secondary button press [JSON](#json-format)
+        ```json
+        {
+            "type": "origins:inventory",
+            "container_type": "hopper",
+            "drop_on_death": false,
+            "key": {
+                "key": "key.origins.secondary_active"
+            }
+        }
+        ```
 
 invisibility-power:
     title: Invisibility
     text: |
         The [Invisibility `origins:invisibility` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invisibility/) power type grants its owner invisibility.
 
-        TODO
+        By default, armor and the glowing outline are not rendered on entities with this power. Set `render_armor` to true to render armor, and set `render_outline` to show any glowing outline.
+
+        Example Invisibility power when not burning that doesn't prevent glowing [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:invisibility",
+            "render_outline": true,
+            "condition": {
+                "type": "origins:on_fire",
+                "inverted": true
+            }
+        }
+        ```
 
 invulnerability-power:
     title: Invulnerability
     text: |
         The [Invulnerability `origins:invulnerability` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invulnerability/) power type grants its owner damage immunity to certain damage sources.
 
-        TODO
+        You can specify which type of damage the player is immune to using a [Damage Condition](https://origins.readthedocs.io/en/latest/types/damage_condition_types/) (`damage_condition` field). Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
+
+        This power type does not support the [Amount (Damage Condition)](https://origins.readthedocs.io/en/latest/types/damage_condition_types/amount/). If that specific damage condition is needed, use the [Modify Damage Taken (Power Type)](#modify-power) with `operation` set to `multiply_total` and `value` set to `-1`.
+
+        Invulerability to fall damage power [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:invulnerability",
+            "damage_condition": {
+                "type": "origins:name",
+                "name": "fall"
+            }
+        }
+        ```
 
 keep-inventory-power:
     title: Keep Inventory
     text: |
         The [Keep Inventory `origins:keep_inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/keep_inventory/) power type makes certain items persist in its owner's inventory after death.
 
-        TODO
+        By default, all items in the owner's inventory will remain after death. An [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) (`item_condition` field), can be provided specifying which items will persist in the owner's inventory. Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
+
+        Optionally, the `slots` field can be given a list of numberical slots to preserve items in; other slots will drop items.
+
+        Power which applies makes items in the hotbar persist beyond death [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:keep_inventory",
+            "slots": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+            ]
+        }
+        ```
 
 launch-power:
     title: Launch
     text: |
         The [Launch `origins:launch`](https://origins.readthedocs.io/en/latest/types/power_types/launch/) power type launches its owner upwards when pressing a certain key.
 
-        TODO
+        The `speed` field must be set with a float value specifying how fast to launch the owner into the air. The higher this value, the higher the owner will go.
+
+        The `key` field specifies what key this power should respond to. By default, this is the primary key (G). A `cooldown` in ticks can be provided to cause the power to need to recharge on use; this is rendered into a resource bar on the hud, but can be turned off by setting the `hud_render`s `should_render` field to false.
+
+        Optionally, a sound event can be played via the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.fandom.com/wiki/Sounds.json/Java_Edition_values).
+
+        Example launch power which plays a sound and has a cooldown of 30 seconds [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:launch",
+            "cooldown": 600,
+            "hud_render": {
+                "bar_index": 4
+            },
+            "sound": "minecraft:entity.parrot.fly",
+            "speed": 2,
+            "key": {
+                "key": "key.origins.primary_active",
+                "continuous": true
+            }
+        }
+        ```
+
+        TODO - Research the speed field's impact on projectile motion
 
 loot-table-power:
     title: Loot Table
     text: |
-        The [Replace Loot Table `origins:replace_loot_table` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) power type changes the loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
+        The [Replace Loot Table `origins:replace_loot_table` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) power type changes one or more loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
 
-        TODO
+        The `replace` field requires an object with `"key": "value"` pairs. Each "key" is a [regular expression](https://en.wikipedia.org/wiki/Regular_expression) matching all loot tables to replace, and each "value" is the loot table to replace all matches with.
+
+        In case multiple powers want to replace a loot table, the power with the highest `priority` (default to 0) will "win" and it will successfully replace the table while the other powers will be ignored (TODO - Verify this). If multiple powers with the same priority try to do the replacement, the power that successfully "wins" is undefined (unknowable normally, but not necessarily random).
+
+        A [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_action_types/), [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/), and an [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) can all be used to determine when to apply the loot table replacement. As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of all conditions too.
+
+        Here's a table explaining what entities, blocks, and items are tested for each loot table type:
+
+        TODO - Look at [Replace Loot Table](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) page on the origins wiki to determine actor and target, and the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki.
+
+        For [JSON](#json-format) examples, see the [Replace Loot Table](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) wiki page.
+
+        TODO - Regular expressions page.
 
 restrict-armor-power:
     title: Restrict Armor
     text: |
-        The [Restrict Armor `origins:restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_restrict_armor/) power type instead.
+        The [Restrict Armor `origins:restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [an entity condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_restrict_armor/) power type instead.
 
-        TODO
+        You can specify which items are restricted from being worn via [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used as well. If the condition matches the item, then the item will be unwearable.
+
+        Here's a table showing the armor level (x) and toughness (+x) of each piece of armor:
+
+        <table>
+            <tr><th>Material</th> <th colspan=2>Head</th> <th colspan=2>Chest</th> <th colspan=2>Legs</th> <th colspan=2>Feet</th></tr>
+            <tr><th>Turtle Shell</th>   <td>2</td><td>+0</td><td> </td><td>  </td><td> </td><td>  </td><td> </td><td>  </td></tr>
+            <tr><th>Leather</th>        <td>1</td><td>+0</td><td>3</td><td>+0</td><td>2</td><td>+0</td><td>1</td><td>+0</td></tr>
+            <tr><th>Gold</th>           <td>2</td><td>+0</td><td>5</td><td>+0</td><td>3</td><td>+0</td><td>1</td><td>+0</td></tr>
+            <tr><th>Chainmail</th>      <td>2</td><td>+0</td><td>5</td><td>+0</td><td>4</td><td>+0</td><td>1</td><td>+0</td></tr>
+            <tr><th>Iron</th>           <td>2</td><td>+0</td><td>6</td><td>+0</td><td>5</td><td>+0</td><td>2</td><td>+0</td></tr>
+            <tr><th>Diamond</th>        <td>3</td><td>+2</td><td>8</td><td>+2</td><td>6</td><td>+2</td><td>3</td><td>+2</td></tr>
+            <tr><th>Netherite</th>      <td>3</td><td>+3</td><td>8</td><td>+3</td><td>6</td><td>+3</td><td>3</td><td>+3</td></tr>
+        </table>
+
+        Example power which prevents equipping any armor better than chainmail [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:restrict_armor",
+            "head": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 2
+            },
+            "chest": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 5
+            },
+            "legs": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 4
+            },
+            "feet": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 1
+            }
+        }
+        ```
 
 resource-power:
     title: Resources
@@ -374,6 +554,47 @@ resource-power:
         You can also set the `min_action` and `max_action` fields to entity actions that will be executed when the resource reaches its minimum and maximum values respectively, from any means.
 
         Resources are fairly complex and it is recommended you look at example packs and experiment on them yourself to figure out how they work more fully.
+
+        Example multi-power (id mypack:water) using a resource to display whether the user is in water or not [JSON](#json-format):
+        ```json
+        {
+            "name": "Watery Display",
+            "description": "Displays if in water or not.",
+            "type": "origins:multiple",
+            "resource": {
+                "type": "origins:resource",
+                "min": 0,
+                "max": 1,
+                "start_value": 0,
+                "hud_render": {
+                    "should_render": true,
+                    "bar_index": 1
+                }
+            },
+            "set": {
+                "condition": {
+                    "type": "origins:fluid_height",
+                    "fluid": "minecraft:water",
+                    "comparison": ">",
+                    "compare_to": 0
+                },
+                "type": "origins:action_over_time",
+                "interval": 5,
+                "rising_action": {
+                    "type": "origins:change_resource",
+                    "resource": "my_pack:test_resource",
+                    "change": 1,
+                    "operation": "set"
+                },
+                "falling_action": {
+                    "type": "origins:change_resource",
+                    "resource": "my_pack:test_resource",
+                    "change": 0,
+                    "operation": "set"
+                }
+            }
+        }
+        ```
 
 other-power:
     title: Other
@@ -561,35 +782,23 @@ sound-action:
 
         The `pitch` field controls the pitch of the sound event by multiplying it's frequency. It ranges from 0.0 to 2.0 and defaults to 1.0. 1.0 means no pitch change, 0.5 means one octave lower, 2.0 means one octave higher, and 0.25 means two octaves lower.
         
-        For note block sounds, the default sound is F#4. Here's a table showing the frequencies of note block sounds (based on 2^(n/12)):
+        For note block sounds, the default sound is F#4. Here's a table showing the frequencies of note block sounds (based on both equal temprament and a form of just intonation on F#):
 
         <table>
-            <tr><th>Note</th><th>Frequency</th></tr>
-            <tr><td>F#3 </td><td>0.500000 </td></tr>
-            <tr><td>G3  </td><td>0.529732 </td></tr>
-            <tr><td>G#3 </td><td>0.561231 </td></tr>
-            <tr><td>A3  </td><td>0.594604 </td></tr>
-            <tr><td>A#3 </td><td>0.629961 </td></tr>
-            <tr><td>B3  </td><td>0.667420 </td></tr>
-            <tr><td>C4  </td><td>0.707107 </td></tr>
-            <tr><td>C#4 </td><td>0.749154 </td></tr>
-            <tr><td>D4  </td><td>0.793701 </td></tr>
-            <tr><td>D#4 </td><td>0.840896 </td></tr>
-            <tr><td>E4  </td><td>0.890899 </td></tr>
-            <tr><td>F4  </td><td>0.943874 </td></tr>
-            <tr><td>F#4 </td><td>1.000000 </td></tr>
-            <tr><td>G4  </td><td>1.059463 </td></tr>
-            <tr><td>G#4 </td><td>1.122462 </td></tr>
-            <tr><td>A4  </td><td>1.189207 </td></tr>
-            <tr><td>A#4 </td><td>1.259921 </td></tr>
-            <tr><td>B4  </td><td>1.334840 </td></tr>
-            <tr><td>C5  </td><td>1.414214 </td></tr>
-            <tr><td>C#5 </td><td>1.498307 </td></tr>
-            <tr><td>D5  </td><td>1.587401 </td></tr>
-            <tr><td>D#5 </td><td>1.681793 </td></tr>
-            <tr><td>E5  </td><td>1.781797 </td></tr>
-            <tr><td>F5  </td><td>1.887749 </td></tr>
-            <tr><td>F#5 </td><td>2.000000 </td></tr>
+            <tr><th>Note</th><th>Equal Pitch</th><th>Just Pitch</th>    <th>Note</th><th>Equal Pitch</th><th>Just Pitch</th></tr>
+            <tr><td>F#3</td><td>0.500000</td><td>0.5000 (1/2)</td>      <td>F#4</td><td>1.000000</td><td>1.0000 (1/1)</td></tr>
+            <tr><td>G3 </td><td>0.529732</td><td>0.5333 (8/15)</td>     <td>G4 </td><td>1.059463</td><td>1.0667 (16/15)</td></tr>
+            <tr><td>G#3</td><td>0.561231</td><td>0.5625 (9/16)</td>     <td>G#4</td><td>1.122462</td><td>1.1250 (9/8)</td></tr>
+            <tr><td>A3 </td><td>0.594604</td><td>0.6000 (3/5)</td>      <td>A4 </td><td>1.189207</td><td>1.2000 (6/5)</td></tr>
+            <tr><td>A#3</td><td>0.629961</td><td>0.6250 (5/8)</td>      <td>A#4</td><td>1.259921</td><td>1.2500 (5/4)</td></tr>
+            <tr><td>B3 </td><td>0.667420</td><td>0.6667 (2/3)</td>      <td>B4 </td><td>1.334840</td><td>1.3333 (4/3)</td></tr>
+            <tr><td>C4 </td><td>0.707107</td><td>0.7000 (7/10)</td>     <td>C5 </td><td>1.414214</td><td>1.4000 (7/5)</td></tr>
+            <tr><td>C#4</td><td>0.749154</td><td>0.7500 (3/4)</td>      <td>C#5</td><td>1.498307</td><td>1.5000 (3/2)</td></tr>
+            <tr><td>D4 </td><td>0.793701</td><td>0.8000 (4/5)</td>      <td>D5 </td><td>1.587401</td><td>1.6000 (8/5)</td></tr>
+            <tr><td>D#4</td><td>0.840896</td><td>0.0000 (5/6)</td>      <td>D#5</td><td>1.681793</td><td>1.6667 (5/3)</td></tr>
+            <tr><td>E4 </td><td>0.890899</td><td>0.9000 (9/10)</td>     <td>E5 </td><td>1.781797</td><td>1.8000 (9/5)</td></tr>
+            <tr><td>F4 </td><td>0.943874</td><td>0.0000 (15/16)</td>    <td>F5 </td><td>1.887749</td><td>1.8750 (15/8)</td></tr>
+            <tr><td>F#4</td><td>1.000000</td><td>1.0000 (1/1)</td>      <td>F#5</td><td>2.000000</td><td>2.0000 (2/1)</td></tr>
         </table>
 
         Entity action that plays the enderman death sound within 24 blocks [JSON](#json-format):
@@ -909,9 +1118,9 @@ riding-cond:
     text: |
         These entity conditions involve passengers and mounts. They all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/). These are special conditions and actions that work on a pair of entities called the "actor" and a "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/).
 
-        The [Passenger `origins:passenger` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger/) entity condition checks if the entity with the power (the actor) is being directly ridden by some other entity (the target).
+        The [Passenger `origins:passenger` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger/) entity condition checks if the entity with the power (the target) is being directly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
 
-        The [Passenger Recursive `origins:passenger_recursive` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the actor) is being directly or indirectly ridden by some other entity (the target).
+        The [Passenger Recursive `origins:passenger_recursive` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the target) is being directly or indirectly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
 
         The [Riding `origins:riding` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the actor) is directly riding an entity (the target).
 
