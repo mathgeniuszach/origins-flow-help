@@ -489,7 +489,7 @@ loot-table-power:
 
         Here's a table explaining what entities, blocks, and items are tested for each loot table type. Note that the actor is always the entity that has the power.
         
-        TODO - This table is not complete; look at the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki to .
+        TODO - This table is not complete; look at the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki to gain further understanding on the items and blocks tested.
 
         <table>
             <tr><th>Type</th><th>Description</th><th>Target</th><th>Item</th><th>Block</th></tr>
