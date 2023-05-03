@@ -481,7 +481,7 @@ loot-table-power:
     text: |
         The [Replace Loot Table `origins:replace_loot_table` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) power type changes one or more loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
 
-        The `replace` field requires an object with `"key": "value"` pairs. Each "key" is a [regular expression](https://en.wikipedia.org/wiki/Regular_expression) matching all loot tables to replace, and each "value" is the loot table to replace all matches with.
+        The `replace` field requires an object with `"key": "value"` pairs. Each "key" is a [regular expression](/response/what-is-regex) matching all loot tables to replace, and each "value" is the loot table to replace all matches with.
 
         In case multiple powers want to replace a loot table, the power with the highest `priority` (default to 0) will "win" and it will successfully replace the table while the other powers will be ignored. If multiple powers with the same priority try to do the replacement, the power that successfully "wins" is undefined (unknowable normally and not necessarily random).
 
@@ -492,8 +492,6 @@ loot-table-power:
         TODO - Look at [Replace Loot Table](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) page on the origins wiki to determine actor and target, and the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki.
 
         For [JSON](#json-format) examples, see the [Replace Loot Table](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) wiki page.
-
-        TODO - Regular expressions page.
 
 restrict-armor-power:
     title: Restrict Armor
