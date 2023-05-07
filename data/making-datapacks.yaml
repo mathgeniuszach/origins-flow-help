@@ -158,7 +158,7 @@ action-power:
 
         Here's a list of common action-related power types ([full list here](https://origins.readthedocs.io/en/latest/types/power_types/#action-related)):
         - [Active Self](https://origins.readthedocs.io/en/latest/types/power_types/active_self/) - pressing a key on the keyboard
-        - [Action Over Time](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) - 
+        - [Action Over Time](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) - repeatedly on a timer, and when the condition becomes true and false
         - [Action On Block Break](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_break/) - breaking a block
         - [Action On Block Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_use/) - right clicking a block
         - [Action On Item Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_item_use/) - finishing using an item (like food or a potion)
