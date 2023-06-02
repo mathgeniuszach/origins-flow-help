@@ -249,7 +249,7 @@ mob-hostility-power:
 
         If you allow yourself to use addon mods, here are some options:
         1. [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) has the [Mobs Ignore `apugli:mobs_ignore`](https://apugli.readthedocs.io/en/latest/types/power_types/mobs_ignore/) power type which causes certain mobs to ignore the player.
-        2. [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) has the [Remove Goal `ra_additions:remove_goal`] power type, which when on a _mob_, allows you to prevent the mob from performing actions on a more granular level. This should be on the _mob_, not the player, so you'd have to grant the power to said mob.
+        2. [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) has the [Remove Goal `ra_additions:remove_goal`] power type, which when on a __mob__, allows you to prevent the mob from performing actions on a more granular level. This should be on the __mob__, __not the player__, so you'd have to grant the power to said mob.
         
         The closest thing you have in regular old origins is the `origins:scare_creepers` power, which is a _power_ and not a _power type_, meaning it can only be added to origins directly and not configured. You can also try vaguely related power types or powers that involve command/function usage, like giving mobs blindness to lower their follow radius, shoving them away, giving them the `{NoAI:1b}` NBT tag, or teleporting an invisible cat around to scare creepers.
 
