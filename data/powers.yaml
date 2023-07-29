@@ -71,7 +71,8 @@ toggleable-power:
     text: |
         If you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (or check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
 
-        Example multiple power with togglability [JSON](#json-format) (this power has id "mypack:radar"):
+        Example multiple power with togglability [JSON](#json-format). Note that this power has the id of `0:radar`, and two subpowers called `toggle` and `glow`. As the wiki says, sub-powers can be referenced via the full id `namespace:super-power_sub-power`, which for `toggle` is `0:radar_toggle` and for `glow` is `0:radar_glow`. As you'll probably change the name of the power to something different like `0:mysuperpowernamehere`, make sure you change the condition/power field to `0:mysuperpowernamehere_toggle` to match it.
+        
         ```json
         {
             "name": "Radar",
@@ -87,7 +88,7 @@ toggleable-power:
             "glow": {
                 "condition": {
                     "type": "origins:power_active",
-                    "power": "mypack:radar_toggle"
+                    "power": "0:radar_toggle"
                 },
 
                 "type": "origins:entity_glow",
