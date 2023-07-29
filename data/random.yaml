@@ -90,6 +90,7 @@ json-format:
         JSON Format (aka, JavaScript Object Notation), is a common format for storing and sharing information on the internet and on your computer. All Minecraft datapacks use JSON format to specify what items drop from mobs and can be found in chests (loot tables), what items can be crafted into other items (recipes), what must be met to get advancements, and what powers an origin has. JSON files are stored in files ending with `.json`.
 
         On Discord, if you're sharing json code with other people, you can get syntax highlighting by writing your messages like so:
+        
         ![Discord triple quotes json format image](discord-json)
 
         Here's a sample of some JSON code:
