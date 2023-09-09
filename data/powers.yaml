@@ -55,7 +55,7 @@ multiple-power:
         To use this power type in the Origin Creator, change the dropdown in the top left from `single` to `multiple`. You can press the "+" button at the bottom to add more sub-powers.
         ![Power type dropdown](power-type-dropdown)
 
-        To see an example, see the [Toggleable power type here](#toggleable-power)
+        To see an example, see the [Toggleable power page](#toggleable-power)
 
 toggleable-power:
     title: Toggleable Power
