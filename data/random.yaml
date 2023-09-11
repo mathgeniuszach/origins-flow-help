@@ -83,8 +83,10 @@ file-extensions:
     title: File Extensions
     text: |
         For some reason, by default on Windows, file extensions are hidden and not normally visible.
+        
+        This is a dangerous default by Microsoft that allows for people to hide malware .exe or .scr files under different extensions like `.txt` or `.pdf`. It can also cause confusion when an image or zip file is acting strangely because it has the wrong extension, or no extension at all. By enabling extensions, you can more easily detect and change filetypes.
 
-        To show file extensions on Windows, open up Windows Search (Shortcut; Win+S) and type in "File Explorer Options" and open the respective program that shows up.
+        To show file extensions on Windows, open up Windows Search (Shortcut; Win+S), type in "File Explorer Options", and open the respective program that shows up.
 
         In the new window that just popped up, select the "View" tab (1), uncheck the box that says "Hide extensions for known file types" (2), and click "Apply" (3). You can now close out of this window or click "Ok".
 
