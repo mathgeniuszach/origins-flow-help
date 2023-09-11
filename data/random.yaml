@@ -18,7 +18,7 @@ dot-minecraft:
 
         ![Prism launcher folder button image](prism-launcher-folder)
         
-        If you're using the stock vanilla launcher, the `.minecraft` will be located at one of these paths:
+        If you're using the stock vanilla launcher, the `.minecraft` folder will be located at one of these paths:
         
         + Windows - `%appdata%/.minecraft`
         + Linux - `~/.minecraft`
