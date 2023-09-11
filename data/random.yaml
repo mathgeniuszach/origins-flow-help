@@ -13,16 +13,16 @@ dot-minecraft:
 
         ![Open pack folder button image](resource-packs-folder)
         ![Up a folder button image](resource-packs-up-one)
-
-        Launchers like Prism Launcher and MultiMC have an easier way of doing this that doesn't require launching the game. Select an instance and click the "Folder" button on the right (1). Then you can double click to open your `.minecraft` folder (2). In these launchers, every instance has it's own `.minecraft` folder.
-
-        ![Prism launcher folder button image](prism-launcher-folder)
         
         If you're using the stock vanilla launcher, the `.minecraft` folder will be located at one of these paths:
         
         + Windows - `%appdata%/.minecraft`
         + Linux - `~/.minecraft`
         + MacOS - `~/Library/Application Support/minecraft`
+
+        Launchers like Prism Launcher and MultiMC have an easier way of doing this that doesn't require launching the game. Select an instance and click the "Folder" button on the right (1). Then you can double click to open your `.minecraft` folder (2). In these launchers, every instance has it's own `.minecraft` folder.
+
+        ![Prism launcher folder button image](prism-launcher-folder)
 
         There are usually a lot of folders and files present in the `.minecraft` folder, but the only ones important for this wiki are the folders shown below:
 
@@ -75,7 +75,7 @@ logs:
     text: |
         For a variety of reasons you may need to access your Minecraft logs or crash reports. There are a few ways to get these.
 
-        The easiest way is to navigate to your [.minecraft folder](#dot-minecraft) (click to find out how), and go into the "logs" folder for your game logs, or the "crash-reports" folder for crash reports. Note that crash reports are always dated, while the "logs" folder clearly shows which log is the latest. Pick the latest files relevant to your use case unless otherwise specified.
+        The easiest way is to navigate to your [`.minecraft` folder](#dot-minecraft) (click to find out how), and go into the "logs" folder for your game logs, or the "crash-reports" folder for crash reports. Note that crash reports are always dated, while the "logs" folder clearly shows which log is the latest. Pick the latest files relevant to your use case unless otherwise specified.
 
         If you need to view these logs for any reason, you can do so in any text editor. If you need to find some text (e.g., "origins") in them, you can do so by pressing "Ctrl+F" and typing that text into the box that shows up. Sometimes you must press "Enter" a few times to find all matches individually. You'll normally want this search to be case-insensitive, so make sure that any checkbox named "Match case" or similar is left unchecked.
 
