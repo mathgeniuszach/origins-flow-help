@@ -13,12 +13,15 @@ import httpx
 
 import asyncio
 import re
-from os.path import exists
+import signal
 
 UNSAFE_CHARS = re.compile(r"[^a-zA-Z0-9_-]+")
 IMG_LINKS = re.compile(r"!\[(.*?)\]\((.*?)\)")
 REG_LINKS = re.compile(r"\]\((?!<)([^\)]+)\)")
 SITE_LINKS = re.compile(r"\]\((?!<)(#[^\)]+)\)")
+
+SESSION_LOCK = asyncio.Lock()
+
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -43,13 +46,13 @@ async def load_data():
         index = yaml.safe_load(resp.content)
         flow_data["default"] = index["default"]
 
-        async with asyncio.TaskGroup() as tg:
-            async def load_file(file):
-                resp = await http_client.get(repo + file)
-                flow_data.update(yaml.safe_load(resp.content))
 
-            for file in index['data']:
-                tg.create_task(load_file(file))
+        async def load_file(file):
+            resp = await http_client.get(repo + file)
+            flow_data.update(yaml.safe_load(resp.content))
+
+        for file in index['data']:
+            await load_file(file) # Should be task group but unsupported in 3.10
     
     # Parse links
     for page in flow_data.values():
@@ -94,7 +97,7 @@ class Session:
         self.buttons = []
         for opt in page.get("opts", []):
             self.buttons.append(Button(style=ButtonStyle.GRAY, label=opt["text"], custom_id=opt["link"]))
-        components = self.buttons
+        components = self.buttons.copy()
 
         m = 24 if self.prev else 25
         if len(components) > m:
@@ -112,12 +115,14 @@ class Session:
     async def back(self):
         if not self.prev: return
         self.link = ""
+        self.start = 0
         await self.load(self.prev.pop())
     
     async def more(self):
+        link = self.link
         self.link = ""
         self.start += 23 if self.prev else 24
-        await self.load(self.link) # Not technically necessary, but I'm lazy
+        await self.load(link) # Not technically necessary, but I'm lazy
     
     async def close(self):
         if self.buttons:
@@ -133,11 +138,12 @@ async def on_component(event: Component):
 
     await ctx.defer(edit_origin=True)
 
-    s = sessions.get(message.id)
-    if s is None:
-        # Broken state, typically caused by improper shutdown.
-        await message.edit(components=[])
-        return
+    async with SESSION_LOCK:
+        s = sessions.get(message.id)
+        if s is None:
+            # Broken state, typically caused by improper shutdown.
+            await message.edit(components=[])
+            return
     
     match ctx.custom_id:
         case 'more-button':
@@ -145,25 +151,38 @@ async def on_component(event: Component):
         case 'back-button':
             await s.back()
         case link:
+            s.start = 0
             await s.load(link)
 
 async def close_sessions():
-    for s in sessions.values():
-        await s.close()
+    async with SESSION_LOCK:
+        for s in list(sessions.values()):
+            await s.close()
     
 async def timeout_sessions():
     delay = int(config['session']['AGE_TIMER'])
     max_age = int(config['session']['MAX_AGE'])
     while True:
         await asyncio.sleep(delay)
-        for s in list(sessions.values()):
-            s.age += 1
-            if s.age > max_age:
-                s.close()
+        async with SESSION_LOCK:
+            for s in list(sessions.values()):
+                s.age += 1
+                if s.age > max_age:
+                    await s.close()
+
+
+
+async def on_exit():
+    await close_sessions()
+    await bot.stop()
 
 @listen()
-async def on_ready():
+async def on_startup():
     print("Bot started")
+
+    loop = asyncio.get_event_loop()
+    loop.add_signal_handler(signal.SIGINT, lambda: asyncio.create_task(on_exit()))
+    loop.add_signal_handler(signal.SIGTERM, lambda: asyncio.create_task(on_exit()))
 
     asyncio.create_task(timeout_sessions())
 
@@ -174,12 +193,13 @@ async def on_ready():
     opt_type = OptionType.STRING
 )
 async def flowhelp(ctx: SlashContext, start: str = "index"):
-    while len(sessions) >= int(config['session']['MAX_SESSIONS']):
-        await sessions.pop(list(sessions.keys())[0]).close()
+    async with SESSION_LOCK:
+        while len(sessions) >= int(config['session']['MAX_SESSIONS']):
+            await sessions.pop(list(sessions.keys())[0]).close()
 
-    message = await ctx.send("Thinking...")
-    s = Session(ctx, message)
-    sessions[message.id] = s
+        message = await ctx.send("Thinking...")
+        s = Session(ctx, message)
+        sessions[message.id] = s
     await s.load(start)
 
 @slash_command(description="Reloads the Flow Help bot.")
@@ -187,6 +207,7 @@ async def flowhelp(ctx: SlashContext, start: str = "index"):
 async def reflow(ctx: SlashContext):
     await close_sessions()
     await load_data()
+    await ctx.send("Reloaded Flow Help.", ephemeral=True)
 
 @slash_command(description="ping pong")
 async def ping(ctx: SlashContext):
@@ -197,10 +218,7 @@ async def ping(ctx: SlashContext):
 def main():
     asyncio.run(load_data())
     print("Flow data loaded")
-    try:
-        bot.start()
-    except KeyboardInterrupt:
-        asyncio.run(close_sessions())
+    bot.start()
 
 if __name__ == "__main__":
     main()
