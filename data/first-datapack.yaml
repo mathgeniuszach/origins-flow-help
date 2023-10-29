@@ -13,9 +13,9 @@ first-datapack:
 
         To start, have you ever installed and used an origins datapack (not a mod) successfully before?
     opts:
-      - text: No
+      - text: "No"
         link: install-datapack-first
-      - text: Yes
+      - text: "Yes"
         link: coding-experience
 
 install-datapack-first:

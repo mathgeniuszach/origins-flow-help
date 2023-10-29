@@ -101,9 +101,9 @@ power-no-work:
         
         Does the power appear in the origin's description? (i.e., when you choose the origin)
     opts:
-      - text: Yes
+      - text: "Yes"
         link: power-broken
-      - text: No
+      - text: "No"
         link: power-no-show
 
 power-broken:

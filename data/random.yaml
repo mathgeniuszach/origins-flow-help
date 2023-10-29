@@ -154,9 +154,9 @@ other:
     title: Other
     text: Are you having an issue with the Origin Creator specifically?
     opts:
-      - text: Yes
+      - text: "Yes"
         link: oc-other
-      - text: No
+      - text: "No"
         link: raw-other
 
 oc-other:

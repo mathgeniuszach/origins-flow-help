@@ -11,7 +11,7 @@ data:
 default:
     title: Page Not Found
     text: |
-        The page you clicked on does not exist.
+        This page does not exist.
 
         If you believe this to be an error, please contact me on [my Discord (click here)](https://discord.gg/pBFqEcXvW5).
 

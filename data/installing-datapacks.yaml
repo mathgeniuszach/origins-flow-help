@@ -2,9 +2,9 @@ installing-datapacks:
     title: Installing Datapacks
     text: Do you have the datapack file downloaded?
     opts:
-      - text: Yes
+      - text: "Yes"
         link: installing-mod-prompt
-      - text: No
+      - text: "No"
         link: no-zip
 
 no-zip:
@@ -32,9 +32,9 @@ installing-mod-prompt:
     opts:
       - text: I have the Bedrock Edition addon
         link: bedrock-edition
-      - text: Yes
+      - text: "Yes"
         link: installing-downloaded-datapacks
-      - text: No
+      - text: "No"
         link: getting-the-mod
 
 installing-downloaded-datapacks:
