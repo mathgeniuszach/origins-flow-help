@@ -93,13 +93,11 @@ toggleable-power:
 pehkui-power:
     title: Pehkui
     text: |
-        Modifying your player size is one of the most common things that requires that you install Pehkui mod in addition to the origins mod, but pehkui can be used to modify your mining speed, block reach, and other things with the player as well. You can get [the Pehkui mod here (click)](https://www.curseforge.com/minecraft/mc-mods/pehkui).
-        
-        If you're not super adept at making powers or origins, do NOT make a power using pehkui. You are going to confuse yourself and your brain will explode. Really familiar yourself with simpler concepts first. If you're more comfortable with making origins, then you can continue on this page.
+        The [Pehkui mod] allows you to change your player size, mining speed, block reach, and many other things.
 
-        The main way to modify player size or other pehkui attributes is to use an "action" power type and run pehkui commands through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. There's an example power below.
+        The main way to modify player size or other pehkui attributes is to use an "action" power type and run pehkui commands through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. There's an example power available through the link below.
 
-        If you just want to modify player size, you could also install the [Extra Origins mod](https://www.curseforge.com/minecraft/mc-mods/extra-origins) and use the custom `extraorigins:modify_size` power type it provides instead. [Here's one example (click here)](https://github.com/MoriyaShiine/extra-origins/blob/master/src/main/resources/data/extraorigins/powers/bite_sized.json#L4) of that power type in use. If you're using the Origin Creator, you can use the "custom" option in any drop down where it normally says "single" or "multiple" and type in `extraorigins:modify_size` for the power type yourself.
+        If you just want to modify player size, you could also install the [Extra Origins mod](https://www.curseforge.com/minecraft/mc-mods/extra-origins) and use the custom `extraorigins:modify_size` power type it provides instead. [Here's one example (click here)](https://github.com/MoriyaShiine/extra-origins/blob/master/src/main/resources/data/extraorigins/powers/bite_sized.json#L4) of that power type in use.
 
         Example 65% size power [JSON](#json-format) (courtesy of LuaDotExe):
         ```json
@@ -110,11 +108,7 @@ pehkui-power:
                 "actions": [
                     {
                       "type": "origins:execute_command",
-                      "command": "scale set pehkui:height 0.65 @s"
-                    },
-                    {
-                      "type": "origins:execute_command",
-                      "command": "scale set pehkui:width 0.65 @s"
+                      "command": "scale set pehkui:base 0.65 @s"
                     },
                     {
                       "type": "origins:execute_command",
