@@ -93,7 +93,7 @@ toggleable-power:
 pehkui-power:
     title: Pehkui
     text: |
-        The [Pehkui mod] allows you to change your player size, mining speed, block reach, and many other things.
+        The [Pehkui mod](https://www.curseforge.com/minecraft/mc-mods/pehkui) allows you to change your player size, mining speed, block reach, and many other things.
 
         The main way to modify player size or other pehkui attributes is to use an "action" power type and run pehkui commands through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. There's an example power available through the link below.
 

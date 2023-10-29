@@ -1,7 +1,7 @@
 # this file is the flow bot, in all of it's code.
 
-from interactions import Client, Intents, listen
-from interactions import slash_command, slash_option, SlashContext, OptionType
+from interactions import Client, Intents, listen, Permissions
+from interactions import slash_command, slash_option, slash_default_member_permission, SlashContext, OptionType
 from interactions import Button, ButtonStyle, ActionRow
 from interactions.api.events import Component
 import interactions
@@ -27,7 +27,7 @@ config.read("config.ini")
 bot = Client(
     intents = Intents.ALL,
     token = config['bot']['TOKEN'],
-    default_scope = config['bot']['GUILD'] 
+    default_scope = config['bot']['GUILD']
 )
 
 sessions = {}
@@ -181,6 +181,12 @@ async def flowhelp(ctx: SlashContext, start: str = "index"):
     s = Session(ctx, message)
     sessions[message.id] = s
     await s.load(start)
+
+@slash_command(description="Reloads the Flow Help bot.")
+@slash_default_member_permission(Permissions.ADMINISTRATOR)
+async def reflow(ctx: SlashContext):
+    await close_sessions()
+    await load_data()
 
 @slash_command(description="ping pong")
 async def ping(ctx: SlashContext):
