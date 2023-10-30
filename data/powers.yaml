@@ -44,7 +44,7 @@ existing-power:
 multiple-power:
     title: Multiple
     text: |
-        The [Multiple `origins:multiple` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/multiple/) power type lets you squish a bunch of custom powers together into a single file. You may want to do this to fit a bunch of different effects into a single power name and description. Note that you could also alternatively just have two or more power files and just mark all but one as hidden.
+        The [Multiple `origins:multiple` (click for more info)](http://l.mathgeniuszach.com/p/multiple/) power type lets you squish a bunch of custom powers together into a single file. You may want to do this to fit a bunch of different effects into a single power name and description. Note that you could also alternatively just have two or more power files and just mark all but one as hidden.
 
         Every key in a power file that is not the name of a field like "name" or "description" is treated as a "sub-power". Each sub-power has its own condition and power type, and is marked as hidden by default so that only the super power shows up on the list of origin powers.
         
@@ -60,7 +60,7 @@ multiple-power:
 toggleable-power:
     title: Toggleable Power
     text: |
-        If you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](https://origins.readthedocs.io/en/latest/types/power_types/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](https://origins.readthedocs.io/en/latest/types/entity_condition_types/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (or check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
+        If you want a custom power that you can toggle, you'll have to use more than one custom power; one of power type ["Toggle"; `origins:toggle`](http://l.mathgeniuszach.com/p/toggle/) and the other power your custom power type, with the condition ["Power Active"; `origins:power_active`](http://l.mathgeniuszach.com/e/power_active/) that points to the toggle power. You can set the "Toggle" power's "Hidden" field to true (or check it) to hide it, or combine the two powers in a [multiple power type](#multiple-power).
 
         Example multiple power with togglability [JSON](#json-format). Note that this power has the id of `0:radar`, and two subpowers called `toggle` and `glow`. As the wiki says, sub-powers can be referenced via the full id `namespace:super-power_sub-power`, which for `toggle` is `0:radar_toggle` and for `glow` is `0:radar_glow`. As you'll probably change the name of the power to something different like `0:mysuperpowernamehere`, make sure you change the condition/power field to `0:mysuperpowernamehere_toggle` to match it.
         
@@ -95,7 +95,7 @@ pehkui-power:
     text: |
         The [Pehkui mod](https://www.curseforge.com/minecraft/mc-mods/pehkui) allows you to change various player attributes, including player size.
 
-        The main way to modify player size or other pehkui attributes is to use an "action" power type and run pehkui commands through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. There's an example power available through the link below.
+        The main way to modify player size or other pehkui attributes is to use an "action" power type and run pehkui commands through entity actions. Most likely, you'll want to use the [`origins:action_on_callback`](http://l.mathgeniuszach.com/p/action_on_callback/) power type in combination with the [`origins:execute_command`](https://origins.readthedocs.io/en/latest/types/entity_action_types/execute_command/) entity action. You'll want to test how the command works in-game and also test the variety of entity actions that exist already. There's an example power available through the link below.
 
         If you just want to modify player size, you could also install the [Extra Origins mod](https://www.curseforge.com/minecraft/mc-mods/extra-origins) and use the custom `extraorigins:modify_size` power type it provides instead. [Here's one example (click here)](https://github.com/MoriyaShiine/extra-origins/blob/master/src/main/resources/data/extraorigins/powers/bite_sized.json#L4) of that power type in use.
 
@@ -127,19 +127,38 @@ pehkui-power:
 
 attribute-power:
     title: Attribute
+    short: |
+        The [Attribute `origins:attribute`](http://l.mathgeniuszach.com/p/attribute/) power type gives/takes away certain numeric values (e.g. max-health/armor/speed) from its user. Note that if you want to use a condition, you must use `origins:conditioned_attribute` instead.
+
+        This power works by applying one or more modifiers. Every modifier takes an "attribute" name (what to modify), an "operation" (how to modify), and a value (how much to modify by).
+
+        Some attribute names ([for full list click here](http://minecraft.wiki/w/Attribute)) are:
+        - `generic.max_health` - maximum health in half hearts (normally 20)
+        - `generic.movement_speed` - movement speed; for players, multiply by about 43 for blocks/second (1 block/s is about 0.023).
+        - `generic.attack_damage` - attack damage in half hearts
+        - `generic.armor` - armor points (20 for full diamond armor)
+        - `generic.armor_toughness` - armor toughness (8 for diamond armor, 12 for netherite)
+        - `generic.attack_knockback` - knockback done by attacks
+        - `generic.attack_speed` - number of full strength attacks per second. Defaults to 4.0 with a fist. Weapons set this value directly
+
+        Supported operations are:
+        - `addition` - adds/subtracts a raw number. A value of 2.5 with `generic.max_health` adds a heart and a quarter. With `generic.movement_speed`, it adds about 108 blocks/second (2.5*43 is about 108).
+        - `multiply_base` - adds/subtracts a percentage. A value of 0.5 for `multiply_base` in `generic.max_health` adds +50% extra health (5 hearts). With `generic.movement_speed`, it gives +50% speed (1.5x speed).
+        - `multiply_total` - like `multiply_base` but percentages stack. While two `multiply_base` values of 0.2 (+20% each) would yield 0.4 (+40%), two `multiply_total` values of 0.2 (20%) would stack and yield 0.44 (+44%). There's a bonus 4% (which is 20% of 20%).
+
     text: |
-        The [Attribute `origins:attribute` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/attribute/) power type gives/takes away certain numeric values (e.g. max-health/armor/speed) from its user. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Attribute `origins:conditioned_attribute` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_attribute/) power type instead.
+        The [Attribute `origins:attribute` (click for more info)](http://l.mathgeniuszach.com/p/attribute/) power type gives/takes away certain numeric values (e.g. max-health/armor/speed) from its user. Note that if you want [a condition](#power-conditions) on this power type, you must use the [Conditioned Attribute `origins:conditioned_attribute` (click for more info)](http://l.mathgeniuszach.com/p/conditioned_attribute/) power type instead.
 
         This power can provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "attribute" name (specifying what to modify), an "operation" (specifying how to modify), and a value (specifying how much to modify by).
 
-        Common attribute names ([for full list click here](https://minecraft.fandom.com/wiki/Attribute)) are:
+        Common attribute names ([for full list click here](https://minecraft.wiki/w/Attribute)) are:
 
         - `generic.max_health` - maximum health in half hearts. Normally 20.0.
         - `generic.knockback_resistance` - the percentage number of knockback that's ignored (1.0 is 100% or no knockback, 0.5 is 50% or half knockback)
         - `generic.movement_speed` - speed of movement; for players, multiply by about 43 for blocks/second (1 block/s is about 0.023). It's recommended you modify this with a multiply operation.
         - `generic.attack_damage` - attack damage in half hearts.
         - `generic.armor` - armor points (20 for full diamond armor)
-        - `generic.armor_toughness` - [armor toughness](https://minecraft.fandom.com/wiki/Armor#Armor_toughness) (8 for diamond armor, 12 for netherite)
+        - `generic.armor_toughness` - [armor toughness](https://minecraft.wiki/w/Armor#Armor_toughness) (8 for diamond armor, 12 for netherite)
         - `generic.attack_knockback` - knockback done by attacks
         - `generic.attack_speed` - number of full strength attacks per second. Defaults to 4.0 with a fist. Other weapons set this value directly.
         - `generic.luck` - "improves" loot from loot tables (some items become more likely to appear); in vanilla, this only applies to fishing. Defaults to 0.0 (meaning multiply operations don't work). This number has nothing to do with a percentage; each level of the status effect luck adds 1.0 to this attribute.
@@ -150,7 +169,7 @@ attribute-power:
         
         A value of 0.5 for `multiply_base` in `generic.max_health` multiplies your health by 1.5x (5 hearts normally), while with `generic.knockback_resistance` it adds nothing (1.5 times no knockback resistance by default is 0). With `generic.movement_speed`, it multiplies your movement speed by 1.5x.
 
-        If you really want to know, `multiply_total` is the same as `multiply_base`, but percentages stack with each other. So while `multiply_base` values of 0.2 (+20% each) would only yield a net result of 0.4 (+40%), two `multiply_total` values of 0.2 (20%) would stack and yield a net result of 0.44 (+44%). There's a bonus 4% (which is 20% of 20%).
+        If you really want to know, `multiply_total` is the same as `multiply_base`, but percentages stack with each other. So while two `multiply_base` values of 0.2 (+20% each) would only yield a net result of 0.4 (+40%), two `multiply_total` values of 0.2 (20%) would stack and yield a net result of 0.44 (+44%). There's a bonus 4% (which is 20% of 20%).
 
         If you're updating `generic.max_health`, there is an additional field called `update_health` for this power that defaults to be true (on). If you set it to false (off), the player's health percentage will not be preserved to the new maximum health. For example, imagine the user has 5 hearts remaining and their max health changes from 10 hearts to 20. If true (default), their health will change to 10 hearts (to preserve 50%). If false, their health will remain at 5 hearts.
 
@@ -179,14 +198,33 @@ attribute-power:
 
 status-effect-power:
     title: Status Effect
-    text: |
-        If you simply want a constant status effect that remains permanent even after the user drinks milk, you can use the [Action Over Time `origins:action_over_time`](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) power type (that runs an action every so many ticks) instead with the "Entity Action" being an [Apply Effect](#effect-action) action containing the status effect you want. If you want the power to instantly remove the status effect when it deactivates (its [condition](#power-conditions) becomes false), set the "Falling Action" to a [Clear Effect](#effect-action) action containing the status effect to remove.
+    short: |
+        To create a constant status effect power that remains permanent under some condition (even after drinking milk), use [Action Over Time `origins:action_over_time`](http://l.mathgeniuszach.com/p/action_over_time/) with the entity action being [Apply Effect](#effect-action). If you want the power to instantly remove the status effect, set the falling action to [Clear Effect](#effect-action).
 
-        Otherwise, the [Stacking Status Effect `origins:stacking_status_effect` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/stacking_status_effect/) power type is a typical way to apply a status effect that increases its duration (not its amplifier) over time as the power remains active.
+        Otherwise, the [Stacking Status Effect `origins:stacking_status_effect`](http://l.mathgeniuszach.com/p/stacking_status_effect/) power type can be used to repeatedly apply a status effect that increases its duration (not its amplifier) over time as the power remains active. This power works with the concept of "stacks". While the power is active/inactive (condition is true/false), the user gains/loses a stack every so many ticks (determined by `tick_rate`). The amount of stacks starts at 0, but increases/decreases until hitting the value of `max_stacks`/`min_stacks`. `min_stacks` can be negative to provide a "buffer" before the status effect is applied. Every time a stack is added (not when a stack is removed) the status effect is reapplied with a duration (in ticks, 20 ticks is a second) equal to `number of stacks * duration_per_stack`. The status effect is not applied if the user already has the status effect with a greater duration.
+
+        Example constant status effect power [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:action_over_time",
+            "interval": 20,
+            "entity_action": {
+                "type": "origins:apply_effect",
+                "effect": {
+                    "effect": "minecraft:regeneration",
+                    "duration": 100
+                }
+            }
+        }
+        ```
+    text: |
+        If you simply want a constant status effect that remains permanent even after the user drinks milk, you can use the [Action Over Time `origins:action_over_time`](http://l.mathgeniuszach.com/p/action_over_time/) power type (that runs an action every so many ticks) instead with the "Entity Action" being an [Apply Effect](#effect-action) action containing the status effect you want. If you want the power to instantly remove the status effect when it deactivates (its [condition](#power-conditions) becomes false), set the "Falling Action" to a [Clear Effect](#effect-action) action containing the status effect to remove.
+
+        Otherwise, the [Stacking Status Effect `origins:stacking_status_effect` (click for more info)](http://l.mathgeniuszach.com/p/stacking_status_effect/) power type is a typical way to apply a status effect that increases its duration (not its amplifier) over time as the power remains active.
 
         The Stacking Status Effect works with the concept of "stacks". While the power is active/inactive ([condition](#power-conditions) is true/false), the user gains/loses a stack respectively every so many ticks (determined by the "Tick Rate"). The amount of stacks starts at 0, but increases/decreases until hitting the Max-Stacks/Min-Stacks values respectively. Note that "Min Stacks" can be negative to provide a "buffer" before the status effect is applied. Every time a stack is added (not when a stack is removed) the status effect is reapplied with a duration (in ticks, 20 ticks is a second) equal to `number of stacks * Duration Per Stack`. If the user already has the status effect with a greater duration than what would be applied, the status effect remains the same.
 
-        If you need more control over how and when the status effect is applied, as well as increases or decreases (e.g., you would like the amplifier to increase over time), you'll probably have to use a [Resource (click to learn more)](#resource-power) in combination with several [Action Over Time `origins:action_over_time`](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) powers instead. Note that actions can have individual conditions too with [`origins:if_else` and `origins:if_else_list` (click to learn about meta actions)](https://origins.readthedocs.io/en/latest/types/meta_action_types/).
+        If you need more control over how and when the status effect is applied, as well as increases or decreases (e.g., you would like the amplifier to increase over time), you'll probably have to use a [Resource (click to learn more)](#resource-power) in combination with several [Action Over Time `origins:action_over_time`](http://l.mathgeniuszach.com/p/action_over_time/) powers instead. Note that actions can have individual conditions too with [`origins:if_else` and `origins:if_else_list` (click to learn about meta actions)](https://origins.readthedocs.io/en/latest/types/meta_action_types/).
 
         Example constant status effect power [JSON](#json-format):
         ```json
@@ -211,11 +249,11 @@ status-effect-power:
 night-vision-power:
     title: Night Vision
     text: |
-        The [Night Vision `origins:night_vision` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/night_vision/) power type grants night vision to its owner without giving them the status effect.
+        The [Night Vision `origins:night_vision` (click for more info)](http://l.mathgeniuszach.com/p/night_vision/) power type grants night vision to its owner without giving them the status effect.
 
         It also has a `strength` field that can range from 0.0-1.0 that specifies how strong the night vision effect is, which defaults to 1.0. As you can imagine, a value of 0.0 does nothing, while a value of 1.0 gives full night vision.
 
-        This specific power (though not any other power types) also has a [Toggle Night Vision](https://origins.readthedocs.io/en/latest/types/power_types/toggle_night_vision/) variant that allows its owner to enable or disable the effects of night vision with a keybind.
+        This specific power (though not any other power types) also has a [Toggle Night Vision](http://l.mathgeniuszach.com/p/toggle_night_vision/) variant that allows its owner to enable or disable the effects of night vision with a keybind.
 
         Example night vision power [JSON](#json-format):
         ```json
@@ -236,16 +274,16 @@ mob-hostility-power:
         1. [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) has the [Mobs Ignore `apugli:mobs_ignore`](https://apugli.readthedocs.io/en/latest/types/power_types/mobs_ignore/) power type which causes certain mobs to ignore the player.
         2. [Robin's Apoli Additions'](https://www.curseforge.com/minecraft/mc-mods/robins-apoli-additions) has the [Remove Goal `ra_additions:remove_goal` and Add Goal `ra_additions:add_goal`](https://raa-docs.readthedocs.io/en/latest/power_types/) power type, which when on a __mob__, allows you to prevent the mob from performing actions on a more granular level. This should be on the __mob__, __not the player__, so you'd have to grant the power to said mob.
         
-        The closest thing you have in regular old origins is the `origins:scare_creepers` power, which is a _power_ and not a _power type_, meaning it can only be added to origins directly and not configured. You can also try vaguely related power types or powers that involve command/function usage, like giving mobs blindness to lower their follow radius, shoving them away, giving them the `{NoAI:1b}` NBT tag, or teleporting an invisible cat around to scare creepers.
+        The closest thing you have in base origins is the `origins:scare_creepers` power, which is a _power_ and not a _power type_, meaning it can only be added to origins directly and not configured. You could also try to mimic this function by lowering mobs' follow radius (perhaps through blindness), shoving them away, giving them the `{NoAI:1b}` NBT tag, or teleporting an invisible cat around to scare creepers.
 
         There are two other main workarounds in base origins, you could either:
         1. Interface with mob hostility directly via mixins with an origins addon mod (make a mod instead of a datapack).
-        2. Make a power which adds the mob to your own "team" via the [`/team`](https://minecraft.fandom.com/wiki/Commands/team) command. Mobs will not attack the player if they are on the same team as the player. However, all entities can only ever be on ONE team at a time, so using this method could conflict with other packs that use teams.
+        2. Make a power which adds the mob to your own "team" via the [`/team`](https://minecraft.wiki/w/Commands/team) command. Mobs will not attack the player if they are on the same team as the player. However, all entities can only ever be on ONE team at a time, so using this method could conflict with other packs that use teams.
 
 creative-flight-power:
     title: Creative Flight
     text: |
-        The [Creative Flight `origins:creative_flight` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/creative_flight/) power type grants the ability to fly as if its owner was in creative mode.
+        The [Creative Flight `origins:creative_flight` (click for more info)](http://l.mathgeniuszach.com/p/creative_flight/) power type grants the ability to fly as if its owner was in creative mode.
 
         Example creative flight power [JSON](#json-format):
         ```json
@@ -259,7 +297,7 @@ creative-flight-power:
 elytra-flight-power:
     title: Elytra Flight
     text: |
-        The [Elytra Flight `origins:elytra_flight` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/elytra_flight/) power type grants the ability to fly as if an elytra was equipped.
+        The [Elytra Flight `origins:elytra_flight` (click for more info)](http://l.mathgeniuszach.com/p/elytra_flight/) power type grants the ability to fly as if an elytra was equipped.
 
         There is also a `render_elytra` field that must be either set to `true` (an elytra should be shown), or `false` (no elytra will be shown).
 
@@ -279,7 +317,7 @@ elytra-flight-power:
 effect-immunity-power:
     title: Effect Immunity
     text: |
-        The [Effect Immunity `origins:effect_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/effect_immunity/) power type prevents certain status effects from being applied to its owner.
+        The [Effect Immunity `origins:effect_immunity` (click for more info)](http://l.mathgeniuszach.com/p/effect_immunity/) power type prevents certain status effects from being applied to its owner.
 
         The effects to prevent can be provided in the `effect` (singular) or `effects` (plural) fields. To turn the list of effects into a whitelist instead of a blacklist (i.e., `effect` and `effects` would specify the only effects that should not be blocked), set the `inverted` field to true.
 
@@ -297,7 +335,7 @@ effect-immunity-power:
 fire-immunity-power:
     title: Fire Immunity
     text: |
-        The [Fire Immunity `origins:fire_immunity` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_immunity/) power type prevents its owner from being set on fire and from taking any fire damage.
+        The [Fire Immunity `origins:fire_immunity` (click for more info)](http://l.mathgeniuszach.com/p/fire_immunity/) power type prevents its owner from being set on fire and from taking any fire damage.
 
         Example fire immunity power [JSON](#json-format):
         ```json
@@ -311,15 +349,15 @@ fire-immunity-power:
 projectile-power:
     title: Projectile
     text: |
-        The [Fire Projectile `origins:fire_projectile` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/fire_projectile/) power type enables its owner to fire a projectile upon a key press.
+        The [Fire Projectile `origins:fire_projectile` (click for more info)](http://l.mathgeniuszach.com/p/fire_projectile/) power type enables its owner to fire a projectile upon a key press.
 
-        The entity fired can be configured via the `entity_type` field. [A full list of entity ids can be found here](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Entities), but notable ones are in the "Projectiles" section of that page. NBT can be given to the entity via the `tag` field.
+        The entity fired can be configured via the `entity_type` field. [A full list of entity ids can be found here](https://minecraft.wiki/w/Java_Edition_data_values/Entities), but notable ones are in the "Projectiles" section of that page. NBT can be given to the entity via the `tag` field.
 
         The number of entities fired is configurable via the `count` field which defaults to 1.
 
         The `key` field specifies what key this power should respond to. By default, this is the primary key (G). A `cooldown` in ticks can be provided to cause the power to need to recharge on use; this is rendered into a resource bar on the hud, but can be turned off by setting the `hud_render`s `should_render` field to false.
 
-        A full list of fields available and their functions can be found on the [Fire Projectile](https://origins.readthedocs.io/en/latest/types/power_types/fire_projectile/) page of the wiki.
+        A full list of fields available and their functions can be found on the [Fire Projectile](http://l.mathgeniuszach.com/p/fire_projectile/) page of the wiki.
 
         Example power that fires arrows rapidly while holding left click [JSON](#json-format)
         ```json
@@ -343,7 +381,7 @@ projectile-power:
 inventory-power:
     title: Inventory
     text: |
-        The [Inventory `origins:inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/inventory/) power type gives its owner a separate inventory, like a backpack, that can be used to store items.
+        The [Inventory `origins:inventory` (click for more info)](http://l.mathgeniuszach.com/p/inventory/) power type gives its owner a separate inventory, like a backpack, that can be used to store items.
 
         The type of inventory is configurable via the `container_type` field, and can be set to one of "chest", "hopper", "dropper", "dispenser", or "double_chest". The "chest" has 3 rows of 9 slots (27), hopper has 1 row of 5 slots (5), the "dropper" and "dispenser" have 3 rows of 3 slots (9), and the "double_chest" as 6 rows of 9 slots (54). There is no noticable difference between "dropper" and "dispenser".
 
@@ -368,7 +406,7 @@ inventory-power:
 invisibility-power:
     title: Invisibility
     text: |
-        The [Invisibility `origins:invisibility` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invisibility/) power type grants its owner invisibility.
+        The [Invisibility `origins:invisibility` (click for more info)](http://l.mathgeniuszach.com/p/invisibility/) power type grants its owner invisibility.
 
         By default, armor and the glowing outline are not rendered on entities with this power. Set `render_armor` to true to render armor, and set `render_outline` to show any glowing outline.
 
@@ -387,7 +425,7 @@ invisibility-power:
 invulnerability-power:
     title: Invulnerability
     text: |
-        The [Invulnerability `origins:invulnerability` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/invulnerability/) power type grants its owner damage immunity to certain damage sources.
+        The [Invulnerability `origins:invulnerability` (click for more info)](http://l.mathgeniuszach.com/p/invulnerability/) power type grants its owner damage immunity to certain damage sources.
 
         You can specify which type of damage the player is immune to using a [Damage Condition](https://origins.readthedocs.io/en/latest/types/damage_condition_types/) (`damage_condition` field). Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
 
@@ -407,7 +445,7 @@ invulnerability-power:
 keep-inventory-power:
     title: Keep Inventory
     text: |
-        The [Keep Inventory `origins:keep_inventory` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/keep_inventory/) power type makes certain items persist in its owner's inventory after death.
+        The [Keep Inventory `origins:keep_inventory` (click for more info)](http://l.mathgeniuszach.com/p/keep_inventory/) power type makes certain items persist in its owner's inventory after death.
 
         By default, all items in the owner's inventory will remain after death. An [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) (`item_condition` field), can be provided specifying which items will persist in the owner's inventory. Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used here as well.
 
@@ -434,13 +472,13 @@ keep-inventory-power:
 launch-power:
     title: Launch
     text: |
-        The [Launch `origins:launch`](https://origins.readthedocs.io/en/latest/types/power_types/launch/) power type launches its owner upwards when pressing a certain key.
+        The [Launch `origins:launch`](http://l.mathgeniuszach.com/p/launch/) power type launches its owner upwards when pressing a certain key.
 
         The `speed` field must be set with a float value specifying how fast to launch the owner into the air. The higher this value, the higher the owner will go.
 
         The `key` field specifies what key this power should respond to. By default, this is the primary key (G). A `cooldown` in ticks can be provided to cause the power to need to recharge on use; this is rendered into a resource bar on the hud, but can be turned off by setting the `hud_render`s `should_render` field to false.
 
-        Optionally, a sound event can be played via the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.fandom.com/wiki/Sounds.json/Java_Edition_values).
+        Optionally, a sound event can be played via the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.wiki/w/Sounds.json/Java_Edition_values).
 
         Example launch power which plays a sound and has a cooldown of 30 seconds [JSON](#json-format):
         ```json
@@ -463,8 +501,20 @@ launch-power:
 
 loot-table-power:
     title: Loot Table
+    short: |
+        The [Replace Loot Table `origins:replace_loot_table` (click for more info)](http://l.mathgeniuszach.com/p/replace_loot_table/) power type changes one or more loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
+
+        The `replace` field requires an object with `"key": "value"` pairs. Each "key" is a [regular expression](http://mathgeniuszach.com/response/what-is-regex) matching all loot tables to replace, and each "value" is the loot table to replace all matches with.
+
+        In case multiple powers want to replace a loot table, the power with the highest `priority` (default to 0) will "win" and it will successfully replace the table while the other powers will be ignored. If multiple powers with the same priority try to do the replacement, the power that successfully "wins" is undefined (unknowable normally and not necessarily random).
+
+        A [Bientity Condition](https://origins.readthedocs.io/en/latest/types/bientity_action_types/), [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/), and an [Item Condition](https://origins.readthedocs.io/en/latest/types/item_condition_types/) can all be used to determine when to apply the loot table replacement. As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of all conditions too.
+
+        A table explaining what entities, blocks, and items are tested for can be found on the online page.
+
+        For [JSON](#json-format) examples, see the [Replace Loot Table (Examples)](http://l.mathgeniuszach.com/p/replace_loot_table/#Examples) wiki page.
     text: |
-        The [Replace Loot Table `origins:replace_loot_table` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/) power type changes one or more loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
+        The [Replace Loot Table `origins:replace_loot_table` (click for more info)](http://l.mathgeniuszach.com/p/replace_loot_table/) power type changes one or more loot tables that its owner uses when breaking blocks, killing mobs, fishing, opening chests, etc.
 
         The `replace` field requires an object with `"key": "value"` pairs. Each "key" is a [regular expression](/response/what-is-regex) matching all loot tables to replace, and each "value" is the loot table to replace all matches with.
 
@@ -487,14 +537,47 @@ loot-table-power:
             <tr><td><code class="noborder">generic</code></td><td>Generic</td><td>?</td><td>?</td><td>?</td></tr>
         </table>
         
-        This data was found using the [loot context types](https://minecraft.fandom.com/wiki/Loot_table#Loot_context_types) section on the minecraft wiki. In general, the "Target" is the "this entity", the "Item/Tool" is the "Tool", and the "Block" is a cached version of the block at the "Origin" position.
+        This data was found using the [loot context types](https://minecraft.wiki/w/Loot_table#Loot_context_types) section on the minecraft wiki. In general, the "Target" is the "this entity", the "Item/Tool" is the "Tool", and the "Block" is a cached version of the block at the "Origin" position.
 
-        For [JSON](#json-format) examples, see the [Replace Loot Table (Examples)](https://origins.readthedocs.io/en/latest/types/power_types/replace_loot_table/#Examples) wiki page.
+        For [JSON](#json-format) examples, see the [Replace Loot Table (Examples)](http://l.mathgeniuszach.com/p/replace_loot_table/#Examples) wiki page.
 
 restrict-armor-power:
     title: Restrict Armor
+    short: |
+        The [Restrict Armor `origins:restrict_armor` (click for more info)](http://l.mathgeniuszach.com/p/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [an entity condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](http://l.mathgeniuszach.com/p/conditioned_restrict_armor/) power type instead.
+
+        You can specify which items are restricted from being worn via [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used as well. If the condition matches the item, then the item will be unwearable.
+
+        A table showing the armor level and toughness of each piece of armor can be found on the online page.
+
+        Example power which prevents equipping any armor better than chainmail [JSON](#json-format):
+        ```json
+        {
+            "type": "origins:restrict_armor",
+            "head": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 2
+            },
+            "chest": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 5
+            },
+            "legs": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 4
+            },
+            "feet": {
+                "type": "origins:armor_value",
+                "comparison": ">",
+                "compare_to": 1
+            }
+        }
+        ```
     text: |
-        The [Restrict Armor `origins:restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [an entity condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/conditioned_restrict_armor/) power type instead.
+        The [Restrict Armor `origins:restrict_armor` (click for more info)](http://l.mathgeniuszach.com/p/restrict_armor/) power type prevents its owner from wearing certain armor. Note that if you want [an entity condition](#power-conditions) on this power type, you must use the [Conditioned Restrict Armor `origins:conditioned_restrict_armor` (click for more info)](http://l.mathgeniuszach.com/p/conditioned_restrict_armor/) power type instead.
 
         You can specify which items are restricted from being worn via [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). Like other conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used as well. If the condition matches the item, then the item will be unwearable.
 
@@ -540,10 +623,22 @@ restrict-armor-power:
 
 resource-power:
     title: Resources
-    text: |
-        The [Resource `origins:resource` (click for more info)](https://origins.readthedocs.io/en/latest/types/power_types/resource/) power type provides an integer variable with a minimum (`min` field) and maximum (`max` field) value that can be used for a variety of purposes. The starting value of a resource can be set with the `start_value` field, otherwise it will default to the `min` value.
+    short: |
+        The [Resource `origins:resource` (click for more info)](http://l.mathgeniuszach.com/p/resource/) power type provides an integer variable with a minimum (`min` field) and maximum (`max` field) value that can be used for a variety of purposes. The starting value of a resource can be set with the `start_value` field, otherwise it will default to the `min` value.
         
-        Resources can be changed via the [Change Resource (Entity Action)](https://origins.readthedocs.io/en/latest/types/entity_action_types/change_resource/) and checked via the [Resource (Entity Condition)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/resource/).
+        Resources can be changed via the [Change Resource (Entity Action)](https://origins.readthedocs.io/en/latest/types/entity_action_types/change_resource/) and checked via the [Resource (Entity Condition)](http://l.mathgeniuszach.com/e/resource/).
+
+        Resources can also optionally appear as a colored bar on their owner's HUD via the `hud_render` field, which takes a [HUD Render object](https://origins.readthedocs.io/en/latest/types/data_types/hud_render/) as its value.
+
+        You can also set the `min_action` and `max_action` fields to entity actions that will be executed when the resource reaches its minimum and maximum values respectively, from any means.
+
+        Resources are fairly complex and it is recommended you look at example packs and experiment on them yourself to figure out how they work more fully.
+
+        For an example power, see the online page.
+    text: |
+        The [Resource `origins:resource` (click for more info)](http://l.mathgeniuszach.com/p/resource/) power type provides an integer variable with a minimum (`min` field) and maximum (`max` field) value that can be used for a variety of purposes. The starting value of a resource can be set with the `start_value` field, otherwise it will default to the `min` value.
+        
+        Resources can be changed via the [Change Resource (Entity Action)](https://origins.readthedocs.io/en/latest/types/entity_action_types/change_resource/) and checked via the [Resource (Entity Condition)](http://l.mathgeniuszach.com/e/resource/).
 
         Resources can also optionally appear as a colored bar on their owner's HUD via the `hud_render` field, which takes a [HUD Render object](https://origins.readthedocs.io/en/latest/types/data_types/hud_render/) as its value.
 
@@ -595,7 +690,7 @@ resource-power:
 other-power:
     title: Other
     text: |
-        A full list of power types can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/power_types/). You should also try looking at the [Action Power Types](#action-power), [Prevent Power Types](#prevent-power), and [Modify Power Types](#modify-power) to see if any of those have what you want, and consider that a Minecraft command/function may be able to work in conjuction with your power to provide the functionality you desire.
+        A full list of power types can be found on [the official wiki](http://l.mathgeniuszach.com/p/). You should also try looking at the [Action Power Types](#action-power), [Prevent Power Types](#prevent-power), and [Modify Power Types](#modify-power) to see if any of those have what you want, and consider that a Minecraft command/function may be able to work in conjuction with your power to provide the functionality you desire.
 
         If none of the power types listed on there provide the functionality you need, there is a very real possibility there is NO power that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are three great addon mods:
         - [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) - [Wiki](https://apugli.readthedocs.io/en/latest/)
@@ -610,8 +705,18 @@ other-power:
 
 area-action:
     title: Area Action
+    short: |
+        Area actions are entity actions that execute on certain entities nearby, and they all involve the use of Bientity Conditions and Actions. These special objects work on a pair of entities called the "actor" and the "target". Which entity is the "actor" and the "target" depend on the action, but normally the "actor" is the entity with the power and the "target" is the other entity. The "actor" and "target" can be swapped using `origins:invert`.
+
+        To execute regular actions/conditions on either the "actor" or "target" directly, use `origins:actor_action`, `origins:target_action`, `origins:actor_condition`, or `origins:target_condition`.
+
+        [Area of Effect `origins:area_of_effect`](http://origins.readthedocs.io/en/latest/types/entity_action_types/area_of_effect/) works on the executor ("actor") and nearby entities ("target"s) within `radius` blocks (defaults to 10). Use `bientity_condition` to only match some entities, and `bientity_action` to specify an action to perform.
+
+        [Riding Action `origins:riding_action`](http://origins.readthedocs.io/en/latest/types/entity_action_types/riding_action/) works on the executor ("actor") and entities being ridden ("target"s). Use `recursive` to set whether or not any entities being ridden indirectly will be targeted (defaults to false), `bientity_condition` to only match some entities, and `bientity_action` to specify an action to perform.
+
+        [Passenger Action `origins:passenger_action`](http://origins.readthedocs.io/en/latest/types/entity_action_types/passenger_action/) works on the executor ("actor") and entities riding the actor ("target"s). Use `recursive` to set whether or not any entities riding the actor indirectly will be targeted (defaults to false), `bientity_condition` to only match some entities, and `bientity_action` to specify an action to perform.
     text: |
-        Sometimes you don't want to execute an entity action on the main player or entity, but a certain entity nearby. There are a few actions that can help with this, and they all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/) and [Bientity Actions](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/). These are special conditions and actions that work on a pair of entities called the "actor" and a "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/) or the [Invert `origins:invert` (Action)](https://origins.readthedocs.io/en/latest/types/bientity_action_types/invert/).
+        Sometimes you don't want to execute an entity action on the main player or entity, but a certain entity nearby. There are a few actions that can help with this, and they all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/) and [Bientity Actions](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/). These are special conditions and actions that work on a pair of entities called the "actor" and the "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/) or the [Invert `origins:invert` (Action)](https://origins.readthedocs.io/en/latest/types/bientity_action_types/invert/).
 
         As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used in place of bientity conditions too.
         
@@ -621,7 +726,7 @@ area-action:
 
         The [Riding Action `origins:riding_action` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/riding_action/) entity action executes a bi-entity action with the executor being the "actor" and any entities being ridden being the "target". Use `recursive` to set whether or not any entities being ridden indirectly will be targeted (defaults to false), `bientity_condition` to restrict which entities are affected, and `bientity_action` to specify an action to perform.
 
-        The [Passenger Action `origins:passenger_action` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/passenger_action/) entity action executes a bi-entity action with the executor being the "actor" and any entities being riding the actor being the "target". Use `recursive` to set whether or not any entities riding the actor indirectly will be targeted (defaults to false), `bientity_condition` to restrict which entities are affected, and `bientity_action` to specify an action to perform.
+        The [Passenger Action `origins:passenger_action` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/passenger_action/) entity action executes a bi-entity action with the executor being the "actor" and any entities riding the actor being the "target". Use `recursive` to set whether or not any entities riding the actor indirectly will be targeted (defaults to false), `bientity_condition` to restrict which entities are affected, and `bientity_action` to specify an action to perform.
 
         There is also the [Raycast `origins:raycast` (click here for more info)](#raycast-action) entity action which casts a ray in the direction the "actor" entity is looking until it hits a block or entity, known as the "target". The Raycast action is very complex and thus it has its own page in this flow help.
 
@@ -646,6 +751,18 @@ area-action:
 
 raycast-action:
     title: Raycast Action
+    short: |
+        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/raycast/) entity action casts a ray (think of it like an invisible laser) in the direction the "actor" entity is looking that moves forward until it hits a block or entity, known as the "target".
+
+        This power is fairly complex and to get a full grasp on everything it can do, read the online page.
+
+        The only required field for this action is `distance`, which determines the maximum distance the ray/laser will travel. Higher values may allow for further entities/blocks to be reached, but may also decrease performance. I recommend using 32 for this value in most cases, but you may want to increase or decrease this value depending on your use case.
+
+        By default, the ray/laser fired will either travel forward until it "hits" a block (which can be a fluid) or an entity, or it will "miss" if it travels beyond the specified `distance` without hitting anything. On a hit or a miss, the `block_action`, `bientity_action`, and `miss_action` fields can be used to do something with that information.
+
+        The `command_at_hit` and `command_along_ray` fields allow you to execute commands at every position along the invisible laser of the raycast. The `command_along_ray` command will be run every "step" blocks/meters specified by the `command_step` field. To make these commands only execute on a successful hit, set `command_along_ray_only_on_hit` to true.
+
+        The `fluid_handling` and `shape_type` fields allow you to further configure which blocks can be hit by the raycast and how.
     text: |
         The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/raycast/) entity action casts a ray (think of it like an invisible laser) in the direction the "actor" entity is looking that moves forward until it hits a block or entity, known as the "target".
 
@@ -780,11 +897,11 @@ block-action:
 effect-action:
     title: Effect Action
     text: |
-        The [Apply Effect `origins:apply_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/apply_effect/) entity action applies one or more status effects to the entity. The effects applied can be specified via either the `effect` (A single [Status Effect Instance](https://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance/)) or `effects` ([Array](https://origins.readthedocs.io/en/latest/types/data_types/array/) of [Status Effect Instances](https://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance/)). 
+        The [Apply Effect `origins:apply_effect`](http://origins.readthedocs.io/en/latest/types/entity_action_types/apply_effect) entity action applies one or more status effects to the entity. The effects applied can be specified via either the `effect` (A single Status Effect Instance) or `effects` (Array of Status Effect Instances) fields.
         
-        Each [Status Effect Instance](https://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance/) has an `effect` field that should be set to the [Status Effect ID (click for a full list of vanilla ids)](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Effects) of a status effect to give; other fields are optional. Optionally, the `duration` (in ticks, defaults to 100 or 5 secs) and `amplifier` (0 level 1, 1 level 2, defaults to 0 or level 1) of the effect can be set as well. Set `is_ambient` to true (defaults to false) to make particle effects less noticable, or `show_particles` to false (defaults to true) to turn off particle effects entirely. If you don't want the icon of the effect to show on the hud, set `show_icon` to false (defaults to true).
+        Each [Status Effect Instance](http://origins.readthedocs.io/en/latest/types/data_types/status_effect_instance) has an `effect` field that should be set to the [Status Effect ID (click for a full list of vanilla ids)](http://minecraft.wiki/w/Java_Edition_data_values/Effects) of a status effect to give; other fields are optional. The `duration` (in ticks, defaults to 100 or 5 secs) and `amplifier` (0 level 1, 1 level 2, defaults to 0 or level 1) fields of the effect can be set as well. Set `is_ambient` to true (defaults to false) to make particle effects less noticable, or `show_particles` to false (defaults to true) to turn off particle effects entirely. If you don't want the icon of the effect to show on the hud, set `show_icon` to false (defaults to true).
 
-        The [Clear Effect `origins:clear_effect` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/clear_effect/) entity action clears all or just one status effect from the entity. By default, this action clears all effects from the entity, but the `effect` field can be set to a [Status Effect ID (click for a full list of vanilla ids)](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Effects) to only clear that one effect.
+        The [Clear Effect `origins:clear_effect`](http://origins.readthedocs.io/en/latest/types/entity_action_types/clear_effect) entity action clears status effects from the entity. By default, this action clears all effects from the entity, but the `effect` field can be set to a [Status Effect ID](http://minecraft.wiki/w/Java_Edition_data_values/Effects) to only clear that one effect.
 
         Entity action which gives Slow Falling I and Slowness I for 20 seconds [JSON](#json-format):
         ```json
@@ -848,6 +965,15 @@ open-inventory-action:
 
 inventory-action:
     title: Inventory Action
+    short: |
+        There are several entity actions that interact with the items in a player/entity's inventory. Most of these actions work based upon [Item Actions](https://origins.readthedocs.io/en/latest/types/item_action_types/), and items effected can be restricted via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
+
+        Here's a list of common inventory actions:
+        - [Give `origins:give`](https://origins.readthedocs.io/en/latest/types/entity_action_types/give/) - gives an entity an item stack by either inserting it into their inventory or dropping it on the ground.
+        - [Equipped Item Action `origins:equipped_item_action`](https://origins.readthedocs.io/en/latest/types/entity_action_types/equipped_item_action/) - executes an `item_action` on the item in one equipped item slot (`equipment_slot` field).
+        - [Drop Inventory `origins:drop_inventory`](https://origins.readthedocs.io/en/latest/types/entity_action_types/drop_inventory/) - drops certain items from the entity's inventory.
+        - [Modify Inventory `origins:modify_inventory`](https://origins.readthedocs.io/en/latest/types/entity_action_types/modify_inventory/) - uses an `item_action` to modify certain items specified by the `item_condition` field.
+        - [Replace Inventory `origins:replace_inventory`](https://origins.readthedocs.io/en/latest/types/entity_action_types/replace_inventory/) - replaces the items specified by the `item_condition` field with an item stack.
     text: |
         There are several entity actions that interact with the items in a player/entity's inventory. Most of these actions work based upon [Item Actions](https://origins.readthedocs.io/en/latest/types/item_action_types/), and items effected can be restricted via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
 
@@ -891,10 +1017,37 @@ inventory-action:
 
 sound-action:
     title: Sound Action
+    short: |
+        The [Play Sound `origins:play_sound` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/play_sound/) entity action plays a sound event at the entity's position.
+
+        The sound played is specified by the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.wiki/w/Sounds.json/Java_Edition_values).
+
+        The `volume` field controls the number of blocks the sound can be heard from. A value of 1.0 means 16 blocks, 0.5 means 8 blocks, 3.0 means 48 blocks, etc. It defaults to 1.0 or 16 blocks.
+
+        The `pitch` field controls the pitch of the sound event by multiplying it's frequency. It ranges from 0.0 to 2.0 and defaults to 1.0. 1.0 means no pitch change, 0.5 means one octave lower, 2.0 means one octave higher, and 0.25 means two octaves lower.
+        
+        For note block sounds, the default sound is F#4. A table showing the frequencies of note block sounds can be found on the online page.
+
+        Entity action that plays the enderman death sound within 24 blocks [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:play_sound",
+            "sound": "minecraft:entity.enderman.death",
+            "volume": 1.5
+        }
+        ```
+        Entity action that plays C5 on a note block harp [JSON](#json-format):
+        ```json
+        "entity_action": {
+            "type": "origins:play_sound",
+            "sound": "minecraft:block.note_block.harp",
+            "pitch": 1.414214
+        }
+        ```
     text: |
         The [Play Sound `origins:play_sound` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/play_sound/) entity action plays a sound event at the entity's position.
 
-        The sound played is specified by the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.fandom.com/wiki/Sounds.json/Java_Edition_values).
+        The sound played is specified by the `sound` field. A full list of sound effects [can be found here](https://www.digminecraft.com/lists/sound_list_pc.php). If you want more detail on each sound, you can find it [on this list instead](https://minecraft.wiki/w/Sounds.json/Java_Edition_values).
 
         The `volume` field controls the number of blocks the sound can be heard from. A value of 1.0 means 16 blocks, 0.5 means 8 blocks, 3.0 means 48 blocks, etc. It defaults to 1.0 or 16 blocks.
 
@@ -944,9 +1097,9 @@ particle-action:
 
         The [Spawn Particles `origins:spawn_particles` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/spawn_particles/) entity action spawns particles on the entity's position, and only allows offsetting in the y direction.
 
-        The [`/particle`](https://minecraft.fandom.com/wiki/Commands/particle) command spawns particles at any specified position and can be run through the [Execute Command](#command-action) entity action.
+        The [`/particle`](https://minecraft.wiki/w/Commands/particle) command spawns particles at any specified position and can be run through the [Execute Command](#command-action) entity action.
 
-        Both methods take a `particle` effect of some kind ([IDs can be found here](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Particles)), a number of particles to spawn (`count` field), the `speed` the particles move/fall at, a boolean `force` specifying the range at which particles can be seen (normal or false means within 32 blocks, force or true means within 512 blocks), and a `delta`/`spread` cuboid volume to spawn the particle in.
+        Both methods take a `particle` effect of some kind ([IDs can be found here](https://minecraft.wiki/w/Java_Edition_data_values/Particles)), a number of particles to spawn (`count` field), the `speed` the particles move/fall at, a boolean `force` specifying the range at which particles can be seen (normal or false means within 32 blocks, force or true means within 512 blocks), and a `delta`/`spread` cuboid volume to spawn the particle in.
 
         Entity action which spawns a redstone block particle cuboid [JSON](#json-format):
         ```json
@@ -970,7 +1123,7 @@ particle-action:
 spawn-action:
     title: Spawn Action
     text: |
-        The [Spawn Entity `origins:add_velocity` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/spawn_entity/) entity action spawns another entity at the position of the actor entity. The ID of the entity spawned is specified by the `entity_type` field ([This is a list of all entity IDs](https://minecraft.fandom.com/wiki/Java_Edition_data_values/Entities)). Extra NBT for that entity can be provided through the `nbt` field, and an `entity_action` can be executed on the spawned entity as well.
+        The [Spawn Entity `origins:add_velocity` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/spawn_entity/) entity action spawns another entity at the position of the actor entity. The ID of the entity spawned is specified by the `entity_type` field ([This is a list of all entity IDs](https://minecraft.wiki/w/Java_Edition_data_values/Entities)). Extra NBT for that entity can be provided through the `nbt` field, and an `entity_action` can be executed on the spawned entity as well.
 
         For acquiring NBT data, I recommend using [`mcstacker.net`](https://mcstacker.net/).
 
@@ -988,7 +1141,7 @@ explode-action:
     text: |
         The [Explode `origins:explode` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/explode/) entity action summons an explosion at the entity with a specific explosion power.
 
-        You can set the power of the explosion via the `power` field. [Here's a list of all vanilla explosion power levels](https://minecraft.fandom.com/wiki/Explosion).
+        You can set the power of the explosion via the `power` field. [Here's a list of all vanilla explosion power levels](https://minecraft.wiki/w/Explosion).
 
         By default, this action will damage the entity who invoked the action (which is often the player who summoned the explosion). If you do not want this to damage said entity, set `damage_self` to false.
 
@@ -1027,9 +1180,9 @@ hunger-action:
     text: |
         These food related entity actions will only work on players.
 
-        The [Feed `origins:feed` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/feed/) entity action fills up the _player_ entity's hunger bar as if they had eaten food. The `food` field specifies the number of half hunger bars to restore, and `food * saturation * 2` is the number of half saturation bars to restore. See the [Food level and saturation level restoration](https://minecraft.fandom.com/wiki/Hunger#Food_level_and_saturation_level_restoration) section on the Minecraft wiki for common food and saturation values. To mimic the saturation of a given item, set the `saturation` field to the "Saturation Ratio" value divided by 2.
+        The [Feed `origins:feed` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/feed/) entity action fills up the _player_ entity's hunger bar as if they had eaten food. The `food` field specifies the number of half hunger bars to restore, and `food * saturation * 2` is the number of half saturation bars to restore. See the [Food level and saturation level restoration](https://minecraft.wiki/w/Hunger#Food_level_and_saturation_level_restoration) section on the Minecraft wiki for common food and saturation values. To mimic the saturation of a given item, set the `saturation` field to the "Saturation Ratio" value divided by 2.
 
-        The [Exhaust `origins:exhaust` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/exhaust/) entity action applies exhaustion to the entity, reducing saturation and hunger. This value starts at 0 and increases up to 4 via various actions; once it reaches 4, the total hunger value is decreased by 1 (half a hunger bar). See the [Exhaustion level increase](https://minecraft.fandom.com/wiki/Hunger#Exhaustion_level_increase) section on the Minecraft wiki to see how much exhaustion occurs from various actions.
+        The [Exhaust `origins:exhaust` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_action_types/exhaust/) entity action applies exhaustion to the entity, reducing saturation and hunger. This value starts at 0 and increases up to 4 via various actions; once it reaches 4, the total hunger value is decreased by 1 (half a hunger bar). See the [Exhaustion level increase](https://minecraft.wiki/w/Hunger#Exhaustion_level_increase) section on the Minecraft wiki to see how much exhaustion occurs from various actions.
 
         Example action which feeds the food/saturation of an apple [JSON](#json-format):
         ```json
@@ -1071,7 +1224,7 @@ other-action:
 biome-cond:
     title: Biome Condition
     text: |
-        The [Biome `origins:biome` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/biome/) entity condition checks whether the entity is in a specified biome/biomes. The biome(s) to check for can be controlled via either the `biome` or `biomes` field.
+        The [Biome `origins:biome` (click here for more info)](http://l.mathgeniuszach.com/e/biome/) entity condition checks whether the entity is in a specified biome/biomes. The biome(s) to check for can be controlled via either the `biome` or `biomes` field.
 
         Optionally, a "condition" field is available that allows the checking the biome against a more complex [Biome Condition](https://origins.readthedocs.io/en/latest/types/biome_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
 
@@ -1085,26 +1238,36 @@ biome-cond:
 
 block-cond:
     title: Block Condition
+    short: |
+        Several conditions exist for checking nearby blocks against [Block Conditions](http://origins.readthedocs.io/en/latest/types/block_condition_types). As with regular conditions, [Meta Conditions](http://origins.readthedocs.io/en/latest/types/meta_condition_types) can be used too:
+        - [Block Collision `origins:block_collision`](http://l.mathgeniuszach.com/e/block_collision) - checks a `block_condition` against a block the entity is colliding with.
+        - [Block In Radius `origins:block_in_radius`](http://l.mathgeniuszach.com/e/block_in_radius) - checks if a certain number of blocks exist within a given `radius` in a specific `shape` (defaults to cube).
+        - [In Block Anywhere `origins:in_block_anywhere`](http://l.mathgeniuszach.com/e/in_block_anywhere) - checks if a certain number of blocks are overlapping with the entity's eyes or feet.
+        - [On Block `origins:on_block`](http://l.mathgeniuszach.com/e/on_block) - checks a `block_condition` against the block the entity is standing on.
+        - [Submerged In `origins:submerged_in`](http://l.mathgeniuszach.com/e/submerged_in) - checks if the entity's eyes are in the `fluid` specified.
+        - [Fluid Height `origins:fluid_height`](http://l.mathgeniuszach.com/e/distance_from_coordinates) - checks how deep the entity is within a given fluid. If the entity is not in the liquid, the fluid height will be 0. If the entity is fully under the liquid (they cannot breathe air), this value will be at least 1.5. Higher values than 2.8 wrap back to 1.78.
+        - [Distance From Coordinates `origins:distance_from_coordinates`](http://l.mathgeniuszach.com/e/distance_from_coordinates) - compares the distance between the entity and another point in space.
+        - [Collided Horizontally `origins:collided_horizontally`](http://l.mathgeniuszach.com/e/collided_horizontally) - checks if the entity is walking against a block horizontally.
     text: |
         Several block-related conditions exist that allow for checking nearby blocks against a [Block Condition](https://origins.readthedocs.io/en/latest/types/block_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
 
-        The [Block Collision `origins:block_collision` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/block_collision/) entity condition checks a `block_condition` against a block the entity is colliding with.
+        The [Block Collision `origins:block_collision` (click here for more info)](http://l.mathgeniuszach.com/e/block_collision/) entity condition checks a `block_condition` against a block the entity is colliding with.
 
-        The [Block In Radius `origins:block_in_radius` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/block_in_radius/) entity condition checks if a certain number of blocks match a given `block_condition` within a given `radius` in a specific `shape` (defaults to cube).
+        The [Block In Radius `origins:block_in_radius` (click here for more info)](http://l.mathgeniuszach.com/e/block_in_radius/) entity condition checks if a certain number of blocks match a given `block_condition` within a given `radius` in a specific `shape` (defaults to cube).
 
-        The [In Block Anywhere `origins:in_block_anywhere` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/in_block_anywhere/) entity condition checks if a certain number of blocks that match a given `block_condition` are overlapping with the entity's eyes or feet.
+        The [In Block Anywhere `origins:in_block_anywhere` (click here for more info)](http://l.mathgeniuszach.com/e/in_block_anywhere/) entity condition checks if a certain number of blocks that match a given `block_condition` are overlapping with the entity's eyes or feet.
 
-        The [In Block `origins:in_block` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/in_block/) entity condition checks if the block the entity's feet is inside matches a given `block_condition`.
+        The [In Block `origins:in_block` (click here for more info)](http://l.mathgeniuszach.com/e/in_block/) entity condition checks if the block the entity's feet is inside matches a given `block_condition`.
 
-        The [On Block `origins:on_block` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/on_block/) entity condition checks if the block the entity is standing on matches a given `block_condition`.
+        The [On Block `origins:on_block` (click here for more info)](http://l.mathgeniuszach.com/e/on_block/) entity condition checks if the block the entity is standing on matches a given `block_condition`.
 
-        The [Submerged In `origins:submerged_in` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/submerged_in/) entity condition checks if the entity's eyes are in the `fluid` specified. 
+        The [Submerged In `origins:submerged_in` (click here for more info)](http://l.mathgeniuszach.com/e/submerged_in/) entity condition checks if the entity's eyes are in the `fluid` specified. 
 
-        The [Fluid Height `origins:fluid_height` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/distance_from_coordinates/) entity condition checks how deep the entity is within a given fluid, where the values get larger the deeper you are. If the entity is not in the liquid, the fluid height will be 0. If the entity is fully under the liquid (they cannot breathe air), this value will be at least 1.5. Higher values than 2.8 wrap back to 1.78.
+        The [Fluid Height `origins:fluid_height` (click here for more info)](http://l.mathgeniuszach.com/e/distance_from_coordinates/) entity condition checks how deep the entity is within a given fluid, where the values get larger the deeper you are. If the entity is not in the liquid, the fluid height will be 0. If the entity is fully under the liquid (they cannot breathe air), this value will be at least 1.5. Higher values than 2.8 wrap back to 1.78.
 
-        The [Distance From Coordinates `origins:distance_from_coordinates` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/distance_from_coordinates/) entity condition checks the entity's position relative to a point in space, either relative to 0,0 or the world spawn.
+        The [Distance From Coordinates `origins:distance_from_coordinates` (click here for more info)](http://l.mathgeniuszach.com/e/distance_from_coordinates/) entity condition checks the entity's position relative to a point in space, either relative to 0,0 or the world spawn.
 
-        The [Collided Horizontally `origins:collided_horizontally` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/collided_horizontally/) entity condition checks if the entity is walking against a block horizontally.
+        The [Collided Horizontally `origins:collided_horizontally` (click here for more info)](http://l.mathgeniuszach.com/e/collided_horizontally/) entity condition checks if the entity is walking against a block horizontally.
 
         Condition that checks if the entity is standing on a grass block [JSON](#json-format):
         ```json
@@ -1122,11 +1285,11 @@ item-cond:
     text: |
         The following entity conditions allow checking if an item is equipped. Items can be checked via the use of [Item Conditions](https://origins.readthedocs.io/en/latest/types/item_condition_types/). As with regular conditions, [Meta Conditions](https://origins.readthedocs.io/en/latest/types/meta_condition_types/) can be used too.
 
-        The [Equipped Item `origins:equipped_item` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/equipped_item/) entity condition checks if the entity has an item equipped in the specified `equipment_slot` (which can be one of "mainhand", "offhand", "head", "chest", "legs", or "feet").
+        The [Equipped Item `origins:equipped_item` (click here for more info)](http://l.mathgeniuszach.com/e/equipped_item/) entity condition checks if the entity has an item equipped in the specified `equipment_slot` (which can be one of "mainhand", "offhand", "head", "chest", "legs", or "feet").
 
-        The [Using Item `origins:using_item` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/using_item/) entity condition checks if the entity is using an item (eating, drinking, shielding, drawing a bow, etc.).
+        The [Using Item `origins:using_item` (click here for more info)](http://l.mathgeniuszach.com/e/using_item/) entity condition checks if the entity is using an item (eating, drinking, shielding, drawing a bow, etc.).
 
-        The [Using Effective Tool `origins:using_effective_tool` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/using_effective_tool/) entity condition checks if the player entity is using the effective tool of the block they're mining. This condition only works on players.
+        The [Using Effective Tool `origins:using_effective_tool` (click here for more info)](http://l.mathgeniuszach.com/e/using_effective_tool/) entity condition checks if the player entity is using the effective tool of the block they're mining. This condition only works on players.
 
         Condition which checks if the entity is holding a harvest level 2 or more item [JSON](#json-format):
         ```json
@@ -1143,8 +1306,34 @@ item-cond:
 
 raycast-cond:
     title: Raycast Condition
+    short: |
+        The [Raycast `origins:raycast` (click here for more info)](http://l.mathgeniuszach.com/e/raycast/) entity condition casts a ray (think of it as an invisible laser) in the direction the "actor" entity is looking that moves forward until it hits a block or entity, known as the "target". It then tests the hit object to see if it matches a condition.
+
+        This condition is fairly complex and to get a full grasp on everything it can do, read the online page.
+
+        The only required field for this condition is `distance`, which determines the maximum distance the ray/laser will travel. Higher values may allow for further entities/blocks to be reached, but may also decrease performance. I recommend using 32 for this value in most cases, but you may want to increase or decrease this value depending on your use case.
+
+        By default, the ray/laser fired will either travel forward until it "hits" a block (which can be a fluid) or an entity, or it will "miss" if it travels beyond the specified `distance` without hitting anything. On a miss, this condition is false. On a hit, if specified, either the `block_condition` or `hit_bientity_condition` field will be evaluated. If the condition is empty or evaluates as true, this raycast condition will be true.
+
+        The `fluid_handling` and `shape_type` fields allow you to further configure which blocks can be hit by the raycast and how.
+
+        Condition that checks if a creeper is being looked at, ignoring fluids [JSON](#json-format):
+        ```json
+        "condition": {
+            "type": "origins:raycast",
+            "distance": 32,
+            "fluid_handling": "none",
+            "hit_bientity_condition": {
+                "type": "origins:target_condition",
+                "condition": {
+                    "type": "origins:entity_type",
+                    "entity_type": "minecraft:creeper"
+                }
+            }
+        }
+        ```
     text: |
-        The [Raycast `origins:raycast` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/raycast/) entity condition casts a ray (think of it as an invisible laser) in the direction the "actor" entity is looking until it hits a block or entity, known as the "target". This condition will be true if a hit is found that matches any sub-conditions provided. If no sub-conditions match the hit, this condition will be false.
+        The [Raycast `origins:raycast` (click here for more info)](http://l.mathgeniuszach.com/e/raycast/) entity condition casts a ray (think of it as an invisible laser) in the direction the "actor" entity is looking until it hits a block or entity, known as the "target". This condition will be true if a hit is found that matches any sub-conditions provided. If no sub-conditions match the hit, this condition will be false.
 
         ### Basic Functionality
 
@@ -1193,9 +1382,9 @@ time-cond:
     text: |
         There are two base conditions that allow checking the time.
 
-        The [Daytime `origins:daytime` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/daytime/) entity condition checks if it is daytime in the world. To check for night time, set the `inverted` field on this condition to true.
+        The [Daytime `origins:daytime` (click here for more info)](http://l.mathgeniuszach.com/e/daytime/) entity condition checks if it is daytime in the world. To check for night time, set the `inverted` field on this condition to true.
 
-        The [Time of Day `origins:time_of_day` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/time_of_day/) entity condition compares the current day time of the world (in ticks) to another value. The day time goes from 0 to 24000 and loops around; 23000-24000 (23230) is sunrise, 6000 is noon, 12000-13000 (12780) is sunset, and 18000 is midnight.
+        The [Time of Day `origins:time_of_day` (click here for more info)](http://l.mathgeniuszach.com/e/time_of_day/) entity condition compares the current day time of the world (in ticks) to another value. The day time goes from 0 to 24000 and loops around; 23000-24000 (23230) is sunrise, 6000 is noon, 12000-13000 (12780) is sunset, and 18000 is midnight.
 
         Condition that checks if the sun is setting [JSON](#json-format):
         ```json
@@ -1219,7 +1408,7 @@ time-cond:
 dimension-cond:
     title: Dimension Condition
     text: |
-        The [Dimension `origins:dimension` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/dimension/) entity condition checks whether the entity is in a specified dimension.
+        The [Dimension `origins:dimension` (click here for more info)](http://l.mathgeniuszach.com/e/dimension/) entity condition checks whether the entity is in a specified dimension.
 
         Vanilla dimensions are minecraft:overworld, minecraft:the_nether and minecraft:the_end, but namespace and IDs of custom/modded dimensions should also work.
 
@@ -1235,7 +1424,7 @@ dimension-cond:
 sky-cond:
     title: Sky Condition
     text: |
-        The [Exposed to Sky `origins:exposed_to_sky` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/exposed_to_sky/) entity condition checks if the entity is exposed to the sky, meaning there are no blocks above them.
+        The [Exposed to Sky `origins:exposed_to_sky` (click here for more info)](http://l.mathgeniuszach.com/e/exposed_to_sky/) entity condition checks if the entity is exposed to the sky, meaning there are no blocks above them.
 
         Example [JSON](#json-format):
         ```json
@@ -1246,26 +1435,38 @@ sky-cond:
 
 stat-cond:
     title: Stat Condition
+    short: |
+        All of the conditions here function in the same way and all test a "stat" of some kind.
+
+        - [Attribute `origins:attribute`](http://l.mathgeniuszach.com/e/attribute) - checks how much of a given `attribute` the entity has. for a full list of attributes check [the Minecraft Fandom Wiki](https://minecraft.wiki/w/Attribute#Attributes).
+        - [Air `origins:air`](http://l.mathgeniuszach.com/e/air) - checks how much breath/air/bubbles/oxygen the entity has left in ticks. Players (and most mobs) have a value of 0-300 ticks (15s). Dolphins have a value of 0-4800 ticks (240s). Axolotls have a value of 0-6000 ticks (300s).
+        - [Fall Distance `origins:fall_distance`](http://l.mathgeniuszach.com/e/fall_distance) - checks how long (in blocks) the entity has been falling.
+        - [Food Level `origins:food_level`](http://l.mathgeniuszach.com/e/food_level) - checks how many half-hunger legs the player has (from 0-20). This condition only works on players.
+        - [Saturation Level `origins:saturation_level`](http://l.mathgeniuszach.com/e/saturation_level) - checks how many half-hunger legs of saturation the player has (from 0-20, cannot be greater than food level). This condition only works on players.
+        - [Health `origins:health`](http://l.mathgeniuszach.com/e/health) - checks the current _absolute_ health value of the entity in half-hearts.
+        - [Relative Health `origins:relative_health`](http://l.mathgeniuszach.com/e/relative_health) - checks the current health _percentage_ value of the entity, calculated by `currentHealth / maxHealth`.
+        - [XP Levels `origins:xp_levels`](http://l.mathgeniuszach.com/e/xp_levels) - checks how many XP levels the player has. This condition only works on players.
+        - [XP Points `origins:xp_points`](http://l.mathgeniuszach.com/e/xp_points) - checks how many XP points the player has. This condition only works on players.
     text: |
-        All of the powers in this section function in basically the same way; they all involve a "stat" (e.g. health, oxygen, armor) of some kind.
+        All of the conditions in this section function in basically the same way; they all involve a "stat" (e.g. health, oxygen, armor) of some kind.
 
-        The [Attribute `origins:attribute` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/attribute/) entity condition checks how much of a given `attribute` the entity has. for a full list of attributes check [the Minecraft Fandom Wiki](https://minecraft.fandom.com/wiki/Attribute#Attributes).
+        The [Attribute `origins:attribute` (click for more info)](http://l.mathgeniuszach.com/e/attribute/) entity condition checks how much of a given `attribute` the entity has. for a full list of attributes check [the Minecraft Fandom Wiki](https://minecraft.wiki/w/Attribute#Attributes).
 
-        The [Air `origins:air` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/air/) entity condition checks how much breath/air/bubbles/oxygen the entity has left in ticks. Players (and most mobs) have a max value of 300 ticks (15 secs), while dolphins have a max value of 4800 ticks (240 secs). Axolotls, on the other hand, have a max value of 6000 ticks (300 secs).
+        The [Air `origins:air` (click for more info)](http://l.mathgeniuszach.com/e/air/) entity condition checks how much breath/air/bubbles/oxygen the entity has left in ticks. Players (and most mobs) have a max value of 300 ticks (15 secs), while dolphins have a max value of 4800 ticks (240 secs). Axolotls, on the other hand, have a max value of 6000 ticks (300 secs).
 
-        The [Fall Distance `origins:fall_distance` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/fall_distance/) entity condition checks how many blocks the entity has been falling for.
+        The [Fall Distance `origins:fall_distance` (click for more info)](http://l.mathgeniuszach.com/e/fall_distance/) entity condition checks how many blocks the entity has been falling for.
 
-        The [Food Level `origins:food_level` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/food_level/) entity condition checks how many half-hunger legs the player entity has. Food level is in the range of 0 to 20. This condition only works on players.
+        The [Food Level `origins:food_level` (click for more info)](http://l.mathgeniuszach.com/e/food_level/) entity condition checks how many half-hunger legs the player entity has. Food level is in the range of 0 to 20. This condition only works on players.
 
-        The [Saturation Level `origins:saturation_level` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/saturation_level/) entity condition checks how many half-hunger legs of saturation (normally invisible unless you use something like [AppleSkin](https://www.curseforge.com/minecraft/mc-mods/appleskin)) the player entity has. Saturation is in the range of 0 to 20 and can never be greater than the food level. This condition only works on players.
+        The [Saturation Level `origins:saturation_level` (click for more info)](http://l.mathgeniuszach.com/e/saturation_level/) entity condition checks how many half-hunger legs of saturation (normally invisible unless you use something like [AppleSkin](https://www.curseforge.com/minecraft/mc-mods/appleskin)) the player entity has. Saturation is in the range of 0 to 20 and can never be greater than the food level. This condition only works on players.
 
-        The [Health `origins:health` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/health/) entity condition checks the current _absolute_ health value of the entity in half-hearts.
+        The [Health `origins:health` (click for more info)](http://l.mathgeniuszach.com/e/health/) entity condition checks the current _absolute_ health value of the entity in half-hearts.
 
-        The [Relative Health `origins:relative_health` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/relative_health/) entity condition checks the current health _percentage_ value of the entity, calculated by `currentHealth / maxHealth`.
+        The [Relative Health `origins:relative_health` (click for more info)](http://l.mathgeniuszach.com/e/relative_health/) entity condition checks the current health _percentage_ value of the entity, calculated by `currentHealth / maxHealth`.
 
-        The [XP Levels `origins:xp_levels` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/xp_levels/) entity condition checks how many experience levels the player entity has. This condition only works on players.
+        The [XP Levels `origins:xp_levels` (click for more info)](http://l.mathgeniuszach.com/e/xp_levels/) entity condition checks how many experience levels the player entity has. This condition only works on players.
         
-        The [XP Points `origins:xp_points` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/xp_points/) entity condition checks how many experience points the player entity has. This condition only works on players.
+        The [XP Points `origins:xp_points` (click for more info)](http://l.mathgeniuszach.com/e/xp_points/) entity condition checks how many experience points the player entity has. This condition only works on players.
 
         Condition which checks if the entity has 10 or more armor points [JSON](#json-format):
         ```json
@@ -1280,7 +1481,7 @@ stat-cond:
 rain-cond:
     title: Rain Condition
     text: |
-        The [In Rain `origins:in_rain` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/in_rain/) entity condition checks if it is raining at the entity's position.
+        The [In Rain `origins:in_rain` (click here for more info)](http://l.mathgeniuszach.com/e/in_rain/) entity condition checks if it is raining at the entity's position.
 
         Example [JSON](#json-format):
         ```json
@@ -1292,7 +1493,7 @@ rain-cond:
 fire-cond:
     title: Fire Condition
     text: |
-        The [On Fire `origins:on_fire` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/on_fire/) entity condition checks if the entity is on fire.
+        The [On Fire `origins:on_fire` (click here for more info)](http://l.mathgeniuszach.com/e/on_fire/) entity condition checks if the entity is on fire.
 
         Example [JSON](#json-format):
         ```json
@@ -1303,18 +1504,39 @@ fire-cond:
 
 riding-cond:
     title: Riding Condition
+    short: |
+        These entity conditions involve passengers and mounts, and they all involve the use of Bientity Conditions. These special conditions work on a pair of entities called the "actor" and the "target". Which entity is the "actor" and the "target" depend on the action, but normally the "actor" is the entity with the power and the "target" is the other entity. The "actor" and "target" can be swapped using `origins:invert`.
+
+        - [Passenger `origins:passenger`](http://l.mathgeniuszach.com/e/passenger/) - checks if the entity with the power (the target) is being directly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
+        - [Passenger Recursive `origins:passenger_recursive`](http://l.mathgeniuszach.com/e/passenger_recursive/) - checks if the entity with the power (the target) is being directly or indirectly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
+        - [Riding `origins:riding`](http://l.mathgeniuszach.com/e/passenger_recursive/) - checks if the entity with the power (the actor) is directly riding an entity (the target).
+        - [Riding Recursive `origins:riding_recursive`](http://l.mathgeniuszach.com/e/riding_recursive/) - checks if the entity with the power (the actor) is directly or indirectly riding an entity (the target).
+        - [Riding Root `origins:riding_root`](http://l.mathgeniuszach.com/e/riding_root/) - checks if the entity with the power (the actor) is indirectly riding an entity at the start of the riding chain (the target).
+
+        ```json
+        "condition": {
+            "type": "origins:riding",
+            "bientity_condition": {
+                "type": "origins:target_condition",
+                "condition": {
+                    "type": "origins:entity_type",
+                    "entity_type": "minecraft:minecart"
+                }
+            }
+        }
+        ```
     text: |
         These entity conditions involve passengers and mounts. They all involve the use of [Bientity Conditions](https://origins.readthedocs.io/en/latest/types/bientity_action_types/). These are special conditions and actions that work on a pair of entities called the "actor" and a "target". The entities in each category depend on the action being used, but generally the "actor" is the entity executing the action (who has the power), and the "target" is an entity being targeted. The "actor" and "target" can be swapped using the [Invert `origins:invert` (Condition)](https://origins.readthedocs.io/en/latest/types/bientity_condition_types/invert/).
 
-        The [Passenger `origins:passenger` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger/) entity condition checks if the entity with the power (the target) is being directly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
+        The [Passenger `origins:passenger` (click here for more info)](http://l.mathgeniuszach.com/e/passenger/) entity condition checks if the entity with the power (the target) is being directly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
 
-        The [Passenger Recursive `origins:passenger_recursive` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the target) is being directly or indirectly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
+        The [Passenger Recursive `origins:passenger_recursive` (click here for more info)](http://l.mathgeniuszach.com/e/passenger_recursive/) entity condition checks if the entity with the power (the target) is being directly or indirectly ridden by some other entity (the actor). Note that the actor and the target are inverted here for some reason.
 
-        The [Riding `origins:riding` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/passenger_recursive/) entity condition checks if the entity with the power (the actor) is directly riding an entity (the target).
+        The [Riding `origins:riding` (click here for more info)](http://l.mathgeniuszach.com/e/passenger_recursive/) entity condition checks if the entity with the power (the actor) is directly riding an entity (the target).
 
-        The [Riding Recursive `origins:riding_recursive` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/riding_recursive/) entity condition checks if the entity with the power (the actor) is directly or indirectly riding an entity (the target).
+        The [Riding Recursive `origins:riding_recursive` (click here for more info)](http://l.mathgeniuszach.com/e/riding_recursive/) entity condition checks if the entity with the power (the actor) is directly or indirectly riding an entity (the target).
 
-        The [Riding Root `origins:riding_root` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/riding_root/) entity condition checks if the entity with the power (the actor) is indirectly riding an entity at the start of the riding chain (the target).
+        The [Riding Root `origins:riding_root` (click here for more info)](http://l.mathgeniuszach.com/e/riding_root/) entity condition checks if the entity with the power (the actor) is indirectly riding an entity at the start of the riding chain (the target).
 
         Condition which checks if the entity is riding a minecart [JSON](#json-format)
         ```json
@@ -1335,13 +1557,13 @@ server-side-cond:
     text: |
         These entity conditions are by far the most powerful, but as a consequence they only work server-side. This means that they do not work with client side power types such as `origins:climbing`, `origins:entity_glow`, and`origins:shader` won't work with this.
 
-        The [Scoreboard `origins:scoreboard` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/scoreboard/) entity condition checks the entity's score in a scoreboard objective.
+        The [Scoreboard `origins:scoreboard` (click here for more info)](http://l.mathgeniuszach.com/e/scoreboard/) entity condition checks the entity's score in a scoreboard objective.
 
-        The [Command `origins:command` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/command/) entity condition executes a command and checks the number result, which is the number of things effected or just 1 on command success, or 0 on failure.
+        The [Command `origins:command` (click here for more info)](http://l.mathgeniuszach.com/e/command/) entity condition executes a command and checks the number result, which is the number of things effected or just 1 on command success, or 0 on failure.
 
-        The [Predicate `origins:predicate` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/predicate/) entity condition checks if the entity fulfills a specified [Predicate](https://minecraft.gamepedia.com/Predicate).
+        The [Predicate `origins:predicate` (click here for more info)](http://l.mathgeniuszach.com/e/predicate/) entity condition checks if the entity fulfills a specified [Predicate](https://minecraft.gamepedia.com/Predicate).
 
-        The [NBT `origins:nbt` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/nbt/) entity condition checks if the entity has the given NBT data.
+        The [NBT `origins:nbt` (click here for more info)](http://l.mathgeniuszach.com/e/nbt/) entity condition checks if the entity has the given NBT data.
 
         Condition that checks for 4 or more skeletons within a 64-block radius [JSON](#json-format)
         ```json
@@ -1356,7 +1578,7 @@ server-side-cond:
 living-cond:
     title: Living Condition
     text: |
-        The [Living `origins:living` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/living/) entity condition checks if the entity is a mob or a player (a LivingEntity).
+        The [Living `origins:living` (click here for more info)](http://l.mathgeniuszach.com/e/living/) entity condition checks if the entity is a mob or a player (a LivingEntity).
 
         Example [JSON](#json-format):
         ```json
@@ -1368,21 +1590,21 @@ living-cond:
 moving-cond:
     title: Moving Condition
     text: |
-        All of these conditions involve some kind of movement, except for sneaking.
+        All of these conditions involve some kind of movement, except sneaking.
 
-        The [Moving `origins:moving` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/moving/) entity condition checks if the entity is moving horizontally.
+        The [Moving `origins:moving`](http://l.mathgeniuszach.com/e/moving/) entity condition checks if the entity is moving horizontally.
 
-        The [Sneaking `origins:sneaking` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/sneaking/) entity condition checks if the player entity is sneaking. This condition only works on players.
+        The [Sneaking `origins:sneaking`](http://l.mathgeniuszach.com/e/sneaking/) entity condition checks if the player is sneaking. This condition only works on players.
 
-        The [Swimming `origins:swimming` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/swimming/) entity condition checks if the entity is in the swimming pose. This condition only works on players.
+        The [Swimming `origins:swimming`](http://l.mathgeniuszach.com/e/swimming/) entity condition checks if the player is in the swimming pose. This condition only works on players.
 
-        The [Sneaking `origins:sneaking` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/sneaking/) entity condition checks if the player entity is sneaking. This condition only works on players.
+        The [Sneaking `origins:sneaking`](http://l.mathgeniuszach.com/e/sneaking/) entity condition checks if the player is sneaking. This condition only works on players.
 
-        The [Climbing `origins:climbing` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/climbing/) entity condition checks if the entity is climbing.
+        The [Climbing `origins:climbing`](http://l.mathgeniuszach.com/e/climbing/) entity condition checks if the entity is climbing.
 
-        The [Creative Flying `origins:creative_flying` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/creative_flying/) entity condition checks if the entity is flying with creative-mode-like flight.
+        The [Creative Flying `origins:creative_flying`](http://l.mathgeniuszach.com/e/creative_flying/) entity condition checks if the entity is flying with creative-mode-like flight.
 
-        The [Fall Flying `origins:fall_flying` (click here for more info)](https://origins.readthedocs.io/en/latest/types/entity_condition_types/creative_flying/) entity condition checks if the entity is flying with an elytra or elytra like power.
+        The [Fall Flying `origins:fall_flying`](http://l.mathgeniuszach.com/e/creative_flying/) entity condition checks if the entity is flying with an elytra or elytra like power.
 
         Condition that checks for sneak-walking [JSON](#json-format):
         ```json
@@ -1402,7 +1624,7 @@ moving-cond:
 other-cond:
     title: Other Condition
     text: |
-        A full list of entity conditions can be found on [the official wiki](https://origins.readthedocs.io/en/latest/types/entity_condition_types/). Remember that the [Scoreboard/Command Conditions](#score-cmd-cond) are able to check any command in the game, making it able to do things the other conditions could never do.
+        A full list of entity conditions can be found on [the official wiki](http://l.mathgeniuszach.com/e/). Remember that the [Scoreboard/Command Conditions](#score-cmd-cond) are able to check any command in the game, making it able to do things the other conditions could never do.
 
         If none of the conditions listed on there provide the functionality you need, there is a very real possibility there is NO condition that does what you want in base origins. However, an addon mod might provide the functionality you need. Here are three great addon mods:
         - [Apugli](https://www.curseforge.com/minecraft/mc-mods/apugli) - [Wiki](https://apugli.readthedocs.io/en/latest/)

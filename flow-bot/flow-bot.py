@@ -26,7 +26,7 @@ SESSION_LOCK = asyncio.Lock()
 config = configparser.ConfigParser()
 config.read("config.ini")
 
-
+# bot = None
 bot = Client(
     intents = Intents.ALL,
     token = config['bot']['TOKEN'],
@@ -35,32 +35,48 @@ bot = Client(
 
 sessions = {}
 flow_data = {}
-async def load_data():
+async def load_data(local=""):
     global flow_data, meta_map, meta_start
     repo = config['bot']['REPO']
     online = config['bot']['ONLINE']
 
-    # Download content
-    async with httpx.AsyncClient() as http_client:
-        resp = await http_client.get(repo + "index.yaml")
-        index = yaml.safe_load(resp.content)
+    if local:
+        with open(local+"index.yaml", "r") as f:
+            index = yaml.safe_load(f)
         flow_data["default"] = index["default"]
 
-
-        async def load_file(file):
-            resp = await http_client.get(repo + file)
-            flow_data.update(yaml.safe_load(resp.content))
-
         for file in index['data']:
-            await load_file(file) # Should be task group but unsupported in 3.10
+            with open(local+file, "r") as f:
+                flow_data.update(yaml.safe_load(f))
+    else:
+        # Download content
+        async with httpx.AsyncClient() as http_client:
+            resp = await http_client.get(repo + "index.yaml")
+            index = yaml.safe_load(resp.content)
+            flow_data["default"] = index["default"]
+
+            async def load_file(file):
+                resp = await http_client.get(repo + file)
+                flow_data.update(yaml.safe_load(resp.content))
+
+            for file in index['data']:
+                await load_file(file) # Should be task group but unsupported in 3.10
     
     # Parse links
-    for page in flow_data.values():
-        text = page["text"].strip()
+    # long = []
+    for key, page in flow_data.items():
+        text = page.get("short", page["text"]).strip()
         text = IMG_LINKS.sub(rf"[IMAGE: \1](<{repo}i/\2.png>)", text)
         text = SITE_LINKS.sub(rf"](<{online}\1>)", text)
         text = REG_LINKS.sub(rf"](<\1>)", text)
         page["text"] = text
+
+        # if len(text) > 1800:
+        #     long.append((len(text), key))
+    
+    # long.sort()
+    # for l, key in long:
+    #     print(f'Warning: page "{key}" is {l} chars long')
 
 class Session:
     def __init__(self, ctx: SlashContext, message: interactions.Message):
@@ -84,14 +100,14 @@ class Session:
         page = flow_data.get(l, flow_data["default"])
         
         short: bool = "short" in page
-        text: str = f"## {page['title']} ({self.link})\n{page.get('short', page['text'])}"
-        if len(text) > 1950:
-            space = max(text.rfind(" ", 0, 1850), text.rfind("\t", 0, 1850), text.rfind("\r", 0, 1850), text.rfind("\n", 0, 1850))
-            if space < 500: space = 1850
-            text = text[:space] + "..."
-            short = True
-        
+        text: str = f"## {page['title']} ({self.link})\n{page['text']}"
         if short:
+            text += f"\n\nTo read more, see the [#{l}](<{config['bot']['ONLINE']}#{l}>) page online."
+        
+        if len(text) > 1950:
+            space = max(text.rfind(" ", 0, 1800), text.rfind("\t", 0, 1800), text.rfind("\r", 0, 1800), text.rfind("\n", 0, 1800))
+            if space < 500: space = 1800
+            text = text[:space] + "..."
             text += f"\n\nTo read more, see the [#{l}](<{config['bot']['ONLINE']}#{l}>) page online."
         
         self.buttons = []
@@ -216,7 +232,7 @@ async def ping(ctx: SlashContext):
 
 
 def main():
-    asyncio.run(load_data())
+    asyncio.run(load_data('../'))
     print("Flow data loaded")
     bot.start()
 

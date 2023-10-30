@@ -50,8 +50,6 @@ getting-a-modloader:
         Inside the installer, select a version of Minecraft you want to use (1), and click "Install" (2). You shouldn't need to touch anything else, but make sure that "Create profile" (3) is checked. After the installer finishes, reboot your Minecraft launcher and change profiles; you should see a fabric profile that you can now launch!
 
         ![Picture of using the fabric installer](installing-fabric-generic)
-
-        Also note that you have to install a custom modded server to play with friends, which this guide does not cover.
     opts:
       - text: Ok... so how do I install the mod now?
         link: installing-the-mod

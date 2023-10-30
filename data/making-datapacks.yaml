@@ -22,7 +22,7 @@ making-powers:
 
         If the base powers do not suit your needs, or you would like them to be active only in certain conditions, then you will have to design your own custom powers. You'll have to create a new file for every new custom power you want. Every custom power has two parts; a power type that specifies how it works, and a [condition](#power-conditions) that specifies when the power should be active. By understanding these two parts and using them like basic building blocks, you can make almost any power you want.
 
-        You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](https://origins.readthedocs.io/en/latest/types/power_types/). If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more (A lot of these still need to be worked on; if you see a TODO page, you might want to ask in the Discord instead).
+        You can (and **should**) overview the complete list of power types on [this page of the Official Wiki (click here)](http://l.mathgeniuszach.com/p/). If you can't find what you want on there or just want some links for convenience, you can select what you want your power to do below to learn more (A lot of these still need to be worked on; if you see a TODO page, you might want to ask in the Discord instead).
 
         [If you want to learn more about conditions, click here](#power-conditions).
     opts:
@@ -81,23 +81,36 @@ making-powers:
 
 modify-power:
     title: Modify Power
+    short: |
+        [Modifying power types (click here for full list)](http://l.mathgeniuszach.com/p/#modifying_types) modify the player's ability to do something or a stat, particularly things with numerical values.
+
+        Each modify power can either provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied (You can see how each of these values are used in the chart online as ModValueA, ModValueB, ...).
+
+        Resources can also be used instead of constant values. To use a resource instead, specify the resource power's id in the "Resource" field of the modifier. Make sure you also do not specify a value for this to work properly (in the Origin Creator make sure the field is blank).
+
+        Most common operations are (see online page for full list):
+        - `add_base_early` - (vanilla `addition`) performs addition with a number.
+            <br>&nbsp;(Result = BaseValue + ModValueA + ModValueB + ...)
+        - `multiply_total_additive` - (vanilla `multiply_base`) adds a non-stacking percentage of the current value (0.2 is +20%, two 0.2s is +40%, three 0.2s is +60%, etc)
+            <br>&nbsp;(Result = OldValue + OldValue * (ModValueA + ModValueB + ...))
+        - `multiply_total_multiplicative` - (vanilla `multiply_total`) adds a stacking percentage of the current value (0.2 is +20%, two 0.2s is +44%, three 0.2s is +72.8%, etc). Can also be thought of as multiplying by the value + 1 (0.2 is 1.2x, two 0.2s is 1.2x1.2x, three 0.2s is 1.2x1.2x1.2x)
     text: |
-        [Modifying power types (click here for full list)](https://origins.readthedocs.io/en/latest/types/power_types/#modifying_types) modify the player's ability to do something, particularly things with numerical values.
+        [Modifying power types (click here for full list)](http://l.mathgeniuszach.com/p/#modifying_types) modify the player's ability to do something, particularly things with numerical values.
 
         Most notable "modify" powers are:
 
-        - [Modify Attribute](https://origins.readthedocs.io/en/latest/types/power_types/modify_attribute/) - modifies an attribute (max health, armor, attack). Possible attributes use the same names/values as the regular [Attribute power type (click here to learn more)](#attribute-power).
-        - [Modify Player Spawn](https://origins.readthedocs.io/en/latest/types/power_types/modify_player_spawn/) - modifies the player spawn point
-        - [Modify Break Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_break_speed/) - modifies the speed of breaking blocks
-        - [Modify Damage Dealt](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_dealt/) - modifies the amount of damage dealt
-        - [Modify Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/modify_damage_taken/) - modifies the amount of damage taken
-        - [Modify Food](https://origins.readthedocs.io/en/latest/types/power_types/modify_food/) - modifies the amount of food gained from eating
-        - [Modify Exhaustion](https://origins.readthedocs.io/en/latest/types/power_types/modify_exhaustion/) - modifies how much exhaust is received (causing hunger to deplete) when exhaust is received (from sprinting/jumping/etc)
-        - [Modify Jump](https://origins.readthedocs.io/en/latest/types/power_types/modify_jump/) - modifies jump height
-        - [Modify Lava Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_lava_speed/) - modifies lava swim speed
-        - [Modify Swim Speed](https://origins.readthedocs.io/en/latest/types/power_types/modify_swim_speed/) - modifies normal swim speed
-        - [Modify Slipperiness](https://origins.readthedocs.io/en/latest/types/power_types/modify_slipperiness/) - modifies friction
-        - [Modify Velocity](https://origins.readthedocs.io/en/latest/types/power_types/modify_velocity/) - modifies how velocity works
+        - [Modify Attribute](http://l.mathgeniuszach.com/p/modify_attribute/) - modifies an attribute (max health, armor, attack). Possible attributes use the same names/values as the regular [Attribute power type (click here to learn more)](#attribute-power).
+        - [Modify Player Spawn](http://l.mathgeniuszach.com/p/modify_player_spawn/) - modifies the player spawn point
+        - [Modify Break Speed](http://l.mathgeniuszach.com/p/modify_break_speed/) - modifies the speed of breaking blocks
+        - [Modify Damage Dealt](http://l.mathgeniuszach.com/p/modify_damage_dealt/) - modifies the amount of damage dealt
+        - [Modify Damage Taken](http://l.mathgeniuszach.com/p/modify_damage_taken/) - modifies the amount of damage taken
+        - [Modify Food](http://l.mathgeniuszach.com/p/modify_food/) - modifies the amount of food gained from eating
+        - [Modify Exhaustion](http://l.mathgeniuszach.com/p/modify_exhaustion/) - modifies how much exhaust is received (causing hunger to deplete) when exhaust is received (from sprinting/jumping/etc)
+        - [Modify Jump](http://l.mathgeniuszach.com/p/modify_jump/) - modifies jump height
+        - [Modify Lava Speed](http://l.mathgeniuszach.com/p/modify_lava_speed/) - modifies lava swim speed
+        - [Modify Swim Speed](http://l.mathgeniuszach.com/p/modify_swim_speed/) - modifies normal swim speed
+        - [Modify Slipperiness](http://l.mathgeniuszach.com/p/modify_slipperiness/) - modifies friction
+        - [Modify Velocity](http://l.mathgeniuszach.com/p/modify_velocity/) - modifies how velocity works
 
         Each modify power can either provide multiple `modifiers` at once in a list, or just a single `modifier` only. Every modifier takes an "operation" (specifying how to modify the value), and a value (specifying how much to modify by). Operations of the same type are applied at the _same time_; this means their values are combined together first before being applied (You can see how each of these values are used in the chart below as ModValueA, ModValueB, ...).
         
@@ -137,42 +150,39 @@ modify-power:
 prevent-power:
     title: Prevent Power
     text: |
-        [Preventing power types (click here for full list, at bottom of page)](https://origins.readthedocs.io/en/latest/types/power_types/#preventing_types) prevent the individual with the power from doing specific things in particular.
+        [Preventing power types (click here for full list, at bottom of page)](http://l.mathgeniuszach.com/p/#preventing_types) prevent the individual with the power from doing specific things in particular.
 
         Most notable "prevent" powers are:
         
-        - [Prevent Block Use](https://origins.readthedocs.io/en/latest/types/power_types/prevent_block_use/) - prevents right clicking a block
-        - [Prevent Death](https://origins.readthedocs.io/en/latest/types/power_types/prevent_death/) - prevents damage from killing.
-        - [Prevent Elytra Flight](https://origins.readthedocs.io/en/latest/types/power_types/prevent_elytra_flight/) - prevents flying with an elytra
-        - [Prevent Entity Render](https://origins.readthedocs.io/en/latest/types/power_types/prevent_entity_render/) - prevents seeing certain entities
-        - [Prevent Item Use](https://origins.readthedocs.io/en/latest/types/power_types/prevent_item_use/) - prevents using items (but not placing blocks)
-        - [Prevent Sleep](https://origins.readthedocs.io/en/latest/types/power_types/prevent_sleep/) - prevents sleeping, with an optional message
-        - [Prevent Sprinting](https://origins.readthedocs.io/en/latest/types/power_types/prevent_sprinting/) - prevents sprinting
+        - [Prevent Block Use](http://l.mathgeniuszach.com/p/prevent_block_use/) - prevents right clicking a block
+        - [Prevent Death](http://l.mathgeniuszach.com/p/prevent_death/) - prevents damage from killing.
+        - [Prevent Elytra Flight](http://l.mathgeniuszach.com/p/prevent_elytra_flight/) - prevents flying with an elytra
+        - [Prevent Entity Render](http://l.mathgeniuszach.com/p/prevent_entity_render/) - prevents seeing certain entities
+        - [Prevent Item Use](http://l.mathgeniuszach.com/p/prevent_item_use/) - prevents using items (but not placing blocks)
+        - [Prevent Sleep](http://l.mathgeniuszach.com/p/prevent_sleep/) - prevents sleeping, with an optional message
+        - [Prevent Sprinting](http://l.mathgeniuszach.com/p/prevent_sprinting/) - prevents sprinting
 
         All of these powers can be combined with a condition to only prevent various things when a certain condition is true. [For more about conditions, click here](#power-conditions).
 
 action-power:
     title: Action Power
     text: |
-        [Action power types (click here for full list)](https://origins.readthedocs.io/en/latest/types/power_types/#action-related) are more "event-driven" than typical power types. When a certain event occurs (e.g., using an item, pressing a key, over time, when dealing or taking damage), you can use one of these powers to "activate" an [Entity Action](https://origins.readthedocs.io/en/latest/types/entity_action_types/).
+        [Action power types (click here for full list)](http://l.mathgeniuszach.com/p/#action-related) are more "event-driven" than typical power types. When a certain event occurs (e.g., using an item, pressing a key, over time, when dealing or taking damage), you can use one of these powers to "activate" an [Entity Action](http://origins.readthedocs.io/en/latest/types/entity_action_types). If you want to execute multiple actions or some actions based on specific rules or randomness, take a look at the [Meta Action Types](http://origins.readthedocs.io/en/latest/types/meta_action_types).
 
-        Here's a list of common action-related power types ([full list here](https://origins.readthedocs.io/en/latest/types/power_types/#action-related)):
-        - [Active Self](https://origins.readthedocs.io/en/latest/types/power_types/active_self/) - pressing a key on the keyboard
-        - [Action Over Time](https://origins.readthedocs.io/en/latest/types/power_types/action_over_time/) - repeatedly on a timer, and when the condition becomes true and false
-        - [Action On Block Break](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_break/) - breaking a block
-        - [Action On Block Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_block_use/) - right clicking a block
-        - [Action On Item Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_item_use/) - finishing using an item (like food or a potion)
-        - [Action On Callback](https://origins.readthedocs.io/en/latest/types/power_types/action_on_callback/) - respawning or gaining/losing the power/origin
-        - [Action On Entity Use](https://origins.readthedocs.io/en/latest/types/power_types/action_on_entity_use/) - right clicking an entity
-        - [Action On Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_on_hit/) - hitting another entity
-        - [Action When Hit](https://origins.readthedocs.io/en/latest/types/power_types/action_when_hit/) - getting hit by another entity
-        - [Action When Damage Taken](https://origins.readthedocs.io/en/latest/types/power_types/action_when_damage_taken/) - taking damage from any source
+        Here's a list of common action-related power types:
+        - [Active Self](http://l.mathgeniuszach.com/p/active_self) - pressing a key on the keyboard
+        - [Action Over Time](http://l.mathgeniuszach.com/p/action_over_time) - repeatedly on a timer, and when the condition becomes true and false
+        - [Action On Block Break](http://l.mathgeniuszach.com/p/action_on_block_break) - breaking a block
+        - [Action On Block Use](http://l.mathgeniuszach.com/p/action_on_block_use) - right clicking a block
+        - [Action On Callback](http://l.mathgeniuszach.com/p/action_on_callback) - respawning or gaining/losing the power/origin
+        - [Action On Entity Use](http://l.mathgeniuszach.com/p/action_on_entity_use) - right clicking an entity
+        - [Action On Hit](http://l.mathgeniuszach.com/p/action_on_hit) - hitting another entity
+        - [Action When Hit](http://l.mathgeniuszach.com/p/action_when_hit) - getting hit by another entity
+        - [Action When Damage Taken](http://l.mathgeniuszach.com/p/action_when_damage_taken) - taking damage
 
-        All of these action powers can be combined with a condition to only be allowed to activate when a certain condition is true. [For more about conditions, click here](#power-conditions).
+        All of these action powers can be combined with a [condition (click for more info)](#power-conditions) to only activate when a certain condition is true.
 
-        Each of these power types execute an "Entity Action" when a specific event occurs. You can find the complete list of entity actions on [this page of the Official Origins Wiki](https://origins.readthedocs.io/en/latest/types/entity_action_types/). If you want to execute multiple actions at once, or perhaps activate some actions based on specific rules or randomness, take a look at the [Meta Action Types](https://origins.readthedocs.io/en/latest/types/meta_action_types/).
-
-        If you can't find what you want on the wiki or just want some links for convenience, you can select what you want a single action to be below to learn more:
+        For convenience, you can select from some simple actions below:
     opts:
       - text: Apply an action to certain entities nearby
         link: area-action
@@ -216,7 +226,7 @@ power-conditions:
 
         Note that certain power types (the oldest ones, really) have two variants; a "normal" type, and a "conditioned" type. Conditions only work on the "conditioned" type.
 
-        Every power condition is an "Entity Condition" that runs on the owner of the power as the entity. [Click here to see the complete list of regular Entity Conditions](https://origins.readthedocs.io/en/latest/types/entity_condition_types/). If you want to combine conditions together, look at the [Meta Conditions list](https://origins.readthedocs.io/en/latest/types/meta_condition_types/), which provides logical operators and some other useful logic.
+        Every power condition is an "Entity Condition" that runs on the owner of the power as the entity. [Click here to see the complete list of regular Entity Conditions](http://l.mathgeniuszach.com/e/). If you want to combine conditions together, look at the [Meta Conditions list](https://origins.readthedocs.io/en/latest/types/meta_condition_types/), which provides logical operators and some other useful logic.
 
         If you can't find what you want on there or just want some links for convenience, you can click when you want your power to be active below to learn more:
     opts:
