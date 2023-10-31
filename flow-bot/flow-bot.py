@@ -14,6 +14,7 @@ import httpx
 import asyncio
 import re
 import signal
+import traceback
 
 UNSAFE_CHARS = re.compile(r"[^a-zA-Z0-9_-]+")
 IMG_LINKS = re.compile(r"!\[(.*?)\]\((.*?)\)")
@@ -49,18 +50,24 @@ async def load_data(local=""):
             with open(local+file, "r") as f:
                 flow_data.update(yaml.safe_load(f))
     else:
+        raise NotImplementedError("A local directory must be provided")
         # Download content
-        async with httpx.AsyncClient() as http_client:
-            resp = await http_client.get(repo + "index.yaml")
-            index = yaml.safe_load(resp.content)
-            flow_data["default"] = index["default"]
+        # async with httpx.AsyncClient(follow_redirects=True) as http_client:
+        #     try:
+        #         resp = await http_client.get(repo + "index.yaml")
+        #         index = yaml.safe_load(resp.content)
+        #         flow_data["default"] = index["default"]
 
-            async def load_file(file):
-                resp = await http_client.get(repo + file)
-                flow_data.update(yaml.safe_load(resp.content))
-
-            for file in index['data']:
-                await load_file(file) # Should be task group but unsupported in 3.10
+        #         async def load_file(file):
+        #             try:
+        #                 resp = await http_client.get(repo + file)
+        #                 flow_data.update(yaml.safe_load(resp.content))
+        #             except httpx.ReadError as e:
+        #                 print(f'ERROR: Failed to download "{repo}{file}"; {e.__class__.__name__}: {str(e)}')
+        #         for file in index['data']:
+        #             await load_file(file) # Should be task group but unsupported in 3.10
+        #     except httpx.ReadError as e:
+        #         print(f'ERROR: Failed to download "{repo}index.yaml"; {e.__class__.__name__}: {str(e)}')
     
     # Parse links
     # long = []
@@ -79,7 +86,7 @@ async def load_data(local=""):
     #     print(f'Warning: page "{key}" is {l} chars long')
 
 class Session:
-    def __init__(self, ctx: SlashContext, message: interactions.Message):
+    def __init__(self, ctx: SlashContext, message: interactions.Message, back_enabled: bool = True, mod_only: bool = False):
         self.ctx = ctx
         self.message = message
         self.age = 0
@@ -88,13 +95,15 @@ class Session:
         self.start = 0
         self.prev = []
         self.link = ""
+        self.mod_only = mod_only
+        self.back_enabled = back_enabled
     
     async def load(self, link: str):
         l = link.strip()
         l = l[1:] if l[0] == "#" else l
         l = UNSAFE_CHARS.sub("", l)
 
-        if self.link:
+        if self.link and self.back_enabled:
             self.prev.append(self.link)
         self.link = l
         page = flow_data.get(l, flow_data["default"])
@@ -160,6 +169,9 @@ async def on_component(event: Component):
             # Broken state, typically caused by improper shutdown.
             await message.edit(components=[])
             return
+        
+    if s.mod_only and (ctx.member is None or not ctx.member.has_permission(Permissions.MANAGE_MESSAGES)):
+        return
     
     match ctx.custom_id:
         case 'more-button':
@@ -202,27 +214,62 @@ async def on_startup():
 
     asyncio.create_task(timeout_sessions())
 
-@slash_command(description="Launches the Flow Help bot.")
-@slash_option(
-    name = "start",
-    description = "Optional place to start from in the flow help.",
-    opt_type = OptionType.STRING
-)
-async def flowhelp(ctx: SlashContext, start: str = "index"):
+async def _make_session(ctx: SlashContext, start: str = "index", back: bool = True, modonly: bool = False, mentions: interactions.Member | None = None):
     async with SESSION_LOCK:
         while len(sessions) >= int(config['session']['MAX_SESSIONS']):
             await sessions.pop(list(sessions.keys())[0]).close()
 
         message = await ctx.send("Thinking...")
-        s = Session(ctx, message)
+        if mentions is not None:
+            await ctx.send(mentions.mention)
+        
+        s = Session(ctx, message, back, modonly)
         sessions[message.id] = s
     await s.load(start)
+
+@slash_command(description="Launches the Flow Help bot.")
+@slash_option(
+    name = "start",
+    description = "Optional place to start from in the flow help. Defaults to index",
+    opt_type = OptionType.STRING
+)
+@slash_option(
+    name = "back",
+    description = "Whether the back button is shown. Defaults to True.",
+    opt_type = OptionType.BOOLEAN
+)
+@slash_option(
+    name = "modonly",
+    description = "Whether buttons are only available to moderators. Defaults to False.",
+    opt_type = OptionType.BOOLEAN
+)
+@slash_option(
+    name = "mentions",
+    description = "An optional user to ping.",
+    opt_type = OptionType.USER
+)
+async def flowhelp(ctx: SlashContext, start: str = "index", back: bool = True, modonly: bool = False, mentions: interactions.Member | None = None):
+    await _make_session(ctx, start, back, modonly, mentions)
+
+@slash_command(description="Launches the Flow Help bot but with back=False and modonly=True.")
+@slash_option(
+    name = "start",
+    description = "Optional place to start from in the flow help. Defaults to index",
+    opt_type = OptionType.STRING
+)
+@slash_option(
+    name = "mentions",
+    description = "An optional user to ping.",
+    opt_type = OptionType.USER
+)
+async def flowshow(ctx: SlashContext, start: str = "index", mentions: interactions.Member | None = None):
+    await _make_session(ctx, start, False, True, mentions)
 
 @slash_command(description="Reloads the Flow Help bot.")
 @slash_default_member_permission(Permissions.ADMINISTRATOR)
 async def reflow(ctx: SlashContext):
     await close_sessions()
-    await load_data()
+    await load_data(config['bot']['LOCAL'])
     await ctx.send("Reloaded Flow Help.", ephemeral=True)
 
 @slash_command(description="ping pong")
@@ -232,7 +279,7 @@ async def ping(ctx: SlashContext):
 
 
 def main():
-    asyncio.run(load_data('../'))
+    asyncio.run(load_data(config['bot']['LOCAL']))
     print("Flow data loaded")
     bot.start()
 
