@@ -48,15 +48,15 @@ experience-level0:
         Fortunately, there are several resources at your disposal that can be of use, depending on how you choose to make your datapack. There are two main ways you could make a datapack:
 
         1. Through the Origin Creator, and
-          - If code confuses or may confuse you, or you just prefer a more visual interface, then you will probably prefer using the Origin Creator over using an IDE or text editor. You'll still probably want to [learn about JSON (click for more info)](#json-format) to share your work with others.
+          - If code confuses or may confuse you, or you just prefer a more visual interface, then you will probably prefer using the Origin Creator over using an IDE or text editor. You'll still probably want to [learn JSON](#json-format) to share your work with others.
         2. Through a text editor or IDE.
-          - If you want to really get into the details of datapacks even though it may be challenging, you should [learn JSON (click for more info)](#json-format), and make a datapack through a text editor or IDE. This method is much more favorable if you want to eventually create much larger and complex origins, as the Origin Creator is best suited for simpler origins.
+          - If you want to really get into the details of datapacks even though it may be challenging, you should [learn JSON](#json-format), and make a datapack through a text editor or IDE. This method is much more favorable if you want to eventually create much larger and complex origins, as the Origin Creator is best suited for simpler origins.
         
         Here's an image comparing making a datapack in both:
 
         ![Origin Creator vs VSCode](oc-vs-ide)
         
-        Note that if you choose to use the Origin Creator, it may make it more difficult to get help in [the Official Discord](http://discord.gg/4mTMHu3) as most creators do not use it. Thus, if you ask for help with datapacking in the official Discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [my Discord](http://discord.gg/pBFqEcXvW5) instead.
+        Note that if you choose to use the Origin Creator, it may be more difficult to get help in [the Official Discord](http://discord.gg/4mTMHu3) as most creators do not use it. Thus, if you ask for help in the official Discord, it is suggested that you ask questions about the concepts found on the Wiki, as opposed to questions about the Origins Creator itself. If you want to ask questions about the Origin Creator itself, please do so in [my Discord](http://discord.gg/pBFqEcXvW5) instead.
 
         To learn more about each method, click the respective option below.
     text: |

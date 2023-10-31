@@ -9,12 +9,41 @@ import interactions
 import configparser
 import yaml
 
-import httpx
+# import httpx
+# import traceback
 
 import asyncio
 import re
 import signal
-import traceback
+import logging
+
+from sys import stdout
+from os import unlink
+from os.path import exists
+
+LOGGER = logging.getLogger("flow-bot")
+LOG_FORMAT = "[{asctime}] {levelname:<8}  {message}"
+
+def setup_logger():
+    if exists(config['log']['LOG_FILE']):
+        unlink(config['log']['LOG_FILE'])
+    
+    class NullWriter:
+        def write(self, _): pass
+    
+    logging.basicConfig(stream=NullWriter(), format=LOG_FORMAT, datefmt="%I:%M:%S", style="{", level=0)
+
+    log_formatter = logging.Formatter(LOG_FORMAT, datefmt="%I:%M:%S", style="{")
+
+    log_handler_file = logging.FileHandler(config['log']['LOG_FILE'])
+    log_handler_file.setLevel(config['log']['LOG_LEVEL_FILE'])
+    log_handler_file.setFormatter(log_formatter)
+    LOGGER.addHandler(log_handler_file)
+
+    log_handler_out = logging.StreamHandler(stdout)
+    log_handler_out.setLevel(config['log']['LOG_LEVEL_STDOUT'])
+    log_handler_out.setFormatter(log_formatter)
+    LOGGER.addHandler(log_handler_out)
 
 UNSAFE_CHARS = re.compile(r"[^a-zA-Z0-9_-]+")
 IMG_LINKS = re.compile(r"!\[(.*?)\]\((.*?)\)")
@@ -23,6 +52,8 @@ SITE_LINKS = re.compile(r"\]\((?!<)(#[^\)]+)\)")
 
 SESSION_LOCK = asyncio.Lock()
 
+MAX_LINK_CHARS = 100
+DISCORD_MAX_CHARS = 2000
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -70,25 +101,55 @@ async def load_data(local=""):
         #         print(f'ERROR: Failed to download "{repo}index.yaml"; {e.__class__.__name__}: {str(e)}')
     
     # Parse links
-    # long = []
-    for key, page in flow_data.items():
-        text = page.get("short", page["text"]).strip()
+    long = []
+    for link, page in flow_data.items():
+        text: str = page.get("short", page["text"]).strip()
         text = IMG_LINKS.sub(rf"[IMAGE: \1](<{repo}i/\2.png>)", text)
         text = SITE_LINKS.sub(rf"](<{online}\1>)", text)
         text = REG_LINKS.sub(rf"](<\1>)", text)
-        page["text"] = text
 
-        # if len(text) > 1800:
-        #     long.append((len(text), key))
+        if link == "default":
+            max_len_str = f"## {page['title']} ({'x'*MAX_LINK_CHARS})\n{text}"
+            if len(max_len_str) > DISCORD_MAX_CHARS:
+                text = "ERROR: default page too long"
+                LOGGER.error("default page can be %d chars long", len(max_len_str))
+            page[text] = text
+            continue
+
+        text = f"## {page['title']} ({link})\n{text}"
+        extra = f"\n\nTo read more, see the [#{link}](<{config['bot']['ONLINE']}#{link}>) page online."
+        if "short" in page:
+            text += extra
+        
+        if len(text) > DISCORD_MAX_CHARS:
+            long.append(("short" in page, link, len(text)))
+
+            start_trunc = DISCORD_MAX_CHARS - len(extra) - 1
+            space = max(
+                text.rfind(" ", 0, start_trunc),
+                text.rfind("\t", 0, start_trunc),
+                text.rfind("\r", 0, start_trunc),
+                text.rfind("\n", 0, start_trunc)
+            )
+            if space < 500: space = start_trunc
+
+            text = text[:space] + "..."
+            text += extra
+        
+        page["text"] = text
     
-    # long.sort()
-    # for l, key in long:
-    #     print(f'Warning: page "{key}" is {l} chars long')
+    long.sort()
+    for short, link, chars in long:
+        if short:
+            LOGGER.warn('short page "%s" is %d chars long', link, chars)
+        else:
+            LOGGER.warn('page "%s" is %d chars long', link, chars)
 
 class Session:
     def __init__(self, ctx: SlashContext, message: interactions.Message, back_enabled: bool = True, mod_only: bool = False):
         self.ctx = ctx
         self.message = message
+        self.id = message.id
         self.age = 0
 
         self.buttons = []
@@ -97,27 +158,25 @@ class Session:
         self.link = ""
         self.mod_only = mod_only
         self.back_enabled = back_enabled
+
+        LOGGER.debug("session %s created", str(self.id))
     
     async def load(self, link: str):
         l = link.strip()
-        l = l[1:] if l[0] == "#" else l
+        if len(l) > 100: l = l[:100]
+        if l[0] == "#": l = l[1:]
         l = UNSAFE_CHARS.sub("", l)
 
         if self.link and self.back_enabled:
             self.prev.append(self.link)
         self.link = l
-        page = flow_data.get(l, flow_data["default"])
-        
-        short: bool = "short" in page
-        text: str = f"## {page['title']} ({self.link})\n{page['text']}"
-        if short:
-            text += f"\n\nTo read more, see the [#{l}](<{config['bot']['ONLINE']}#{l}>) page online."
-        
-        if len(text) > 1950:
-            space = max(text.rfind(" ", 0, 1800), text.rfind("\t", 0, 1800), text.rfind("\r", 0, 1800), text.rfind("\n", 0, 1800))
-            if space < 500: space = 1800
-            text = text[:space] + "..."
-            text += f"\n\nTo read more, see the [#{l}](<{config['bot']['ONLINE']}#{l}>) page online."
+        page = flow_data.get(l)
+
+        if page is None:
+            page = flow_data["default"]
+            text: str = f"## {page['title']} ({l})\n{page['text']}"
+        else:
+            text: str = page["text"]
         
         self.buttons = []
         for opt in page.get("opts", []):
@@ -137,6 +196,9 @@ class Session:
         
         await self.message.edit(content=text, components=ActionRow.split_components(*components) if components else [])
 
+        if not components:
+            await self.close()
+
     async def back(self):
         if not self.prev: return
         self.link = ""
@@ -150,9 +212,19 @@ class Session:
         await self.load(link) # Not technically necessary, but I'm lazy
     
     async def close(self):
-        if self.buttons:
-            await self.message.edit(components=[])
-            del sessions[self.message.id]
+        try:
+            if self.buttons:
+                await self.message.edit(components=[])
+        except Exception:
+            LOGGER.warn("close edit failed on message %s", str(self.id))
+        
+        try:
+            if self.id in sessions:
+                del sessions[self.id]
+        except Exception:
+            LOGGER.warn("close delete failed on message %s", str(self.id))
+
+        LOGGER.debug("session %s closed", str(self.id))
 
 @listen(Component)
 async def on_component(event: Component):
@@ -183,6 +255,7 @@ async def on_component(event: Component):
             await s.load(link)
 
 async def close_sessions():
+    LOGGER.info("closing all %d sessions", len(sessions))
     async with SESSION_LOCK:
         for s in list(sessions.values()):
             await s.close()
@@ -196,17 +269,19 @@ async def timeout_sessions():
             for s in list(sessions.values()):
                 s.age += 1
                 if s.age > max_age:
+                    LOGGER.debug("session %s timeouted", str(s.id))
                     await s.close()
 
 
 
 async def on_exit():
+    LOGGER.info("exit signal received")
     await close_sessions()
     await bot.stop()
 
 @listen()
 async def on_startup():
-    print("Bot started")
+    LOGGER.info("bot started")
 
     loop = asyncio.get_event_loop()
     loop.add_signal_handler(signal.SIGINT, lambda: asyncio.create_task(on_exit()))
@@ -217,6 +292,7 @@ async def on_startup():
 async def _make_session(ctx: SlashContext, start: str = "index", back: bool = True, modonly: bool = False, mentions: interactions.Member | None = None):
     async with SESSION_LOCK:
         while len(sessions) >= int(config['session']['MAX_SESSIONS']):
+            LOGGER.warn("max sessions reached, closing an old session")
             await sessions.pop(list(sessions.keys())[0]).close()
 
         message = await ctx.send("Thinking...")
@@ -225,9 +301,10 @@ async def _make_session(ctx: SlashContext, start: str = "index", back: bool = Tr
         
         s = Session(ctx, message, back, modonly)
         sessions[message.id] = s
-    await s.load(start)
+    await s.load(start if len(start) <= MAX_LINK_CHARS else start[:MAX_LINK_CHARS])
 
 @slash_command(description="Launches the Flow Help bot.")
+# @slash_default_member_permission(Permissions.MANAGE_MESSAGES)
 @slash_option(
     name = "start",
     description = "Optional place to start from in the flow help. Defaults to index",
@@ -252,6 +329,7 @@ async def flowhelp(ctx: SlashContext, start: str = "index", back: bool = True, m
     await _make_session(ctx, start, back, modonly, mentions)
 
 @slash_command(description="Launches the Flow Help bot but with back=False and modonly=True.")
+# @slash_default_member_permission(Permissions.MANAGE_MESSAGES)
 @slash_option(
     name = "start",
     description = "Optional place to start from in the flow help. Defaults to index",
@@ -271,6 +349,7 @@ async def reflow(ctx: SlashContext):
     await close_sessions()
     await load_data(config['bot']['LOCAL'])
     await ctx.send("Reloaded Flow Help.", ephemeral=True)
+    LOGGER.info("flow data reloaded")
 
 @slash_command(description="ping pong")
 async def ping(ctx: SlashContext):
@@ -279,8 +358,9 @@ async def ping(ctx: SlashContext):
 
 
 def main():
+    setup_logger()
     asyncio.run(load_data(config['bot']['LOCAL']))
-    print("Flow data loaded")
+    LOGGER.info("flow data loaded")
     bot.start()
 
 if __name__ == "__main__":
