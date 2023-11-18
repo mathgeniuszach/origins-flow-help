@@ -100,7 +100,9 @@ pack-disabled:
 
         This can happen for a few reasons; for starters, the datapack could be made for a different version of Minecraft compared to the one you are on. It could also contain certain errors that prevented the datapack from loading properly.
 
-        The only thing you can really try to do is to forcibly enable the datapack with `/datapack enable {datapack name}`. You can run `/datapack list` afterwards and check if it's green to see if that worked. If the command did not work, there's not much you can do.
+        The only thing you can really try to do is to forcibly enable the datapack with `/datapack enable {datapack name}`. You can run `/datapack list` afterwards and check if it's green to see if that worked. If the command did not work, it's likely that the datapack has errors in the log, but you missed them. Go back and really thoroughly check the log for error messages, because you almost definitely missed one. You can also try uploading the log and having someone else check through them for you.
+
+        If you are absolutely confident there's no errors in your log, there's not much you can do at this point.
 
 pack-bad-install:
     title: Bad Install
