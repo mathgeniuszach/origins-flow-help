@@ -1,12 +1,12 @@
 data:
-    - data/index.yaml
-    - data/bug-fix.yaml
-    - data/installing-datapacks.yaml
-    - data/installing-the-mod.yaml
-    - data/making-datapacks.yaml
-    - data/powers.yaml
-    - data/first-datapack.yaml
-    - data/random.yaml
+  - data/index.yaml
+  - data/bug-fix.yaml
+  - data/installing-datapacks.yaml
+  - data/installing-the-mod.yaml
+  - data/making-datapacks.yaml
+  - data/powers.yaml
+  - data/first-datapack.yaml
+  - data/random.yaml
 
 default:
     title: Page Not Found

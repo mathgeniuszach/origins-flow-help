@@ -213,8 +213,7 @@ class Session:
     
     async def close(self):
         try:
-            if self.buttons:
-                await self.message.edit(components=[])
+            await self.message.edit(components=[])
         except Exception:
             LOGGER.warn("close edit failed on message %s", str(self.id))
         
