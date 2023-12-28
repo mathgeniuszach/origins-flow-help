@@ -28,8 +28,13 @@ no-zip:
 
 installing-mod-prompt:
     title: Mod Prompt
-    text: Do you have the origins mod installed into your game?
+    text: | 
+        If you have a vanilla datapack (one without origins or powers), click "I have a vanilla datapack".
+
+        Do you have the origins mod installed into your game?
     opts:
+      - text: I have a vanilla datapack
+        link: installing-downloaded-datapacks
       - text: I have the Bedrock Edition addon
         link: bedrock-edition
       - text: "Yes"
@@ -40,7 +45,7 @@ installing-mod-prompt:
 installing-downloaded-datapacks:
     title: Installing Downloaded Datapacks
     text: |
-        If you have the origins mod installed in your game, then you can proceed with installing a datapack you've downloaded.
+        If your datapack is vanilla or you have the origins mod installed in your game, then you can proceed with installing a datapack you've downloaded.
 
         Before installing it, make sure that the zip file you downloaded contains a pack/pack.mcmeta file inside. If you only see a single folder inside, you'll have to extract the single folder inside, into the location you're installing datapacks to. Otherwise, put the zip file itself into the location you're installing datapacks to.
 
