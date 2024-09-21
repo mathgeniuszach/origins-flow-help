@@ -9,17 +9,20 @@ import interactions
 import configparser
 import yaml
 
-# import httpx
-# import traceback
+import requests
 
 import asyncio
 import re
 import signal
 import logging
 
-from sys import stdout
-from os import unlink
-from os.path import exists
+from sys import stdout, argv
+from os import unlink, mkdir, rename
+from shutil import rmtree
+from os.path import exists, join, abspath, dirname
+from zipfile import ZipFile
+from io import BytesIO
+from tempfile import TemporaryDirectory
 
 LOGGER = logging.getLogger("flow-bot")
 LOG_FORMAT = "[{asctime}] {levelname:<8}  {message}"
@@ -55,8 +58,13 @@ SESSION_LOCK = asyncio.Lock()
 MAX_LINK_CHARS = 100
 DISCORD_MAX_CHARS = 2000
 
+CONFIG_PATH = abspath(join(dirname(__file__), "config.ini") if len(argv) < 2 else argv[1])
+
+def resolve(path: str):
+    return abspath(join(dirname(CONFIG_PATH), path))
+
 config = configparser.ConfigParser()
-config.read("config.ini")
+config.read(CONFIG_PATH)
 
 # bot = None
 bot = Client(
@@ -67,38 +75,31 @@ bot = Client(
 
 sessions = {}
 flow_data = {}
-async def load_data(local=""):
+async def load_data(local, download):
     global flow_data, meta_map, meta_start
     repo = config['bot']['REPO']
     online = config['bot']['ONLINE']
+    
+    if download or not exists(local):
+        with requests.get(config['bot']['ZIP']) as resp:
+            zfile = ZipFile(BytesIO(resp.content))
+            
+            if exists(local): rmtree(local)
+            mkdir(local)
+            
+            zfile.extractall(local)
+            folder = zfile.namelist()[0]
+            for f in ("i", "data", "index.yaml"):
+                rename(join(local, folder, f), join(local, f))
+            rmtree(join(local, folder))
 
-    if local:
-        with open(local+"index.yaml", "r") as f:
-            index = yaml.safe_load(f)
-        flow_data["default"] = index["default"]
+    with open(join(local, "index.yaml"), "r") as f:
+        index = yaml.safe_load(f)
+    flow_data["default"] = index["default"]
 
-        for file in index['data']:
-            with open(local+file, "r") as f:
-                flow_data.update(yaml.safe_load(f))
-    else:
-        raise NotImplementedError("A local directory must be provided")
-        # Download content
-        # async with httpx.AsyncClient(follow_redirects=True) as http_client:
-        #     try:
-        #         resp = await http_client.get(repo + "index.yaml")
-        #         index = yaml.safe_load(resp.content)
-        #         flow_data["default"] = index["default"]
-
-        #         async def load_file(file):
-        #             try:
-        #                 resp = await http_client.get(repo + file)
-        #                 flow_data.update(yaml.safe_load(resp.content))
-        #             except httpx.ReadError as e:
-        #                 print(f'ERROR: Failed to download "{repo}{file}"; {e.__class__.__name__}: {str(e)}')
-        #         for file in index['data']:
-        #             await load_file(file) # Should be task group but unsupported in 3.10
-        #     except httpx.ReadError as e:
-        #         print(f'ERROR: Failed to download "{repo}index.yaml"; {e.__class__.__name__}: {str(e)}')
+    for file in index['data']:
+        with open(join(local, file), "r") as f:
+            flow_data.update(yaml.safe_load(f))
     
     # Parse links
     long = []
@@ -346,7 +347,7 @@ async def flowshow(ctx: SlashContext, start: str = "index", mentions: interactio
 @slash_default_member_permission(Permissions.ADMINISTRATOR)
 async def reflow(ctx: SlashContext):
     await close_sessions()
-    await load_data(config['bot']['LOCAL'])
+    await load_data(resolve(config['bot']['LOCAL']), True)
     await ctx.send("Reloaded Flow Help.", ephemeral=True)
     LOGGER.info("flow data reloaded")
 
@@ -358,7 +359,7 @@ async def ping(ctx: SlashContext):
 
 def main():
     setup_logger()
-    asyncio.run(load_data(config['bot']['LOCAL']))
+    asyncio.run(load_data(resolve(config['bot']['LOCAL']), False))
     LOGGER.info("flow data loaded")
     bot.start()
 
